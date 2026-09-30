@@ -1,24 +1,505 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Primo Semestre – Indice</title>
-  <style>
-    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 3rem auto; padding: 0 1rem; }
-    h1 { border-bottom: 2px solid #333; padding-bottom: .5rem; }
-    ul { line-height: 2; list-style: none; padding-left: 0; }
-    a { text-decoration: none; color: #0366d6; font-size: 1.1rem; }
-    a:hover { text-decoration: underline; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Primo Semestre · Indice</title>
+<script>document.documentElement.classList.add('js')</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='%23F3EDDC'/%3E%3Cpath d='M12 4v16M5.1 8l13.8 8M18.9 8L5.1 16' stroke='%23AC3A28' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --carta:#F3EDDC;
+    --carta-chiara:#FBF7EC;
+    --inchiostro:#231E15;
+    --muto:rgba(35,30,21,.62);
+    --rosso:#AC3A28;           /* garanza, come la riga dei quaderni */
+    --rosso-velato:rgba(172,58,40,.38);
+    --filetto:rgba(35,30,21,.16);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    font-family:"Spectral",Georgia,serif;
+    color:var(--inchiostro);
+    background-color:var(--carta);
+    background-image:
+      linear-gradient(rgba(35,30,21,.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(35,30,21,.055) 1px, transparent 1px);
+    background-size:26px 26px;
+    min-height:100vh;
+  }
+  ::selection{background:rgba(172,58,40,.22)}
+
+  /* la riga rossa a margine, come sui quaderni */
+  body::after{
+    content:"";position:fixed;top:0;bottom:0;
+    left:clamp(10px,4vw,88px);width:2px;
+    background:var(--rosso-velato);pointer-events:none;
+  }
+
+  .pagina{
+    max-width:1120px;margin:0 auto;
+    padding:clamp(2.2rem,5vw,4.5rem) clamp(1.25rem,5vw,3rem) 3rem;
+    position:relative;
+  }
+
+  /* ---------- Testata / frontespizio ---------- */
+  .ornamento{width:16px;height:16px;color:var(--rosso);display:block;margin:0 auto 1.15rem}
+  .testata{text-align:center;max-width:660px;margin:0 auto}
+  .occhiello{
+    margin:0 0 1.1rem;font-size:.72rem;font-weight:500;
+    letter-spacing:.34em;text-transform:uppercase;color:var(--muto);
+    display:flex;align-items:center;justify-content:center;gap:1.1rem;
+  }
+  .occhiello::before,.occhiello::after{content:"";width:2.6rem;height:1px;background:var(--filetto)}
+  h1{
+    font-family:"Fraunces",Georgia,serif;font-optical-sizing:auto;font-weight:520;
+    font-size:clamp(2.7rem,6.5vw,4.7rem);line-height:1.02;letter-spacing:-.015em;
+    margin:.2rem 0 1.1rem;
+  }
+  h1 em{font-style:italic;font-weight:420}
+  .meta{margin:0;font-style:italic;font-weight:300;font-size:1.02rem;color:var(--muto)}
+  .filetto{margin-top:2.2rem;border-top:2px solid var(--inchiostro)}
+  .filetto::after{content:"";display:block;border-top:1px solid var(--inchiostro);margin-top:3px}
+
+  /* timbro tipografico */
+  .timbro{display:none}
+  @media (min-width:1020px){
+    .timbro{
+      display:block;position:absolute;
+      top:clamp(2.4rem,5vw,4rem);right:clamp(1.2rem,4vw,3rem);
+      width:118px;color:var(--rosso);
+      transform:rotate(9deg);mix-blend-mode:multiply;opacity:.85;
+    }
+  }
+
+  /* ---------- Griglia delle quattro tavole ---------- */
+  .griglia{
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:clamp(1.8rem,4vw,3.2rem);
+    margin-top:clamp(2.6rem,5vw,4.2rem);
+  }
+  @media (max-width:900px){
+    .griglia{grid-template-columns:1fr;max-width:520px;margin-left:auto;margin-right:auto}
+  }
+
+  /* ---------- La card / lastra ---------- */
+  .card{
+    --tilt:0deg;--ox:9px;--oy:11px;
+    display:block;
+    background:var(--carta-chiara);
+    border:1.5px solid var(--inchiostro);
+    padding:1rem 1.05rem 1.25rem;
+    box-shadow:var(--ox) var(--oy) 0 -3px rgba(35,30,21,.09);
+    color:inherit;text-decoration:none;
+    transform:rotate(var(--tilt));
+    transition:
+      transform .5s cubic-bezier(.22,.61,.21,1),
+      box-shadow .5s cubic-bezier(.22,.61,.21,1),
+      opacity .6s cubic-bezier(.2,.65,.3,1),
+      translate .6s cubic-bezier(.2,.65,.3,1);
+  }
+  /* lievi inclinazioni alternate: lastre appoggiate sul banco */
+  .card:nth-child(1){--tilt:-.7deg}
+  .card:nth-child(2){--tilt:.55deg;--ox:-9px}
+  .card:nth-child(3){--tilt:.45deg}
+  .card:nth-child(4){--tilt:-.6deg;--ox:-9px}
+  @media (max-width:900px){ .card{--ox:6px;--oy:8px} .card:nth-child(2),.card:nth-child(4){--ox:-6px} }
+
+  /* ingresso in pagina (solo se JS attivo) */
+  html.js .card{opacity:0;translate:0 26px}
+  html.js .card.entrata{opacity:1;translate:0 0}
+
+  .card:hover,.card:focus-visible{
+    transform:rotate(0deg) translate(0,-6px);
+    box-shadow:var(--ox) calc(var(--oy) + 9px) 0 -3px rgba(35,30,21,.13);
+  }
+  .card:focus-visible{outline:1.5px dashed var(--rosso);outline-offset:6px}
+
+  .cornice svg{display:block;width:100%;height:auto;border:1px solid var(--filetto)}
+
+  .didascalia{
+    display:flex;justify-content:space-between;gap:1rem;
+    margin:.85rem 0 0;font-size:.66rem;font-weight:500;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--muto);
+  }
+  .didascalia span:last-child{color:var(--rosso)}
+
+  /* cartiglio: numero romano, titolo, argomenti, invito ad aprire */
+  .cartiglio{
+    display:grid;
+    grid-template-columns:auto minmax(0,1fr) auto;
+    column-gap:.9rem;align-items:baseline;
+    margin-top:.9rem;padding-top:.85rem;
+    border-top:1px solid var(--filetto);
+  }
+  .num{
+    grid-row:1 / span 2;
+    font-family:"Fraunces",Georgia,serif;font-style:italic;font-weight:500;
+    font-size:1.5rem;line-height:1;color:var(--rosso);
+    padding-right:.35rem;
+  }
+  .titolo{
+    margin:0;display:block;width:fit-content;
+    font-family:"Fraunces",Georgia,serif;font-weight:500;
+    font-size:clamp(1.35rem,2.2vw,1.65rem);letter-spacing:-.01em;line-height:1.15;
+    /* la penna rossa sottolinea il titolo al passaggio */
+    background-image:linear-gradient(var(--rosso),var(--rosso));
+    background-repeat:no-repeat;background-position:0 100%;
+    background-size:0% 1.5px;padding-bottom:3px;
+    transition:background-size .5s cubic-bezier(.25,.1,.25,1);
+  }
+  .card:hover .titolo,.card:focus-visible .titolo{background-size:100% 1.5px}
+  .sub{
+    grid-column:2;grid-row:2;margin:.45rem 0 0;
+    font-style:italic;font-weight:300;font-size:.92rem;line-height:1.45;color:var(--muto);
+  }
+  .apri{
+    grid-column:3;grid-row:1;
+    display:inline-flex;align-items:baseline;gap:.4rem;
+    font-style:italic;font-size:.85rem;color:var(--muto);
+    white-space:nowrap;transition:color .3s;
+  }
+  .apri svg{width:26px;height:10px;flex:none;transition:transform .35s cubic-bezier(.34,1.4,.5,1)}
+  .card:hover .apri,.card:focus-visible .apri{color:var(--rosso)}
+  .card:hover .apri svg,.card:focus-visible .apri svg{transform:translateX(6px)}
+
+  /* tratti che si inchiostrano */
+  .cornice text{font-family:"Spectral",Georgia,serif;font-style:italic}
+  .draw{stroke-dasharray:1;stroke-dashoffset:1}
+  .card.animata .draw{
+    animation:tratto var(--dd,1.1s) cubic-bezier(.55,.05,.35,1) var(--rit,0s) forwards;
+  }
+  @keyframes tratto{to{stroke-dashoffset:0}}
+  .ink{opacity:0}
+  .card.animata .ink{animation:inchiostro .55s ease var(--rit,0s) forwards}
+  @keyframes inchiostro{to{opacity:1}}
+
+  /* bolle del beaker */
+  .bolla{opacity:0;transform-box:fill-box;transform-origin:center}
+  .card.animata .bolla{animation:salita var(--dur,3.6s) ease-in var(--bd,0s) infinite}
+  @keyframes salita{
+    0%{transform:translateY(0);opacity:0}
+    10%{opacity:.9}
+    70%{opacity:.55}
+    100%{transform:translateY(-56px);opacity:0}
+  }
+  .vapore{opacity:0;transform-box:fill-box;transform-origin:center bottom}
+  .card.animata .vapore{animation:sfiato 3.2s ease-in-out var(--bd,0s) infinite}
+  @keyframes sfiato{
+    0%,100%{opacity:0;transform:translateY(2px)}
+    35%{opacity:.7;transform:translateY(-2px)}
+  }
+  .nucleo{opacity:0;transform-box:fill-box;transform-origin:center}
+  .card.animata .nucleo{
+    animation:inchiostro .5s ease .8s forwards, polso 2.8s ease-in-out 1.4s infinite;
+  }
+  @keyframes polso{50%{transform:scale(1.13)}}
+
+  /* ---------- Colophon ---------- */
+  .colophon{
+    margin-top:4rem;border-top:1px solid var(--filetto);
+    padding-top:2.2rem;text-align:center;
+  }
+  .colophon p{margin:.9rem 0 0;font-size:.9rem;color:var(--muto);font-style:italic}
+  .augurio{font-family:"Fraunces",Georgia,serif;font-style:italic;font-size:1.35rem;color:var(--rosso)}
+
+  @media (prefers-reduced-motion: reduce){
+    html.js .card{opacity:1;translate:none}
+    .card,.titolo,.apri svg{transition:none}
+    .card:hover,.card:focus-visible{transform:rotate(0deg);box-shadow:var(--ox) var(--oy) 0 -3px rgba(35,30,21,.09)}
+    .card .draw{animation:none;stroke-dashoffset:0}
+    .card .ink{animation:none;opacity:1}
+    .card .bolla{animation:none;opacity:.7}
+    .card .vapore{animation:none;opacity:.5}
+    .card .nucleo{animation:none;opacity:1}
+  }
+</style>
 </head>
 <body>
-  <h1>📚 Primo Semestre</h1>
-  <ul>
-    <li>📐 <a href="./Algebra/output/web/algebra.html">Algebra</a></li>
-    <li>📈 <a href="../Analisi1/index.html">Analisi 1</a></li>
-    <li>🧪 <a href="../Chimica/index.html">Chimica</a></li>
-    <li>⚛️ <a href="../Fisica/index.html">Fisica</a></li>
-  </ul>
+
+<!-- definizioni condivise: carta millimetrata e punte di freccia -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <pattern id="quadretti" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M20 0H0V20" fill="none" stroke="rgba(35,30,21,.08)" stroke-width="1"/>
+    </pattern>
+    <marker id="punta-nera" viewBox="0 0 10 10" refX="8.5" refY="5"
+            markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0.5 1.5L8.5 5L0.5 8.5" fill="none" stroke="#231E15"
+            stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="punta-rossa" viewBox="0 0 10 10" refX="8.5" refY="5"
+            markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0.5 1.5L8.5 5L0.5 8.5" fill="none" stroke="#AC3A28"
+            stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+</svg>
+
+<div class="pagina">
+
+  <!-- timbro rotondo, in alto a destra -->
+  <svg class="timbro" viewBox="0 0 120 120" aria-hidden="true">
+    <defs>
+      <path id="cerchio-timbro" d="M60 60 m-45 0 a45 45 0 1 1 90 0 a45 45 0 1 1 -90 0"/>
+    </defs>
+    <circle cx="60" cy="60" r="57" fill="none" stroke="currentColor" stroke-width="2.5"/>
+    <circle cx="60" cy="60" r="31" fill="none" stroke="currentColor" stroke-width="1.2"/>
+    <text fill="currentColor" font-size="10" letter-spacing="2.2" font-weight="500">
+      <textPath href="#cerchio-timbro">PRIMO SEMESTRE • INDICE GENERALE •</textPath>
+    </text>
+    <text x="60" y="66" text-anchor="middle" fill="currentColor"
+          font-family="Fraunces,Georgia,serif" font-style="italic" font-weight="600" font-size="19">I–IV</text>
+  </svg>
+
+  <header class="testata">
+    <svg class="ornamento" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    <p class="occhiello">Indice generale</p>
+    <h1>Primo <em>Semestre</em></h1>
+    <p class="meta">Dispense, appunti ed esercizi · Anno accademico <span id="aa"></span></p>
+    <div class="filetto" aria-hidden="true"></div>
+  </header>
+
+  <nav class="griglia" aria-label="Corsi del primo semestre">
+
+    <!-- ══ TAV. I — Algebra ══ -->
+    <a class="card" href="./Algebra/output/web/algebra.html">
+      <div class="cornice">
+        <svg viewBox="0 0 320 250" role="img" aria-label="Diagramma del parallelogramma della somma di due vettori">
+          <rect class="ink" width="320" height="250" fill="url(#quadretti)"/>
+          <path class="draw" style="--dd:.8s" pathLength="1" d="M0 205H320" fill="none" stroke="#231E15" stroke-width="1.2"/>
+          <path class="draw" style="--dd:.8s" pathLength="1" d="M52 250V0" fill="none" stroke="#231E15" stroke-width="1.2"/>
+          <path class="ink" style="--rit:1s" d="M157 153L209 57M104 109L209 57" fill="none" stroke="rgba(35,30,21,.45)" stroke-width="1" stroke-dasharray="4 4"/>
+          <path class="ink" style="--rit:.5s" d="M52 205L157 153" fill="none" stroke="#231E15" stroke-width="1.7" marker-end="url(#punta-nera)"/>
+          <path class="ink" style="--rit:.65s" d="M52 205L104 109" fill="none" stroke="#231E15" stroke-width="1.7" marker-end="url(#punta-nera)"/>
+          <path class="ink" style="--rit:.8s" d="M52 205L209 57" fill="none" stroke="#AC3A28" stroke-width="1.8" marker-end="url(#punta-rossa)"/>
+          <circle class="ink" style="--rit:1.15s" cx="52" cy="205" r="3" fill="#231E15"/>
+          <text class="ink" style="--rit:1.15s" x="109" y="192" text-anchor="middle" font-size="15" fill="#231E15">u</text>
+          <text class="ink" style="--rit:1.15s" x="66" y="150" text-anchor="middle" font-size="15" fill="#231E15">v</text>
+          <text class="ink" style="--rit:1.15s" x="120" y="121" text-anchor="middle" font-size="15" fill="#AC3A28">u + v</text>
+          <text class="ink" style="--rit:1.15s" x="42" y="221" text-anchor="middle" font-size="13" fill="rgba(35,30,21,.62)">O</text>
+        </svg>
+      </div>
+      <p class="didascalia"><span>Tav. I · Algebra lineare</span><span>Fig. 1</span></p>
+      <div class="cartiglio">
+        <span class="num" aria-hidden="true">I</span>
+        <h2 class="titolo">Algebra</h2>
+        <span class="apri">Apri
+          <svg viewBox="0 0 24 8" fill="none" aria-hidden="true"><path d="M0 4h20M20 4l-5-3.4M20 4l-5 3.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <p class="sub">Spazi vettoriali · matrici · determinanti</p>
+      </div>
+    </a>
+
+    <!-- ══ TAV. II — Analisi 1 ══ -->
+    <a class="card" id="card-analisi" href="../Analisi1/index.html">
+      <div class="cornice">
+        <svg viewBox="0 0 320 250" role="img" aria-label="Retta tangente che scorre lungo una curva">
+          <rect class="ink" width="320" height="250" fill="url(#quadretti)"/>
+          <path class="draw" style="--dd:.8s" pathLength="1" d="M0 210H320" fill="none" stroke="#231E15" stroke-width="1.2"/>
+          <path class="draw" style="--dd:.8s" pathLength="1" d="M48 250V0" fill="none" stroke="#231E15" stroke-width="1.2"/>
+          <path id="curva-analisi" class="draw" style="--rit:.25s;--dd:1.3s" pathLength="1"
+                d="M62 188C112 58 168 236 288 52" fill="none" stroke="#231E15" stroke-width="1.8"/>
+          <line id="tangente" class="ink" style="--rit:1.5s" x1="0" y1="0" x2="0" y2="0" stroke="#AC3A28" stroke-width="1.6"/>
+          <circle id="punto-tangente" class="ink" style="--rit:1.5s" r="4.5" cx="62" cy="188" fill="#231E15" stroke="#FBF7EC" stroke-width="1.5"/>
+          <text class="ink" style="--rit:1.6s" x="96" y="88" font-size="14" fill="rgba(35,30,21,.75)">y = f(x)</text>
+          <text id="etichetta-tangente" class="ink" style="--rit:1.6s" x="80" y="170" font-size="14" fill="#AC3A28">f′(x)</text>
+        </svg>
+      </div>
+      <p class="didascalia"><span>Tav. II · Analisi matematica</span><span>Fig. 2</span></p>
+      <div class="cartiglio">
+        <span class="num" aria-hidden="true">II</span>
+        <h2 class="titolo">Analisi 1</h2>
+        <span class="apri">Apri
+          <svg viewBox="0 0 24 8" fill="none" aria-hidden="true"><path d="M0 4h20M20 4l-5-3.4M20 4l-5 3.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <p class="sub">Funzioni · limiti · derivate</p>
+      </div>
+    </a>
+
+    <!-- ══ TAV. III — Chimica ══ -->
+    <a class="card" href="../Chimica/index.html">
+      <div class="cornice">
+        <svg viewBox="0 0 320 250" role="img" aria-label="Becher con soluzione e bolle che salgono">
+          <rect class="ink" width="320" height="250" fill="url(#quadretti)"/>
+          <path class="vapore" style="--bd:.2s" d="M150 44q3 -5 0 -12" fill="none" stroke="rgba(35,30,21,.5)" stroke-width="1.1" stroke-linecap="round"/>
+          <path class="vapore" style="--bd:1.1s" d="M160 46q-3 -6 0 -14" fill="none" stroke="rgba(35,30,21,.5)" stroke-width="1.1" stroke-linecap="round"/>
+          <path class="vapore" style="--bd:2s" d="M170 44q3 -5 0 -12" fill="none" stroke="rgba(35,30,21,.5)" stroke-width="1.1" stroke-linecap="round"/>
+          <path class="draw" style="--rit:.1s;--dd:.6s" pathLength="1" d="M104 52H216" fill="none" stroke="#231E15" stroke-width="1.6" stroke-linecap="round"/>
+          <path class="draw" style="--dd:1.1s" pathLength="1" d="M112 52L126 206Q127 216 138 216H182Q193 216 194 206L208 52" fill="none" stroke="#231E15" stroke-width="1.6"/>
+          <path class="ink" style="--rit:.6s" d="M120.5 140L126.8 205Q127.6 214 137 214H183Q192.4 214 193.2 205L199.5 140Q160 149 120.5 140Z" fill="rgba(172,58,40,.16)"/>
+          <path class="draw" style="--rit:.8s;--dd:.5s" pathLength="1" d="M120.5 140Q160 149 199.5 140" fill="none" stroke="#AC3A28" stroke-width="1.5"/>
+          <path class="ink" style="--rit:1s" d="M117 100H126M120 140H129M124 180H133" fill="none" stroke="rgba(35,30,21,.55)" stroke-width="1"/>
+          <circle class="bolla" style="--bd:.2s;--dur:3.6s" cx="146" cy="196" r="3" fill="none" stroke="rgba(35,30,21,.55)" stroke-width="1"/>
+          <circle class="bolla" style="--bd:1s;--dur:4.2s" cx="161" cy="200" r="4.5" fill="none" stroke="rgba(35,30,21,.55)" stroke-width="1"/>
+          <circle class="bolla" style="--bd:1.8s;--dur:3.2s" cx="173" cy="194" r="2.5" fill="none" stroke="rgba(35,30,21,.55)" stroke-width="1"/>
+          <circle class="bolla" style="--bd:2.4s;--dur:4.6s" cx="153" cy="186" r="2" fill="none" stroke="rgba(35,30,21,.55)" stroke-width="1"/>
+          <circle class="bolla" style="--bd:3s;--dur:3.8s" cx="168" cy="188" r="3.4" fill="none" stroke="rgba(35,30,21,.55)" stroke-width="1"/>
+          <path class="ink" style="--rit:1.2s" d="M201 167L226 178" fill="none" stroke="rgba(35,30,21,.5)" stroke-width="1"/>
+          <text class="ink" style="--rit:1.2s" x="232" y="183" font-size="12.5" fill="rgba(35,30,21,.62)">0,1 M</text>
+        </svg>
+      </div>
+      <p class="didascalia"><span>Tav. III · In soluzione</span><span>Fig. 3</span></p>
+      <div class="cartiglio">
+        <span class="num" aria-hidden="true">III</span>
+        <h2 class="titolo">Chimica</h2>
+        <span class="apri">Apri
+          <svg viewBox="0 0 24 8" fill="none" aria-hidden="true"><path d="M0 4h20M20 4l-5-3.4M20 4l-5 3.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <p class="sub">Struttura della materia · stechiometria</p>
+      </div>
+    </a>
+
+    <!-- ══ TAV. IV — Fisica ══ -->
+    <a class="card" id="card-fisica" href="../Fisica/index.html">
+      <div class="cornice">
+        <svg id="svg-bohr" viewBox="0 0 320 250" role="img" aria-label="Modello atomico di Bohr con tre elettroni in orbita">
+          <rect class="ink" width="320" height="250" fill="url(#quadretti)"/>
+          <path id="orb-1" class="draw" pathLength="1" d="M48 125a112 40 0 1 0 224 0a112 40 0 1 0 -224 0"
+                transform="rotate(-14 160 125)" fill="none" stroke="rgba(35,30,21,.85)" stroke-width="1.1"/>
+          <path id="orb-2" class="draw" style="--rit:.3s" pathLength="1" d="M72 125a88 31 0 1 0 176 0a88 31 0 1 0 -176 0"
+                transform="rotate(28 160 125)" fill="none" stroke="rgba(35,30,21,.85)" stroke-width="1.1"/>
+          <path id="orb-3" class="draw" style="--rit:.6s" pathLength="1" d="M96 125a64 52 0 1 0 128 0a64 52 0 1 0 -128 0"
+                transform="rotate(64 160 125)" fill="none" stroke="rgba(35,30,21,.85)" stroke-width="1.1"/>
+          <circle class="nucleo" cx="160" cy="125" r="11" fill="#AC3A28"/>
+          <text class="ink" style="--rit:.95s" x="160" y="129.5" text-anchor="middle" font-style="normal" font-weight="600" font-size="13" fill="#FBF7EC">+</text>
+          <g class="ink" style="--rit:1.05s">
+            <circle r="4.2" fill="#231E15" stroke="#FBF7EC" stroke-width="1.5">
+              <animateMotion dur="5s" repeatCount="indefinite"><mpath href="#orb-1" xlink:href="#orb-1"/></animateMotion>
+            </circle>
+          </g>
+          <g class="ink" style="--rit:1.15s">
+            <circle r="4.2" fill="#231E15" stroke="#FBF7EC" stroke-width="1.5">
+              <animateMotion dur="7.5s" repeatCount="indefinite"><mpath href="#orb-2" xlink:href="#orb-2"/></animateMotion>
+            </circle>
+          </g>
+          <g class="ink" style="--rit:1.25s">
+            <circle r="4.2" fill="#231E15" stroke="#FBF7EC" stroke-width="1.5">
+              <animateMotion dur="9.5s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#orb-3" xlink:href="#orb-3"/></animateMotion>
+            </circle>
+          </g>
+        </svg>
+      </div>
+      <p class="didascalia"><span>Tav. IV · Modello di Bohr</span><span>Fig. 4</span></p>
+      <div class="cartiglio">
+        <span class="num" aria-hidden="true">IV</span>
+        <h2 class="titolo">Fisica</h2>
+        <span class="apri">Apri
+          <svg viewBox="0 0 24 8" fill="none" aria-hidden="true"><path d="M0 4h20M20 4l-5-3.4M20 4l-5 3.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <p class="sub">Meccanica · fluidi · termodinamica</p>
+      </div>
+    </a>
+
+  </nav>
+
+  <footer class="colophon">
+    <svg class="ornamento" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    <p>Composto in Fraunces e Spectral, su carta a quadretti: inchiostro, garanza e un po' di matematica.</p>
+    <p class="augurio">Buono studio.</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  const ridotto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Anno accademico calcolato automaticamente (da settembre cambia da solo) */
+  const oggi = new Date();
+  const inizio = oggi.getMonth() >= 8 ? oggi.getFullYear() : oggi.getFullYear() - 1;
+  document.getElementById('aa').textContent = inizio + '/' + (inizio + 1);
+
+  const cards = Array.from(document.querySelectorAll('.card'));
+  const cardAnalisi = document.getElementById('card-analisi');
+  const bohr = document.getElementById('svg-bohr');
+  let analisiInVista = false;
+
+  /* Ingresso in pagina + prima inchiostratura quando la card entra nel riquadro;
+     le animazioni fuori schermo vengono messe in pausa */
+  const io = new IntersectionObserver(voci => {
+    voci.forEach(v => {
+      if (v.isIntersecting) v.target.classList.add('entrata', 'animata');
+      if (v.target === cardAnalisi) analisiInVista = v.isIntersecting;
+      if (v.target.id === 'card-fisica' && bohr && typeof bohr.pauseAnimations === 'function'){
+        v.isIntersecting ? bohr.unpauseAnimations() : bohr.pauseAnimations();
+      }
+    });
+  }, { threshold: .2 });
+  cards.forEach(c => io.observe(c));
+
+  /* Riavvio dell'inchiostratura a ogni passaggio del mouse o focus */
+  function riinchiostra(card){
+    if (ridotto) return;
+    card.classList.remove('animata');
+    void card.offsetWidth;              /* forzo il ricalcolo per reiniziare le animazioni */
+    card.classList.add('animata');
+  }
+  cards.forEach(c => {
+    c.addEventListener('mouseenter', () => riinchiostra(c));
+    c.addEventListener('focus', () => riinchiostra(c));
+  });
+
+  /* Tav. II: retta tangente che percorre la curva (pendenza calcolata in tempo reale) */
+  const curva = document.getElementById('curva-analisi');
+  if (curva){
+    const L = curva.getTotalLength();
+    const tang = document.getElementById('tangente');
+    const punto = document.getElementById('punto-tangente');
+    const etich = document.getElementById('etichetta-tangente');
+    const R = 54;
+
+    function disegna(t){
+      const p = curva.getPointAtLength(t * L);
+      const q = curva.getPointAtLength(Math.min(L, t * L + 0.75));
+      let dx = q.x - p.x, dy = q.y - p.y;
+      const m = Math.hypot(dx, dy) || 1; dx /= m; dy /= m;
+      tang.setAttribute('x1', (p.x - dx * R).toFixed(1));
+      tang.setAttribute('y1', (p.y - dy * R).toFixed(1));
+      tang.setAttribute('x2', (p.x + dx * R).toFixed(1));
+      tang.setAttribute('y2', (p.y + dy * R).toFixed(1));
+      punto.setAttribute('cx', p.x.toFixed(1));
+      punto.setAttribute('cy', p.y.toFixed(1));
+      let lx = p.x + 15, ancora = 'start';
+      if (p.x > 232){ lx = p.x - 15; ancora = 'end'; }
+      let ly = p.y - 13;
+      if (ly < 26) ly = p.y + 22;
+      etich.setAttribute('x', lx.toFixed(1));
+      etich.setAttribute('y', ly.toFixed(1));
+      etich.setAttribute('text-anchor', ancora);
+    }
+
+    disegna(0.42);  /* posizione iniziale coerente, prima del movimento */
+
+    if (!ridotto){
+      let fase = Math.PI * 0.25, prima = performance.now();
+      (function muovi(ora){
+        const dt = Math.min(0.05, (ora - prima) / 1000); prima = ora;
+        if (analisiInVista){          /* calcolo solo quando la tavola è visibile */
+          fase += dt * 0.55;
+          disegna(0.5 + 0.5 * Math.sin(fase));
+        }
+        requestAnimationFrame(muovi);
+      })(prima);
+    }
+  }
+
+  /* Se l'utente preferisce meno movimento, fermo anche le orbite SMIL */
+  if (ridotto){
+    document.querySelectorAll('animate, animateMotion, animateTransform')
+            .forEach(a => a.remove());
+  }
+})();
+</script>
 </body>
 </html>
