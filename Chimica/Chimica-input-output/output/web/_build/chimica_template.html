@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chimica Generale — Dispensa Ipermediale</title>
+<meta name="description" content="Dispensa ipermediale completa di Chimica Generale: fondamenti, struttura dell'atomo, legame chimico, gas, forze intermolecolari, soluzioni ed esercizi svolti.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$']],
+    displayMath: [['$$', '$$']],
+    processEscapes: true,
+    packages: { '[+]': ['ams', 'noundefined'] }
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'svg'],
+    scale: 1.02
+  },
+  chtml: { displayAlign: 'center', displayIndent: 0 }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script>
+window.mermaidCfg = {
+  startOnLoad: true,
+  theme: 'base',
+  securityLevel: 'loose',
+  flowchart: { curve: 'basis', htmlLabels: true, padding: 14 },
+  themeVariables: {
+    primaryColor: '#eef2f7', primaryTextColor: '#2e2c28', primaryBorderColor: '#3b5b92',
+    lineColor: '#8a8f98', secondaryColor: '#eef5ef', tertiaryColor: '#f6f2ea',
+    fontFamily: 'Inter, system-ui, sans-serif', fontSize: '14px'
+  }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"
+        onload="mermaid.initialize(window.mermaidCfg)"></script>
+<style>
+:root{
+  --paper:#faf7f1; --paper-2:#f4efe5; --card:#ffffff;
+  --ink:#2e2c28; --ink-soft:#6a6459; --ink-faint:#9a938a;
+  --line:#e4ddcd; --line-soft:#eee8db;
+  --blue:#3b5b92; --blue-soft:#eef2f7;
+  --green:#4a7c59; --green-soft:#eef4ee;
+  --amber:#a86f2d; --amber-soft:#f8f0e2;
+  --red:#a04343; --red-soft:#f7e9e6;
+  --violet:#6b5b95; --violet-soft:#efecf6;
+  --teal:#2e7d84; --teal-soft:#e8f3f3;
+  --gray-soft:#f1efe9;
+  --header-h:60px;
+  --sidebar-w:308px;
+  --content-w:880px;
+  --shadow:0 1px 2px rgba(46,44,40,.05), 0 8px 28px rgba(46,44,40,.07);
+  --radius:12px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+[id]{scroll-margin-top:calc(var(--header-h) + 28px)}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:'Lora',Georgia,serif; font-size:17.5px; line-height:1.72;
+  -webkit-font-optical-sizing:auto;
+}
+::selection{background:#e3d9c2}
+
+/* ---------- barra di avanzamento ---------- */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:120;
+  background:linear-gradient(90deg,var(--blue),var(--teal),var(--green));
+  transition:width .12s linear;border-radius:0 2px 2px 0}
+
+/* ---------- topbar ---------- */
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:110;
+  display:flex;align-items:center;gap:14px;padding:0 18px;
+  background:rgba(250,247,241,.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line-soft)}
+.topbar .tb-title{font-family:'Inter',sans-serif;font-size:15px;font-weight:600;letter-spacing:.01em;
+  color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .tb-title small{color:var(--ink-soft);font-weight:500}
+.iconbtn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;
+  border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);
+  cursor:pointer;flex:none}
+.iconbtn:hover{background:var(--paper-2)}
+.iconbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#btnPrint{width:auto;padding:0 12px;gap:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--ink-soft)}
+#btnPrint:hover{color:var(--ink)}
+
+/* ---------- layout ---------- */
+.layout{display:flex;padding-top:var(--header-h)}
+aside#sidebar{width:var(--sidebar-w);flex:none;position:sticky;top:var(--header-h);
+  height:calc(100vh - var(--header-h));overflow-y:auto;padding:18px 14px 40px 16px;
+  border-right:1px solid var(--line-soft);background:linear-gradient(180deg,#fbf9f4,#f6f2e9);
+  scrollbar-width:thin;scrollbar-color:#cfc7b5 transparent}
+main{flex:1;min-width:0;display:flex;justify-content:center;padding:34px 40px 90px}
+.content{width:100%;max-width:var(--content-w)}
+
+/* ---------- hero ---------- */
+.hero{padding:34px 8px 8px}
+.hero .kicker{font-family:'Inter',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--blue)}
+.hero h1{font-family:'Lora',serif;font-size:clamp(30px,4.6vw,46px);line-height:1.14;margin:10px 0 12px;font-weight:700}
+.hero .sub{font-size:18px;color:var(--ink-soft);max-width:640px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 8px}
+.chip-meta{font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:var(--ink-soft);
+  background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+
+/* ---------- tipografia contenuto ---------- */
+.parte > .parte-head{margin:54px 0 8px;padding:26px 28px;border-radius:16px;
+  background:linear-gradient(135deg,#eef2f7 0%,#f6f2e9 70%);border:1px solid var(--line-soft)}
+.parte:first-of-type > .parte-head{margin-top:0}
+.parte-kicker{font-family:'Inter',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.parte-head h1{font-family:'Lora',serif;font-size:clamp(24px,3.2vw,34px);margin:0;line-height:1.2}
+h2{font-family:'Lora',serif;font-size:26px;line-height:1.28;margin:44px 0 14px;padding-top:14px;
+  border-top:1px solid var(--line-soft)}
+h2::before{content:"";display:block;width:44px;height:3px;border-radius:2px;background:var(--blue);margin-bottom:14px}
+h3{font-family:'Lora',serif;font-size:20.5px;margin:34px 0 10px;color:#39362f}
+p{margin:0 0 16px}
+strong{font-weight:700;color:#23211d}
+em{font-style:italic}
+code{font-family:'JetBrains Mono',monospace;font-size:.86em;background:var(--paper-2);
+  border:1px solid var(--line-soft);border-radius:6px;padding:1px 6px}
+ul,ol{margin:0 0 16px;padding-left:26px}
+li{margin:5px 0}
+a{color:var(--blue);text-decoration:none;border-bottom:1px solid #c6d0e2}
+a:hover{border-bottom-color:var(--blue)}
+.partlink strong{border-bottom:none}
+.partlink{display:inline-block}
+.caption{font-size:15px;color:var(--ink-soft);font-style:italic;margin:-6px 4px 22px;line-height:1.55}
+.caption.reveal{opacity:1;transform:none}
+.p-ex{border-left:3px solid var(--teal);padding:6px 0 6px 16px}
+.p-obs{border-left:3px solid var(--amber);padding:6px 0 6px 16px}
+.p-warn{border-left:3px solid var(--red);padding:6px 0 6px 16px}
+
+/* ---------- box ---------- */
+.box{border-radius:var(--radius);padding:16px 20px 14px;margin:20px 0;border:1px solid var(--line-soft);
+  position:relative;box-shadow:0 1px 2px rgba(46,44,40,.04)}
+.box .box-title{display:flex;align-items:center;gap:9px;margin-bottom:8px;font-family:'Inter',sans-serif}
+.box .bicon{width:17px;height:17px;flex:none}
+.box .chip{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 9px;border-radius:999px}
+.box .btitle{font-size:14px;font-weight:600;color:var(--ink-soft)}
+.box p:last-child,.box ul:last-child,.box ol:last-child,.box .mathdisp:last-child{margin-bottom:2px}
+.box .mathdisp{margin:10px 0}
+.box-def{background:var(--blue-soft);border-left:4px solid var(--blue)}
+.box-def .chip{background:var(--blue);color:#fff}
+.box-def .bicon{color:var(--blue)}
+.box-thm{background:var(--violet-soft);border-left:4px solid var(--violet)}
+.box-thm .chip{background:var(--violet);color:#fff}
+.box-thm .bicon{color:var(--violet)}
+.box-ex{background:var(--teal-soft);border-left:4px solid var(--teal)}
+.box-ex .chip{background:var(--teal);color:#fff}
+.box-ex .bicon{color:var(--teal)}
+.box-counterex{background:var(--red-soft);border-left:4px solid var(--red)}
+.box-counterex .chip{background:var(--red);color:#fff}
+.box-counterex .bicon{color:var(--red)}
+.box-obs{background:var(--amber-soft);border-left:4px solid var(--amber)}
+.box-obs .chip{background:var(--amber);color:#fff}
+.box-obs .bicon{color:var(--amber)}
+.box-warn{background:var(--red-soft);border-left:4px solid var(--red)}
+.box-warn .chip{background:var(--red);color:#fff}
+.box-warn .bicon{color:var(--red)}
+.box-tip{background:var(--green-soft);border-left:4px solid var(--green)}
+.box-tip .chip{background:var(--green);color:#fff}
+.box-tip .bicon{color:var(--green)}
+.box-note{background:var(--gray-soft);border-left:4px solid #8d8677}
+.box-note .chip{background:#8d8677;color:#fff}
+.box-note .bicon{color:#8d8677}
+.box-exercise{background:#fdfbf6;border:1px dashed #c9c0ab;border-left:4px solid var(--amber)}
+.box-exercise .chip{background:var(--amber);color:#fff}
+.box-exercise .bicon{color:var(--amber)}
+
+/* badge [da verificare] */
+.verify{display:inline;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#8a5a13;
+  background:#fdf3e0;border:1px solid #ecd9b4;border-radius:6px;padding:1px 7px;white-space:normal}
+
+/* ---------- formule ---------- */
+.mathdisp{margin:20px 0;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+mjx-container[display="true"]{margin:0 !important;max-width:100%;overflow-x:auto;overflow-y:hidden;padding:1px 0}
+.box mjx-container[display="true"]{margin:6px 0 !important}
+p:has(mjx-container),li:has(mjx-container){overflow-x:auto;overflow-y:hidden}
+
+/* ---------- tabelle ---------- */
+.table-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--card);box-shadow:0 1px 2px rgba(46,44,40,.04)}
+table{border-collapse:collapse;width:100%;font-size:15px;font-family:'Inter',sans-serif}
+thead th{background:#efe9db;color:#39362f;font-weight:600;text-align:left;
+  padding:9px 13px;border-bottom:2px solid var(--line);white-space:nowrap}
+tbody td{padding:8px 13px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+tbody tr:nth-child(even){background:#faf7f0}
+tbody tr:last-child td{border-bottom:none}
+
+/* ---------- figure ---------- */
+.figure{margin:24px 0;padding:16px 16px 10px;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;box-shadow:var(--shadow);text-align:center}
+.figure svg{width:100%;height:auto;max-width:760px;display:block;margin:0 auto}
+.figure .ascii{margin:0;text-align:left}
+pre.ascii{font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.55;color:var(--ink);
+  background:var(--paper-2);border:1px solid var(--line-soft);border-radius:10px;padding:14px 18px;overflow-x:auto}
+.mermaid{display:flex;justify-content:center}
+.mermaid svg{max-width:100%}
+
+/* ---------- soluzioni collassabili ---------- */
+details.sol{margin:8px 0 20px;border:1px solid var(--line);border-radius:var(--radius);background:#fdfcf9;overflow:hidden}
+details.sol > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;
+  padding:11px 16px;font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;color:var(--teal);
+  background:var(--teal-soft);user-select:none}
+details.sol > summary::-webkit-details-marker{display:none}
+details.sol > summary::before{content:"▸";transition:transform .2s;display:inline-block}
+details.sol[open] > summary::before{transform:rotate(90deg)}
+details.sol > :not(summary){padding:2px 18px}
+details.sol > p:first-of-type{margin-top:12px}
+
+/* ---------- indice laterale ---------- */
+.toc-filter{margin:2px 4px 12px}
+.toc-filter input{width:100%;font-family:'Inter',sans-serif;font-size:13px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:9px;background:var(--card);color:var(--ink);outline:none}
+.toc-filter input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,91,146,.12)}
+.toc-home{display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-soft);margin:0 6px 10px;border-bottom:none}
+.toc-home:hover{color:var(--blue)}
+.toc-group{border:1px solid transparent;border-radius:10px;margin-bottom:4px}
+.toc-group > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;
+  padding:8px 10px;border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;
+  color:var(--ink);user-select:none;line-height:1.35}
+.toc-group > summary::-webkit-details-marker{display:none}
+.toc-group > summary .chev{margin-left:auto;font-size:10px;color:var(--ink-faint);transition:transform .18s}
+.toc-group[open] > summary .chev{transform:rotate(180deg)}
+.toc-group > summary:hover{background:var(--paper-2)}
+.toc-children{padding:2px 6px 8px 8px}
+.toc-children a{display:block;font-family:'Inter',sans-serif;font-size:12.6px;line-height:1.4;
+  color:var(--ink-soft);padding:5px 9px;border-radius:7px;border-bottom:none;margin:1px 0}
+.toc-children a:hover{background:var(--blue-soft);color:var(--ink)}
+.toc-h2{font-weight:600}
+.toc-h3{padding-left:22px;font-weight:400;font-size:12.2px}
+.toc-children a.active{background:var(--blue);color:#fff;font-weight:600}
+.toc-children a.active:hover{color:#fff}
+.toc-group.hidden{display:none}
+.toc-children a.hidden{display:none}
+
+/* ---------- tooltip ---------- */
+.tip{position:relative;border-bottom:1px dotted var(--blue);cursor:help}
+.tip::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%);
+  width:max-content;max-width:300px;background:#2e2c28;color:#f6f2e9;font-family:'Inter',sans-serif;
+  font-size:12.5px;line-height:1.5;font-weight:400;text-align:left;padding:9px 12px;border-radius:9px;
+  opacity:0;pointer-events:none;transition:opacity .18s;z-index:200;white-space:normal;
+  box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.tip:hover::after{opacity:1}
+@media (max-width:720px){.tip::after{left:0;transform:none}}
+
+/* ---------- torna su ---------- */
+#toTop{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border-radius:50%;
+  border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;z-index:105;
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);
+  opacity:0;pointer-events:none;transition:opacity .25s, transform .25s;transform:translateY(8px)}
+#toTop.show{opacity:1;pointer-events:auto;transform:none}
+#toTop svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#toTop:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* ---------- drawer mobile ---------- */
+.backdrop{position:fixed;inset:0;background:rgba(30,28,24,.35);z-index:112;opacity:0;pointer-events:none;transition:opacity .22s}
+@media (max-width:1080px){
+  aside#sidebar{position:fixed;left:0;top:var(--header-h);z-index:115;transform:translateX(-102%);
+    transition:transform .26s ease;box-shadow:8px 0 30px rgba(46,44,40,.12);width:min(88vw,340px)}
+  aside#sidebar.open{transform:none}
+  .backdrop.show{opacity:1;pointer-events:auto}
+  main{padding:24px 18px 70px}
+  .content{max-width:none}
+  #btnMenu{display:inline-flex}
+  h2{font-size:23px}
+}
+@media (min-width:1081px){#btnMenu{display:none}}
+@media (max-width:640px){
+  body{font-size:16.5px}
+  .topbar .tb-title small{display:none}
+  .parte > .parte-head{padding:20px 18px}
+}
+
+/* ---------- animazioni ---------- */
+.reveal,.reveal-p,.reveal-h{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease}
+.reveal.in,.reveal-p.in,.reveal-h.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal,.reveal-p,.reveal-h{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- stampa ---------- */
+@media print{
+  .topbar,aside#sidebar,#toTop,#progress,.backdrop{display:none !important}
+  body{background:#fff;font-size:11.5pt}
+  .layout{padding-top:0}
+  .figure,.box,.table-wrap{box-shadow:none;break-inside:avoid}
+  details.sol{break-inside:avoid}
+  details.sol:not([open]) > *:not(summary){display:block}
+  .parte > .parte-head{background:none;border:none;padding-left:0}
+}
+</style>
+</head>
+<body id="top">
+<div id="progress" role="presentation"></div>
+
+<header class="topbar">
+  <button id="btnMenu" class="iconbtn" aria-label="Apri indice" title="Indice">
+    <svg viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+  </button>
+  <div class="tb-title">Chimica Generale <small>· dispensa ipermediale — Ingegneria Biomedica, UniFi</small></div>
+  <button id="btnPrint" class="iconbtn" style="margin-left:auto" title="Stampa o salva come PDF">
+    <svg viewBox="0 0 24 24"><path d="M7 8V4h10v4M6 16H4V9h16v7h-2"/><rect x="7" y="13" width="10" height="7"/></svg>
+    Stampa
+  </button>
+</header>
+
+<div class="backdrop" id="backdrop"></div>
+
+<div class="layout">
+  <aside id="sidebar">
+__TOC__
+  </aside>
+  <main>
+    <div class="content">
+      <header class="hero">
+        <div class="kicker">Corso di Chimica Generale · Ingegneria Biomedica · Università degli Studi di Firenze</div>
+        <h1>Chimica — Dispensa Definitiva</h1>
+        <p class="sub">Tutto il corso in un'unica pagina: dalle leggi ponderali alla struttura quantistica dell'atomo, dal legame chimico ai gas, dalle forze intermolecolari alle soluzioni, con esercizi svolti e il metodo della docente.</p>
+        <div class="chips">
+          <span class="chip-meta">__NPARTI__ parti</span>
+          <span class="chip-meta">__NSEC__ sezioni</span>
+          <span class="chip-meta">__NFIG__ figure e diagrammi</span>
+          <span class="chip-meta">__NES__ box didattici</span>
+          <span class="chip-meta">formule in MathJax</span>
+        </div>
+      </header>
+__CONTENT__
+      <footer style="margin-top:70px;padding-top:24px;border-top:1px solid var(--line-soft);color:var(--ink-soft);font-size:14.5px">
+        Dispensa ipermediale generata dalla dispensa definitiva del corso — fonti: lezioni, appunti d'insegnante, appunti di studente, libro di testo ed eserciziario. I punti incerti sono segnalati con l'etichetta <span class="verify">&#9883; da verificare</span>.
+      </footer>
+    </div>
+  </main>
+</div>
+
+<button id="toTop" aria-label="Torna su" title="Torna su">
+  <svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
+
+<script>
+/* ============ drawer mobile ============ */
+const sidebar = document.getElementById('sidebar');
+const backdrop = document.getElementById('backdrop');
+const btnMenu = document.getElementById('btnMenu');
+function openDrawer(open){
+  sidebar.classList.toggle('open', open);
+  backdrop.classList.toggle('show', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+btnMenu.addEventListener('click', () => openDrawer(!sidebar.classList.contains('open')));
+backdrop.addEventListener('click', () => openDrawer(false));
+document.addEventListener('keydown', e => { if(e.key === 'Escape') openDrawer(false); });
+sidebar.addEventListener('click', e => {
+  if(e.target.closest('a') && window.innerWidth <= 1080) openDrawer(false);
+});
+function smoothTo(y){
+  y = Math.max(0, y);
+  window.scrollTo({top: y, behavior: 'smooth'});
+  setTimeout(() => {          // garanzia di arrivo se lo scroll morbido è bloccato dal browser
+    if(Math.abs(window.scrollY - y) > 60) window.scrollTo({top: y, behavior: 'instant'});
+  }, 700);
+}
+document.querySelectorAll('.toc-children a[data-target]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const el = document.getElementById(a.dataset.target);
+    openDrawer(false);                       // sblocca lo scroll del body prima di navigare
+    if(el) smoothTo(el.getBoundingClientRect().top + window.scrollY - 76);
+    history.replaceState(null, '', '#' + a.dataset.target);
+  });
+});
+
+/* ============ stampa ============ */
+document.getElementById('btnPrint').addEventListener('click', () => {
+  document.querySelectorAll('details.sol').forEach(d => d.open = true);
+  document.querySelectorAll('details.toc-group').forEach(d => d.open = true);
+  setTimeout(() => window.print(), 150);
+});
+
+/* ============ barra di avanzamento + torna su ============ */
+const prog = document.getElementById('progress');
+const toTop = document.getElementById('toTop');
+let ticking = false;
+function onScroll(){
+  if(ticking) return; ticking = true;
+  requestAnimationFrame(() => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    toTop.classList.toggle('show', h.scrollTop > 700);
+    ticking = false;
+  });
+}
+document.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+toTop.addEventListener('click', () => smoothTo(0));
+
+/* ============ apparizione morbida ============ */
+const revealIO = new IntersectionObserver(entries => {
+  entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('in'); revealIO.unobserve(en.target); } });
+}, {rootMargin:'0px 0px -6% 0px', threshold:0.04});
+document.querySelectorAll('.reveal,.reveal-p,.reveal-h').forEach(el => revealIO.observe(el));
+
+/* ============ scroll-spy ============ */
+const navLinks = new Map();
+document.querySelectorAll('.toc-children a[data-target]').forEach(a => navLinks.set(a.dataset.target, a));
+const heads = [...document.querySelectorAll('main h2[id], main h3[id]')];
+function setActive(id){
+  navLinks.forEach(a => a.classList.remove('active'));
+  const link = navLinks.get(id);
+  if(link){
+    link.classList.add('active');
+    const group = link.closest('details.toc-group');
+    if(group) group.open = true;
+    if(window.innerWidth > 1080 && sidebar.contains(link)){
+      const r = link.getBoundingClientRect(), s = sidebar.getBoundingClientRect();
+      if(r.top < s.top + 60 || r.bottom > s.bottom - 60)
+        sidebar.scrollTop += r.top - s.top - 90;
+    }
+  }
+}
+let spyTick = false;
+function spy(){
+  const line = 118;
+  let cur = heads[0];
+  for(const h of heads){
+    if(h.getBoundingClientRect().top <= line) cur = h; else break;
+  }
+  if(cur) setActive(cur.id);
+  spyTick = false;
+}
+addEventListener('scroll', () => {
+  if(!spyTick){ spyTick = true; requestAnimationFrame(spy); }
+}, {passive:true});
+spy();
+
+/* ============ filtro indice ============ */
+const filter = document.getElementById('tocFilter');
+filter.addEventListener('input', () => {
+  const q = filter.value.trim().toLowerCase();
+  document.querySelectorAll('.toc-group').forEach(g => {
+    let any = false;
+    g.querySelectorAll('.toc-children a').forEach(a => {
+      const hit = !q || a.textContent.toLowerCase().includes(q);
+      a.classList.toggle('hidden', !hit);
+      if(hit) any = true;
+    });
+    const selfHit = !q || g.querySelector('summary .tg-title').textContent.toLowerCase().includes(q);
+    g.classList.toggle('hidden', !(any || selfHit));
+    if(q && (any || selfHit)) g.open = true;
+    if(!q) g.open = false;
+  });
+});
+
+/* ============ tooltip sui termini ============ */
+const GLOSS = {
+  'polarizzabilità': 'Facilità con cui la nuvola elettronica si deforma in un campo elettrico (μ = αE): cresce con le dimensioni dell’atomo.',
+  'effetto schermo': 'Riduzione della carica nucleare percepita da un elettrone per via degli elettroni più interni: Z_eff = Z − S.',
+  'carica nucleare efficace': 'Carica netta che l’elettrone esterno “sente”: Z_eff = Z − S; è il motore degli andamenti periodici.',
+  'energia di ionizzazione': 'Energia minima per strappare una mole di elettroni a una mole di atomi gassosi isolati.',
+  'affinità elettronica': 'Energia sviluppata aggiungendo un elettrone a un atomo gassoso isolato (1° ordine < 0: esotermica).',
+  'elettronegatività': 'Tendenza di un atomo legato ad attrarre gli elettroni di legame (scala di Pauling: F = 4,0).',
+  'numero di Avogadro': 'N_A = 6,022·10²³ particelle per mole: ponte tra scala atomica e macroscopica.',
+  'difetto di massa': 'Differenza tra massa dei nucleoni isolati e massa del nucleo: si converte in energia di legame (E = Δmc²).',
+  'tempo di dimezzamento': 'Tempo in cui decade metà dei nuclei di un campione radioattivo; caratteristico di ogni nuclide.',
+  'orbitale atomico': 'Funzione d’onda soluzione dell’equazione di Schrödinger: |ψ|² dà la probabilità di trovare l’elettrone.',
+  'ibridazione': 'Mescolamento di orbitali atomici dello stesso atomo: N orbitali danno N ibridi (sp, sp², sp³).',
+  'risonanza': 'Descrizione di una struttura reale come media di formule limite: i legami sono equivalenti e delocalizzati.',
+  'tensione di vapore': 'Pressione della fase gassosa all’equilibrio con il proprio liquido; cresce con la temperatura.',
+  'legame a idrogeno': 'Interazione elettrostatica direzionale tra H legato a F/O/N e un atomo elettronegativo (5–25 kJ/mol).',
+  'forze di London': 'Attrazioni tra dipoli istantanei indotti: crescono con la polarizzabilità e col peso molecolare.',
+  'pressione parziale': 'Pressione che un gas eserciterebbe occupando da solo tutto il volume: P_i = x_i · P_tot.',
+  'frazione molare': 'x_i = n_i / n_tot: frazione di moli di una specie in miscela (somma = 1).',
+  'effusione': 'Passaggio di un gas nel vuoto attraverso un piccolo foro: velocità ∝ 1/√M (legge di Graham).',
+  'molarità': 'Moli di soluto per litro di soluzione (mol/L); dipende dalla temperatura.',
+  'molalità': 'Moli di soluto per chilogrammo di solvente; indipendente dalla temperatura.',
+  'covolume': 'Termine nb di van der Waals: volume proprio delle molecole di un gas reale.',
+  'pressione interna': 'Termine a·n²/V² di van der Waals: correzione delle attrazioni intermolecolari sulla pressione.',
+  'numero sterico': 'Numero di sfere elettroniche (legami σ + coppie solitarie) attorno all’atomo centrale nel VSEPR.',
+  'legge di Henry': 'La solubilità di un gas in un liquido è proporzionale alla sua pressione parziale.',
+  'solvatazione': 'Circondamento di ioni o molecole di soluto da parte del solvente (idratazione, se il solvente è acqua).',
+  'paramagnetismo': 'Attrazione debole in un campo magnetico dovuta a elettroni spaiati (es. O₂).'
+};
+(function(){
+  const skip = 'svg,pre,code,.chip,.btitle,a,summary,script,style,.mermaid,.verify,mjx-container';
+  const walker = document.createTreeWalker(document.querySelector('main'), NodeFilter.SHOW_TEXT, {
+    acceptNode(node){
+      if(!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      if(node.parentElement.closest(skip)) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes = []; while(walker.nextNode()) nodes.push(walker.currentNode);
+  for(const [term, tip] of Object.entries(GLOSS)){
+    const re = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'i');
+    for(const node of nodes){
+      const m = re.exec(node.nodeValue);
+      if(!m) continue;
+      const idx = m.index, after = node.splitText(idx + term.length);
+      const matchNode = node.splitText(idx);
+      const span = document.createElement('span');
+      span.className = 'tip'; span.dataset.tip = tip;
+      matchNode.parentNode.replaceChild(span, matchNode);
+      span.appendChild(matchNode);
+      break;
+    }
+  }
+})();
+</script>
+</body>
+</html>
