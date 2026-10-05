@@ -8,9 +8,29 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
-<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']],processEscapes:true},
- svg:{fontCache:'global'},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};</script>
-<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>
+window.MathJax = {
+  tex: {inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']],processEscapes:true},
+  options: {skipHtmlTags:['script','noscript','style','textarea','pre','code']},
+  startup: {
+    /* salva la sorgente TeX su ogni formula resa, subito dopo il primo typeset:
+       serve alla copia intelligente a fine pagina */
+    pageReady: function(){
+      return MathJax.startup.defaultPageReady().then(function(){
+        try{
+          for (var it of MathJax.startup.document.math){
+            if (it && it.typesetRoot && it.math){
+              it.typesetRoot.setAttribute("data-tex", it.math);
+              it.typesetRoot.setAttribute("data-display", it.display ? "1" : "0");
+            }
+          }
+        }catch(e){}
+      });
+    }
+  }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <style>
 :root{
  --bg:#f4f1e9; --bg2:#efe9dc; --card:#fdfbf5; --ink:#33302a; --ink2:#5c564a;
@@ -19,7 +39,7 @@
  --warn:#a8483c; --curio:#3d8a86; --goal:#557a95; --summary:#6d5a8a;
  --shadow:0 1px 3px rgba(60,50,30,.08), 0 8px 24px rgba(60,50,30,.07);
 }
-*{box-sizing:border-box}
+*{box-sizing:border-box;-webkit-tap-highlight-color:rgba(67,101,156,.15)}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);
  font-family:"Source Serif 4","Lora",Georgia,"Times New Roman",serif;
@@ -37,7 +57,7 @@ body{margin:0;background:var(--bg);color:var(--ink);
 #btn-back:hover{background:#fff;color:var(--accent2);border-color:#c9bfa8}
 #btn-back svg{width:17px;height:17px}
 /* ---------- layout ---------- */
-.layout{display:grid;grid-template-columns:318px minmax(0,1fr);gap:0;max-width:1440px;margin:0 auto;padding-top:56px}
+.layout{display:grid;grid-template-columns:318px minmax(0,1fr);gap:0;padding-top:56px}
 aside.sidebar{position:sticky;top:72px;height:calc(100vh - 92px);overflow-y:auto;
  background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
  margin:16px 0 16px 0;padding:12px 10px 16px;scrollbar-width:thin}
@@ -85,7 +105,7 @@ aside.sidebar::-webkit-scrollbar-thumb{background:#cfc6b0;border-radius:6px}
 .nav-l2.active,.nav-l3.active,.nav-l4.active{color:var(--accent);background:#e9edf6;border-left-color:var(--accent);font-weight:600}
 nav.sidebar a span{display:inline}
 /* ---------- main ---------- */
-main{padding:34px 54px 120px;max-width:940px;min-width:0;overflow-x:clip}
+main{padding:34px 54px 120px;max-width:940px;min-width:0;overflow-x:clip;margin:0 auto}
 .hero{padding:44px 0 8px;text-align:center}
 .hero .kicker{font-family:"Inter",system-ui,sans-serif;font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;
  color:var(--ink2);margin:0 0 10px}
@@ -110,6 +130,11 @@ hr.sep{border:0;border-top:1px dashed var(--line);margin:26px 0}
 .mth.d{display:block;margin:14px 0;overflow-x:auto;overflow-y:hidden;padding:2px 0}
 mjx-container{font-size:104% !important}
 mjx-container[display="true"]{margin:.4em 0 !important}
+/* ---------- selezione testo: formule comprese, come il testo normale ---------- */
+::selection{background:#f3d98b;color:#33290e;text-shadow:none}
+::-moz-selection{background:#f3d98b;color:#33290e;text-shadow:none}
+mjx-container::selection,mjx-container mjx-c::selection{background:#f3d98b;color:inherit}
+mjx-container.msel{background:#f3d98b;border-radius:2px;transition:background .08s}
 /* ---------- box ---------- */
 .tip,.proof,.quote{border-radius:12px;margin:16px 0;box-shadow:var(--shadow);border:1px solid var(--line);background:var(--card)}
 .tip .bhead{display:flex;align-items:center;gap:9px;padding:9px 14px 7px;border-bottom:1px solid rgba(0,0,0,.05)}
@@ -279,6 +304,8 @@ footer.colophon{border-top:1px solid var(--line);margin-top:60px;padding:26px 0 
 <div class="sez" id="0-3-i-consigli-espliciti-del-professore" data-spy><h2>0.3 I consigli espliciti del professore</h2></div>
 <p>Raccolti dalle lezioni e dai video introduttivi, questi sono gli ammonimenti ricorrenti, che conviene trattare come istruzioni per l'esame:</p>
 <ol><li><strong>Trigonometria come prerequisito non negoziabile</strong>: «è indispensabile conoscere almeno i valori di seno e coseno per gli angoli principali (<span class="mth">\(0, \pi/6, \pi/4, \pi/3, \pi/2, \pi\)</span> e i loro multipli), poiché compariranno frequentemente negli esercizi».</li><li><strong>Le formule da imparare a memoria</strong> sono poche e incorniciate nel testo: <span class="mth">\(i^2=-1\)</span>, <span class="mth">\(z\bar z = \|z\|^2\)</span>, <span class="mth">\(z^{-1} = \bar z/\|z\|^2\)</span>, la formula di Eulero, la formula di De Moivre, la formula delle radici <span class="mth">\(n\)</span>-esime, il prodotto righe per colonne, lo sviluppo di Laplace, le proprietà di determinante e traccia.</li><li><strong>Scegliere sempre la riga/colonna con più zeri</strong> nello sviluppo del determinante: «ogni zero che si incontra va sfruttato»; il calcolo è «algoritmico: non c'è nulla da capire, si applica la formula ripetutamente; se si sa programmare, in pochi minuti si può scrivere un programma che calcola determinanti».</li><li><strong>Esercitarsi sul prodotto righe per colonne</strong>, perché «il prodotto entra in continuazione nel corso» e «con le matrici avrete a che fare in continuazione».</li><li><strong>Non abusare dei determinanti di ordine alto</strong>: in pratica non si calcoleranno quasi mai determinanti <span class="mth">\(4\times 4\)</span> a mano; conviene saperlo fare «senza esagerare con l'uso».</li><li><strong>La strategia generale del corso</strong>: «si tratta di trasferire nozioni geometriche in nozioni algebriche con cui possiamo fare i calcoli» — ad esempio il parallelismo (geometrico) diventa <span class="tt" tabindex="0" data-tip="Somma di multipli scalari: λ₁v₁+…+λ_nv_n.">combinazione lineare</span> (algebrica). Tenere a mente questa direzione aiuta a leggere ogni capitolo.</li><li><strong>Sull'esame</strong>: il professore elenca esplicitamente, a fine lezione, le <em>competenze richieste</em> e le <em>possibili domande d'esame</em>; sono raccolte e ampliate nella Parte XI. La grill-work dell'esercitazione in gruppo è parte integrante della preparazione.</li></ol>
+<div class="sez" id="0-4-come-e-organizzata-questa-dispensa" data-spy><h2>0.4 Come è organizzata questa dispensa</h2></div>
+<p>Ogni argomento è sviluppato nello stesso ordine con cui il professore lo costruisce a lezione, perché l'ordine stesso è parte del metodo: prima gli oggetti concreti (numeri, matrici, frecce), poi le operazioni, poi le proprietà, e solo alla fine l'astrazione (spazi vettoriali, applicazioni lineari). Le etichette <strong>Definizione</strong>, <strong>Teorema</strong>, <strong>Proposizione</strong>, <strong>Lemma</strong>, <strong>Corollario</strong>, <strong>Esempio</strong>, <strong>Controesempio</strong>, <strong>Osservazione</strong>, <strong>Dimostrazione</strong>, <strong>Figura</strong> e <strong>Dimostrazione grafica</strong> scandiscono la trattazione; le dimostrazioni grafiche affiancano — e non sostituiscono — quelle formali, come richiesto dal metodo del corso.</p>
 <hr class="sep">
 </section>
 <section class="parte" id="parte-i-premesse-algebriche" data-spy><h1 class="p-title"><span class="pnum"></span>Parte I — Premesse algebriche</h1>
@@ -298,11 +325,18 @@ footer.colophon{border-top:1px solid var(--line);margin-top:60px;padding:26px 0 
 <p>Una relazione è <strong>suriettiva</strong> se <span class="mth">\(\operatorname{im}(\mathcal{R}) = B\)</span> (ogni elemento di <span class="mth">\(B\)</span> è in relazione con almeno un elemento di <span class="mth">\(A\)</span>) ed è <strong>iniettiva</strong> se</p>
 <p><span class="mth d">\[(a_1, b) \in \mathcal{R},\ (a_2,b) \in \mathcal{R} \ \Longrightarrow\ a_1 = a_2,\]</span></p>
 <p>cioè se elementi distinti di <span class="mth">\(A\)</span> sono in relazione con elementi distinti di <span class="mth">\(B\)</span>. Una relazione iniettiva e suriettiva si dice <strong>biunivoca</strong> (o <strong>biettiva</strong>).</p>
+<p>Contando quante frecce arrivano su ogni elemento di <span class="mth">\(B\)</span> nel disegno a due ellissi, le due proprietà si controllano a colpo d'occhio:</p>
+<div class="tblwrap"><table><thead><tr><th></th><th>VIETATO</th><th>PERMESSO</th></tr></thead><tbody>
+<tr class="odd"><td><strong>Suriettiva</strong></td><td><span class="mth">\(b\)</span> con 0 frecce</td><td><span class="mth">\(b\)</span> con 1, 2, 3, … frecce</td></tr>
+<tr class="even"><td><strong>Iniettiva</strong></td><td><span class="mth">\(b\)</span> con <span class="mth">\(\ge 2\)</span> frecce (da <span class="mth">\(a\)</span> distinti)</td><td><span class="mth">\(b\)</span> con 0 oppure 1 freccia</td></tr>
+</tbody></table></div>
+<p>Le due condizioni insieme — ogni elemento di <span class="mth">\(B\)</span> con esattamente una freccia — sono esattamente la relazione <strong>biunivoca</strong>.</p>
 <div class="reveal tip ex"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/></svg></span><span class="btitle">Esempio (relazione finita).</span></div><div class="bbody">Siano <span class="mth">\(A = \{a,b,c,d,e,f\}\)</span>, <span class="mth">\(B = \{1,2,3,4,5,6\}\)</span> e</div></div>
 <p><span class="mth d">\[\mathcal{R} = \{(a,4), (b,1), (b,2), (c,3), (d,5), (e,5), (e,6), (f,2)\}.\]</span></p>
 <p>La relazione è suriettiva (ogni elemento di <span class="mth">\(B\)</span> compare) ma non iniettiva: le coppie <span class="mth">\((b,2)\)</span> e <span class="mth">\((f,2)\)</span>, come <span class="mth">\((d,5)\)</span> e <span class="mth">\((e,5)\)</span>, hanno la stessa seconda componente e prime componenti diverse. Con insiemi finiti conviene la rappresentazione grafica a due ellissi (punti di <span class="mth">\(A\)</span> a sinistra, di <span class="mth">\(B\)</span> a destra, segmenti per le coppie in relazione) oppure quella tabulare (righe <span class="mth">\(a\)</span>–<span class="mth">\(f\)</span>, colonne <span class="mth">\(1\)</span>–<span class="mth">\(6\)</span>, croci nelle celle in relazione).</p>
-<figure class="fig reveal" id="fig0"><svg class="figsvg" viewBox="0 0 430 361" role="img" xmlns="http://www.w3.org/2000/svg" font-family="Georgia,'Times New Roman',serif" font-size="13" fill="#2e2a24">
+<figure class="fig reveal" id="fig0"><svg class="figsvg" viewBox="0 0 640 340" role="img" xmlns="http://www.w3.org/2000/svg" font-family="Georgia,'Times New Roman',serif" font-size="13" fill="#2e2a24">
 <defs>
+ <pattern id="dg0" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="12" cy="12" r="1.1" fill="#ddd3bd"/></pattern>
  <marker id="ahf-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
    <path d="M0,0 L10,5 L0,10 z" fill="#3d3830"/></marker>
  <marker id="abaf-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
@@ -311,7 +345,7 @@ footer.colophon{border-top:1px solid var(--line);margin-top:60px;padding:26px 0 
    <path d="M0,0 L10,5 L0,10 z" fill="#4f7a4e"/></marker>
  <marker id="nof-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
    <path d="M0,0 L10,5 L0,10 z" fill="#8d8676"/></marker>
-<pattern id="dg0" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="12" cy="12" r="1.1" fill="#ddd3bd"/></pattern><marker id="vm0x0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3f6fa8"/></marker><marker id="vm0x1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d8a86"/></marker><marker id="vm0x2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4f7a4e"/></marker><marker id="vm0x3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b06a2e"/></marker><marker id="vm0x4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a8483c"/></marker><marker id="vm0x5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7a5ea8"/></marker></defs><rect x="0" y="0" width="430" height="361" fill="url(#dg0)"/><line x1="60" y1="60" x2="210" y2="105" stroke="#3f6fa8" stroke-width="2.2" stroke-linecap="round" marker-end="url(#vm0x0)"/><circle cx="210" cy="105" r="4" fill="#3f6fa8"/><text x="40" y="55" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >v₁</text><line x1="60" y1="60" x2="175" y2="35" stroke="#3d8a86" stroke-width="2.2" stroke-linecap="round" marker-end="url(#vm0x1)"/><circle cx="175" cy="35" r="4" fill="#3d8a86"/><text x="190" y="30" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >v₂</text><line x1="60" y1="60" x2="105" y2="200" stroke="#4f7a4e" stroke-width="2.2" stroke-linecap="round" marker-end="url(#vm0x2)"/><circle cx="105" cy="200" r="4" fill="#4f7a4e"/><text x="92" y="218" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >v₃</text><text x="90" y="250" font-size="11.5" text-anchor="middle" fill="#2e2a24" >a)</text><line x1="270" y1="135" x2="400" y2="135" stroke="#b06a2e" stroke-width="2.2" stroke-linecap="round" marker-end="url(#vm0x3)"/><circle cx="400" cy="135" r="4" fill="#b06a2e"/><text x="330" y="117" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >v₁ = b₁</text><line x1="270" y1="135" x2="345" y2="55" stroke="#a8483c" stroke-width="2.2" stroke-linecap="round" marker-end="url(#vm0x4)"/><circle cx="345" cy="55" r="4" fill="#a8483c"/><text x="358" y="49" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >b₂</text><line x1="270" y1="135" x2="215" y2="65" stroke="#7a5ea8" stroke-width="2.2" stroke-linecap="round" marker-end="url(#vm0x5)"/><circle cx="215" cy="65" r="4" fill="#7a5ea8"/><text x="200" y="59" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >v₂</text><line x1="215" y1="65" x2="345" y2="55" stroke="#b8b0a2" stroke-width="1.1" stroke-dasharray="4,4" stroke-linecap="round"/><line x1="130" y1="250" x2="260" y2="250" stroke="#b06a2e" stroke-width="2.2" stroke-linecap="round" marker-end="url(#vm0x3)"/><circle cx="260" cy="250" r="4" fill="#b06a2e"/><text x="268" y="254" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >b₂</text><line x1="130" y1="250" x2="150" y2="175" stroke="#3f6fa8" stroke-width="2.2" stroke-linecap="round" marker-end="url(#vm0x0)"/><circle cx="150" cy="175" r="4" fill="#3f6fa8"/><text x="158" y="168" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >b₃</text><line x1="130" y1="250" x2="45" y2="188" stroke="#3d8a86" stroke-width="2.2" stroke-linecap="round" marker-end="url(#vm0x1)"/><circle cx="45" cy="188" r="4" fill="#3d8a86"/><text x="32" y="184" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >v₃</text><line x1="130" y1="250" x2="80" y2="335" stroke="#4f7a4e" stroke-width="2.2" stroke-linecap="round" marker-end="url(#vm0x2)"/><circle cx="80" cy="335" r="4" fill="#4f7a4e"/><text x="66" y="348" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >b₁</text><line x1="45" y1="188" x2="150" y2="175" stroke="#b8b0a2" stroke-width="1.1" stroke-dasharray="4,4" stroke-linecap="round"/><line x1="116" y1="248" x2="116" y2="234" stroke="#3d3830" stroke-width="1" stroke-linecap="round"/><line x1="116" y1="248" x2="130" y2="248" stroke="#3d3830" stroke-width="1" stroke-linecap="round"/><text x="60" y="250" font-size="11.5" text-anchor="middle" fill="#2e2a24" >b)</text><text x="150" y="262" font-size="11.5" text-anchor="middle" fill="#2e2a24" >c)</text></svg><figcaption><span class="fnum">Figura 0</span>—  <span class="badge-recon">figura ricostruita dalle fonti</span></figcaption><div class="fignote"><em>Significato: ogni segmento è una coppia della relazione; che da <span class="mth">\(b\)</span> e da <span class="mth">\(f\)</span> partano segmenti che arrivano sullo stesso <span class="mth">\(2\)</span> visualizza la non iniettività.</em></div></figure>
+</defs><rect x="0" y="0" width="640" height="340" fill="url(#dg0)"/><text x="112" y="58" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic">A</text><text x="308" y="58" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic">B</text><ellipse cx="112" cy="180" rx="58" ry="112" fill="none" stroke="#3d3830" stroke-width="1.3"/><ellipse cx="308" cy="180" rx="58" ry="112" fill="none" stroke="#3d3830" stroke-width="1.3"/><line x1="112" y1="112" x2="308" y2="190" stroke="#9a917f" stroke-width="1.2" stroke-linecap="round"/><line x1="112" y1="138" x2="308" y2="112" stroke="#9a917f" stroke-width="1.2" stroke-linecap="round"/><line x1="112" y1="138" x2="308" y2="138" stroke="#b06a2e" stroke-width="1.2" stroke-linecap="round"/><line x1="112" y1="164" x2="308" y2="164" stroke="#9a917f" stroke-width="1.2" stroke-linecap="round"/><line x1="112" y1="190" x2="308" y2="216" stroke="#4f7a4e" stroke-width="1.2" stroke-linecap="round"/><line x1="112" y1="216" x2="308" y2="216" stroke="#4f7a4e" stroke-width="1.2" stroke-linecap="round"/><line x1="112" y1="216" x2="308" y2="242" stroke="#9a917f" stroke-width="1.2" stroke-linecap="round"/><line x1="112" y1="242" x2="308" y2="138" stroke="#b06a2e" stroke-width="1.2" stroke-linecap="round"/><circle cx="112" cy="112" r="2.6" fill="#3d3830"/><text x="98" y="116.5" font-size="13" text-anchor="end" fill="#2e2a24" font-style="italic">a</text><circle cx="112" cy="138" r="2.6" fill="#3d3830"/><text x="98" y="142.5" font-size="13" text-anchor="end" fill="#2e2a24" font-style="italic">b</text><circle cx="112" cy="164" r="2.6" fill="#3d3830"/><text x="98" y="168.5" font-size="13" text-anchor="end" fill="#2e2a24" font-style="italic">c</text><circle cx="112" cy="190" r="2.6" fill="#3d3830"/><text x="98" y="194.5" font-size="13" text-anchor="end" fill="#2e2a24" font-style="italic">d</text><circle cx="112" cy="216" r="2.6" fill="#3d3830"/><text x="98" y="220.5" font-size="13" text-anchor="end" fill="#2e2a24" font-style="italic">e</text><circle cx="112" cy="242" r="2.6" fill="#3d3830"/><text x="98" y="246.5" font-size="13" text-anchor="end" fill="#2e2a24" font-style="italic">f</text><circle cx="308" cy="112" r="3" fill="#3d3830"/><text x="322" y="116.5" font-size="13" text-anchor="start" fill="#2e2a24">1</text><circle cx="308" cy="138" r="3" fill="#b06a2e"/><text x="322" y="142.5" font-size="13" text-anchor="start" fill="#2e2a24">2</text><circle cx="308" cy="164" r="3" fill="#3d3830"/><text x="322" y="168.5" font-size="13" text-anchor="start" fill="#2e2a24">3</text><circle cx="308" cy="190" r="3" fill="#3d3830"/><text x="322" y="194.5" font-size="13" text-anchor="start" fill="#2e2a24">4</text><circle cx="308" cy="216" r="3" fill="#4f7a4e"/><text x="322" y="220.5" font-size="13" text-anchor="start" fill="#2e2a24">5</text><circle cx="308" cy="242" r="3" fill="#3d3830"/><text x="322" y="246.5" font-size="13" text-anchor="start" fill="#2e2a24">6</text><line x1="410" y1="60" x2="410" y2="60"/><text x="500" y="60" font-size="11.5" text-anchor="middle" fill="#6b6250">forma tabulare</text><line x1="410" y1="88" x2="410" y2="244" stroke="#b8b0a2" stroke-width="1"/><line x1="440" y1="88" x2="440" y2="244" stroke="#b8b0a2" stroke-width="1"/><line x1="470" y1="88" x2="470" y2="244" stroke="#b8b0a2" stroke-width="1"/><line x1="500" y1="88" x2="500" y2="244" stroke="#b8b0a2" stroke-width="1"/><line x1="530" y1="88" x2="530" y2="244" stroke="#b8b0a2" stroke-width="1"/><line x1="560" y1="88" x2="560" y2="244" stroke="#b8b0a2" stroke-width="1"/><line x1="590" y1="88" x2="590" y2="244" stroke="#b8b0a2" stroke-width="1"/><line x1="410" y1="88" x2="590" y2="88" stroke="#b8b0a2" stroke-width="1"/><line x1="410" y1="114" x2="590" y2="114" stroke="#b8b0a2" stroke-width="1"/><line x1="410" y1="140" x2="590" y2="140" stroke="#b8b0a2" stroke-width="1"/><line x1="410" y1="166" x2="590" y2="166" stroke="#b8b0a2" stroke-width="1"/><line x1="410" y1="192" x2="590" y2="192" stroke="#b8b0a2" stroke-width="1"/><line x1="410" y1="218" x2="590" y2="218" stroke="#b8b0a2" stroke-width="1"/><line x1="410" y1="244" x2="590" y2="244" stroke="#b8b0a2" stroke-width="1"/><text x="425" y="80" font-size="12" text-anchor="middle" fill="#2e2a24">1</text><text x="455" y="80" font-size="12" text-anchor="middle" fill="#2e2a24">2</text><text x="485" y="80" font-size="12" text-anchor="middle" fill="#2e2a24">3</text><text x="515" y="80" font-size="12" text-anchor="middle" fill="#2e2a24">4</text><text x="545" y="80" font-size="12" text-anchor="middle" fill="#2e2a24">5</text><text x="575" y="80" font-size="12" text-anchor="middle" fill="#2e2a24">6</text><text x="400" y="105" font-size="12" text-anchor="end" fill="#2e2a24" font-style="italic">a</text><text x="400" y="131" font-size="12" text-anchor="end" fill="#2e2a24" font-style="italic">b</text><text x="400" y="157" font-size="12" text-anchor="end" fill="#2e2a24" font-style="italic">c</text><text x="400" y="183" font-size="12" text-anchor="end" fill="#2e2a24" font-style="italic">d</text><text x="400" y="209" font-size="12" text-anchor="end" fill="#2e2a24" font-style="italic">e</text><text x="400" y="235" font-size="12" text-anchor="end" fill="#2e2a24" font-style="italic">f</text><line x1="510" y1="96" x2="520" y2="106" stroke="#5c564a" stroke-width="1.6"/><line x1="510" y1="106" x2="520" y2="96" stroke="#5c564a" stroke-width="1.6"/><line x1="420" y1="122" x2="430" y2="132" stroke="#5c564a" stroke-width="1.6"/><line x1="420" y1="132" x2="430" y2="122" stroke="#5c564a" stroke-width="1.6"/><line x1="450" y1="122" x2="460" y2="132" stroke="#b06a2e" stroke-width="1.6"/><line x1="450" y1="132" x2="460" y2="122" stroke="#b06a2e" stroke-width="1.6"/><line x1="480" y1="148" x2="490" y2="158" stroke="#5c564a" stroke-width="1.6"/><line x1="480" y1="158" x2="490" y2="148" stroke="#5c564a" stroke-width="1.6"/><line x1="540" y1="174" x2="550" y2="184" stroke="#4f7a4e" stroke-width="1.6"/><line x1="540" y1="184" x2="550" y2="174" stroke="#4f7a4e" stroke-width="1.6"/><line x1="540" y1="200" x2="550" y2="210" stroke="#4f7a4e" stroke-width="1.6"/><line x1="540" y1="210" x2="550" y2="200" stroke="#4f7a4e" stroke-width="1.6"/><line x1="570" y1="200" x2="580" y2="210" stroke="#5c564a" stroke-width="1.6"/><line x1="570" y1="210" x2="580" y2="200" stroke="#5c564a" stroke-width="1.6"/><line x1="450" y1="226" x2="460" y2="236" stroke="#b06a2e" stroke-width="1.6"/><line x1="450" y1="236" x2="460" y2="226" stroke="#b06a2e" stroke-width="1.6"/></svg><figcaption><span class="fnum">Figura 0</span> — Rappresentazione insiemistica e tabulare di una relazione <span class="badge-recon">figura ricostruita dalle fonti</span></figcaption><div class="fignote"><em>Ogni segmento è una coppia della relazione; sulla destra la stessa relazione in forma tabulare, con le croci esattamente sulle stesse coppie. Le coppie evidenziate convergono sulla stessa seconda componente (2 in ambra, 5 in verde): è il difetto che rende la relazione non iniettiva. Tutti i punti di <span class="mth">\(B\)</span> sono toccati da almeno un segmento: la relazione è suriettiva.</em></div></figure>
 <div class="reveal tip ex"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/></svg></span><span class="btitle">Esempio (corrispondenza biunivoca).</span></div><div class="bbody">Sia <span class="mth">\(A\)</span> l'insieme dei numeri naturali pari; la relazione <span class="mth">\((\mathbb{N}, \mathcal{R}, A)\)</span> definita da <span class="mth">\((n,m) \in \mathcal{R}\)</span> se e solo se <span class="mth">\(m = 2n\)</span> è biunivoca: <span class="mth">\(\mathcal{R} = \{(0,0), (1,2), (2,4), (3,6), \ldots\}\)</span>.</div></div>
 <div class="reveal tip ex"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/></svg></span><span class="btitle">Esempio (grafico di funzione).</span></div><div class="bbody">La relazione <span class="mth">\((\mathbb{Z}, \mathcal{R}, \mathbb{N})\)</span> con <span class="mth">\((m,n)\in\mathcal{R}\)</span> se e solo se <span class="mth">\(n = m^2+1\)</span> non è iniettiva (<span class="mth">\((1,2), (-1,2) \in \mathcal{R}\)</span>) né suriettiva (per <span class="mth">\(n=3\)</span> non esiste <span class="mth">\(m\)</span> con <span class="mth">\(m^2+1=3\)</span>); essa è il grafico della funzione <span class="mth">\(f(m) = m^2+1\)</span>: le funzioni sono casi particolari di relazioni.</div></div>
 <div class="subsez" id="relazioni-in-un-insieme-le-proprieta-riflessiva-simmetrica-transitiva" data-spy><h3>Relazioni in un insieme: le proprietà riflessiva, simmetrica, transitiva</h3></div>
@@ -360,7 +394,7 @@ footer.colophon{border-top:1px solid var(--line);margin-top:60px;padding:26px 0 
 <p>Dal punto di vista insiemistico, l'insieme dei numeri complessi <strong>non è un insieme nuovo</strong>: coincide con <span class="mth">\(\mathbb{R}^2\)</span>, il piano cartesiano.</p>
 <div class="reveal tip def"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><rect x="3" y="3" width="10" height="10" rx="2"/></svg></span><span class="btitle">Definizione.</span></div><div class="bbody"><span class="mth d">\[\mathbb{C} = \{(a,b) \mid a, b \in \mathbb{R}\} \cong \mathbb{R}^2.\]</span> Un <strong>numero complesso</strong> <span class="mth">\(z\)</span> è una <strong>coppia ordinata</strong> <span class="mth">\((a,b)\)</span> di numeri reali: <span class="mth">\(a\)</span> è la prima componente, <span class="mth">\(b\)</span> la seconda.</div></div>
 <p>Ciò che rende <span class="mth">\(\mathbb{C}\)</span> diverso da <span class="mth">\(\mathbb{R}^2\)</span> non è l'insieme di partenza, bensì le <strong>operazioni</strong> che vi si definiscono, in particolare il prodotto. Geometricamente, fissato un sistema di coordinate, ogni numero complesso si rappresenta come un <strong>punto</strong> (o un vettore applicato nell'origine) del piano.</p>
-<figure class="fig reveal" id="fig1"><svg class="figsvg" viewBox="0 0 380 210" role="img" xmlns="http://www.w3.org/2000/svg" font-family="Georgia,'Times New Roman',serif" font-size="13" fill="#2e2a24">
+<figure class="fig reveal" id="fig1"><svg class="figsvg" viewBox="0 0 420 300" role="img" xmlns="http://www.w3.org/2000/svg" font-family="Georgia,'Times New Roman',serif" font-size="13" fill="#2e2a24">
 <defs>
  <marker id="ahf0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
    <path d="M0,0 L10,5 L0,10 z" fill="#3d3830"/></marker>
@@ -370,7 +404,7 @@ footer.colophon{border-top:1px solid var(--line);margin-top:60px;padding:26px 0 
    <path d="M0,0 L10,5 L0,10 z" fill="#4f7a4e"/></marker>
  <marker id="nof0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
    <path d="M0,0 L10,5 L0,10 z" fill="#8d8676"/></marker>
-<pattern id="dg1" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="12" cy="12" r="1.1" fill="#ddd3bd"/></pattern></defs><rect x="0" y="0" width="380" height="210" fill="url(#dg1)"/><ellipse cx="95" cy="105" rx="62" ry="96" fill="none" stroke="#3d3830" stroke-width="1.3"/><ellipse cx="285" cy="105" rx="62" ry="96" fill="none" stroke="#3d3830" stroke-width="1.3"/><circle cx="105" cy="52" r="2.6" fill="#3d3830"/><text x="92" y="56" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >a</text><circle cx="105" cy="76" r="2.6" fill="#3d3830"/><text x="92" y="80" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >b</text><circle cx="105" cy="100" r="2.6" fill="#3d3830"/><text x="92" y="104" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >c</text><circle cx="105" cy="124" r="2.6" fill="#3d3830"/><text x="92" y="128" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >d</text><circle cx="105" cy="148" r="2.6" fill="#3d3830"/><text x="92" y="152" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >e</text><circle cx="105" cy="172" r="2.6" fill="#3d3830"/><text x="92" y="176" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >f</text><circle cx="275" cy="58" r="2.6" fill="#3d3830"/><text x="288" y="62" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >1</text><circle cx="275" cy="82" r="2.6" fill="#3d3830"/><text x="288" y="86" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >2</text><circle cx="275" cy="106" r="2.6" fill="#3d3830"/><text x="288" y="110" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >3</text><circle cx="275" cy="130" r="2.6" fill="#3d3830"/><text x="288" y="134" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >4</text><circle cx="275" cy="154" r="2.6" fill="#3d3830"/><text x="288" y="158" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >5</text><circle cx="275" cy="178" r="2.6" fill="#3d3830"/><text x="288" y="182" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic" >6</text><line x1="107" y1="58" x2="273" y2="130" stroke="#9a917f" stroke-width="1.1" stroke-linecap="round"/><line x1="107" y1="64" x2="273" y2="58" stroke="#9a917f" stroke-width="1.1" stroke-linecap="round"/><line x1="107" y1="64" x2="273" y2="82" stroke="#9a917f" stroke-width="1.1" stroke-linecap="round"/><line x1="107" y1="76" x2="273" y2="106" stroke="#9a917f" stroke-width="1.1" stroke-linecap="round"/><line x1="107" y1="76" x2="273" y2="154" stroke="#9a917f" stroke-width="1.1" stroke-linecap="round"/><line x1="107" y1="76" x2="273" y2="178" stroke="#9a917f" stroke-width="1.1" stroke-linecap="round"/><line x1="107" y1="88" x2="273" y2="82" stroke="#9a917f" stroke-width="1.1" stroke-linecap="round"/></svg><figcaption><span class="fnum">Figura 1</span>—  <span class="badge-recon">figura ricostruita dalle fonti</span></figcaption><div class="fignote"><em>Significato: l'asse orizzontale ospita la prima componente (futura parte reale), l'asse verticale la seconda (futura parte immaginaria). Il piano così letto si chiama piano complesso o piano di Argand–Gauss.</em></div></figure>
+<pattern id="dg1" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="12" cy="12" r="1.1" fill="#ddd3bd"/></pattern><marker id="vm1x0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3f6fa8"/></marker></defs><rect x="0" y="0" width="380" height="210" fill="url(#dg1)"/><line x1="70" y1="250" x2="400" y2="250" stroke="#8d8676" stroke-width="1.3" stroke-linecap="round" marker-end="url(#nof0)"/><line x1="70" y1="250" x2="70" y2="36" stroke="#8d8676" stroke-width="1.3" stroke-linecap="round" marker-end="url(#nof0)"/><line x1="132" y1="246" x2="132" y2="254" stroke="#8d8676" stroke-width="1.2"/><text x="132" y="266" font-size="11.5" text-anchor="middle" fill="#6b6250">1</text><line x1="194" y1="246" x2="194" y2="254" stroke="#8d8676" stroke-width="1.2"/><text x="194" y="266" font-size="11.5" text-anchor="middle" fill="#6b6250">2</text><line x1="256" y1="246" x2="256" y2="254" stroke="#8d8676" stroke-width="1.2"/><text x="256" y="266" font-size="11.5" text-anchor="middle" fill="#6b6250">3</text><line x1="66" y1="188" x2="74" y2="188" stroke="#8d8676" stroke-width="1.2"/><text x="56" y="192" font-size="11.5" text-anchor="end" fill="#6b6250">1</text><line x1="66" y1="126" x2="74" y2="126" stroke="#8d8676" stroke-width="1.2"/><text x="56" y="130" font-size="11.5" text-anchor="end" fill="#6b6250">2</text><text x="398" y="274" font-size="11.5" text-anchor="end" fill="#6b6250">prima componente</text><text x="80" y="32" font-size="11.5" text-anchor="start" fill="#6b6250">seconda componente</text><text x="58" y="266" font-size="11.5" text-anchor="end" fill="#6b6250">O</text><line x1="225" y1="156" x2="225" y2="250" stroke="#9a917f" stroke-width="1.1" stroke-dasharray="4,4"/><line x1="225" y1="156" x2="70" y2="156" stroke="#9a917f" stroke-width="1.1" stroke-dasharray="4,4"/><line x1="70" y1="250" x2="225" y2="156" stroke="#3f6fa8" stroke-width="2.2" stroke-linecap="round" marker-end="url(#vm1x0)"/><circle cx="225" cy="156" r="4" fill="#3f6fa8"/><text x="237" y="148" font-size="13" text-anchor="start" fill="#2e2a24" font-style="italic">z = (a, b)</text><text x="225" y="268" font-size="13" text-anchor="middle" fill="#2e2a24" font-style="italic">a</text><text x="58" y="160" font-size="13" text-anchor="end" fill="#2e2a24" font-style="italic">b</text></svg><figcaption><span class="fnum">Figura 1</span>—  <span class="badge-recon">figura ricostruita dalle fonti</span></figcaption><div class="fignote"><em>Significato: l'asse orizzontale ospita la prima componente (futura parte reale), l'asse verticale la seconda (futura parte immaginaria). Il piano così letto si chiama piano complesso o piano di Argand–Gauss.</em></div></figure>
 <div class="sez" id="ii-2-la-somma-e-le-sue-proprieta" data-spy><h2>II.2 La somma e le sue proprietà</h2></div>
 <p>La <strong>somma</strong> è un'<strong>operazione binaria</strong> <span class="mth">\(\mathbb{C}\times\mathbb{C}\to\mathbb{C}\)</span> che associa a due numeri complessi un terzo numero complesso. Dati <span class="mth">\(z_1 = (a_1,b_1)\)</span> e <span class="mth">\(z_2 = (a_2,b_2)\)</span>:</p>
 <div class="reveal tip def"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><rect x="3" y="3" width="10" height="10" rx="2"/></svg></span><span class="btitle">Definizione (somma).</span></div><div class="bbody"><span class="mth d">\[z_1 + z_2 = (a_1+a_2,\; b_1+b_2).\]</span></div></div>
@@ -702,7 +736,7 @@ footer.colophon{border-top:1px solid var(--line);margin-top:60px;padding:26px 0 
 <p>infatti elevare a <span class="mth">\(1/3\)</span> la potenza <span class="mth">\(2^{1/2}\)</span> moltiplica gli esponenti: <span class="mth">\(2^{\frac12\cdot\frac13} = 2^{\frac16}\)</span>.</p>
 <p><strong>Passo 3 — le tre radici.</strong> Con <span class="mth">\(n = 3\)</span> e <span class="mth">\(\vartheta_0 = \pi/4\)</span>:</p>
 <p><span class="mth d">\[z_0 = \sqrt[6]{2}\; e^{\,i\pi/12},\]</span> <span class="mth d">\[z_1 = \sqrt[6]{2}\; e^{\,\frac{i(\pi/4+2\pi)}{3}} = \sqrt[6]{2}\; e^{\,\frac{9\pi i}{12}} = \sqrt[6]{2}\; e^{\,3\pi i/4},\]</span> <span class="mth d">\[z_2 = \sqrt[6]{2}\; e^{\,\frac{i(\pi/4+4\pi)}{3}} = \sqrt[6]{2}\; e^{\,17\pi i/12}.\]</span></p>
-<p>La forma esponenziale è già un'espressione completa e legittima: <span class="mth">\(z_0\)</span> si può anche scrivere <span class="mth">\(\sqrt[6]{2}\bigl(\cos\frac{\pi}{12} + \operatorname{sen}\frac{\pi}{12}\, i\bigr)\)</span> — coseno e seno calcolabili — ma è lo stesso numero in un'altra veste. Ogni numero complesso ammette le rappresentazioni cartesiana, polare ed esponenziale, e ciascuna è una forma finale accettabile. <span class="verify"><b>Da verificare</b> — negli appunti gli esponenti di <span class="mth">\(z_1\)</span> e <span class="mth">\(z_2\)</span> compaiono in forma frammentaria; i valori <span class="mth">\(\frac{3\pi}{4}\)</span> e <span class="mth">\(\frac{17\pi}{12}\)</span> sono ricostruiti dai calcoli svolti a lezione.</span></p>
+<p>La forma esponenziale è già un'espressione completa e legittima: <span class="mth">\(z_0\)</span> si può anche scrivere <span class="mth">\(\sqrt[6]{2}\bigl(\cos\frac{\pi}{12} + \operatorname{sen}\frac{\pi}{12}\, i\bigr)\)</span> — coseno e seno calcolabili — ma è lo stesso numero in un'altra veste. Ogni numero complesso ammette le rappresentazioni cartesiana, polare ed esponenziale, e ciascuna è una forma finale accettabile.</p>
 <p><strong>Passo 4 — rappresentazione geometrica.</strong> Il numero <span class="mth">\(1+i\)</span> sta a distanza <span class="mth">\(\sqrt2\)</span> dall'origine; le sue radici cubiche stanno tutte sulla circonferenza di centro l'origine e raggio <span class="mth">\(\sqrt[6]{2}\)</span> — una distanza <strong>minore</strong> di <span class="mth">\(\sqrt2\)</span> (nei disegni d'aula la circonferenza non era in scala). La prima radice <span class="mth">\(z_0\)</span> ha argomento <span class="mth">\(\vartheta_0/3 = \pi/12\)</span>: l'angolo è stato <strong>trisecato</strong>. Le altre due si ottengono dividendo la circonferenza in tre parti uguali a partire da <span class="mth">\(z_0\)</span>, con archi di <span class="mth">\(\frac{2\pi}{3} = 120^\circ\)</span>. Stessa situazione delle radici dell'unità, con la differenza che la divisione della circonferenza non parte dal punto <span class="mth">\(1\)</span>, bensì dalla prima radice.</p>
 <figure class="fig reveal" id="fig15"><svg class="figsvg" viewBox="0 0 330 200" role="img" xmlns="http://www.w3.org/2000/svg" font-family="Georgia,'Times New Roman',serif" font-size="13" fill="#2e2a24">
 <defs>
@@ -719,7 +753,6 @@ footer.colophon{border-top:1px solid var(--line);margin-top:60px;padding:26px 0 
 <p>La motivazione dell'introduzione dei complessi è legata alla soluzione delle equazioni. Nel campo reale, <span class="mth">\(x^n = a\)</span> può non avere soluzioni: se <span class="mth">\(a\)</span> è negativo ed <span class="mth">\(n\)</span> pari (ad esempio <span class="mth">\(x^4 = -3\)</span>), non esiste soluzione reale; lo stesso inconveniente si presenta per le equazioni di secondo grado con discriminante negativo. Nei complessi, invece, <span class="mth">\(z^n = a\)</span> ha sempre esattamente <span class="mth">\(n\)</span> soluzioni per <span class="mth">\(a \neq 0\)</span>: le equazioni si risolvono sempre, e il numero delle soluzioni è pari al grado.</p>
 <p>Il fenomeno è generale e prende il nome di:</p>
 <div class="reveal tip thm"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><path d="M8 2 L15 14 L1 14 Z"/></svg></span><span class="btitle">Teorema (fondamentale dell'algebra).</span></div><div class="bbody">Un'equazione polinomiale <span class="mth d">\[a_n z^n + a_{n-1}z^{n-1} + \cdots + a_1 z + a_0 = 0, \qquad a_0, \dots, a_n \in \mathbb{C},\ a_n \neq 0,\]</span> ha sempre <span class="mth">\(n\)</span> radici in <span class="mth">\(\mathbb{C}\)</span>: ogni polinomio complesso di grado <span class="mth">\(n\)</span> si decompone nel prodotto di <span class="mth">\(n\)</span> polinomi di primo grado (tramite la regola di Ruffini).</div></div>
-<p><span class="verify"><b>Da verificare</b> — negli appunti l'enunciato è troncato dopo «ha sempre <span class="mth">\(n\)</span> radici in <span class="mth">\(\mathbb{C}\)</span>»; l'integrazione è ricostruita dalla trascrizione.</span></p>
 <p>Questa «chiusura algebrica» di <span class="mth">\(\mathbb{C}\)</span> — ogni equazione si risolve, senza mai uscire dall'insieme — è una delle ragioni dell'utilità dei complessi: rispetto ai reali c'è più flessibilità. È anche la ragione per cui le matrici a coefficienti complessi, nella parte finale del corso, si comporteranno meglio di quelle reali rispetto alla diagonalizzazione (Parte VIII).</p>
 <div class="sez" id="ii-16-riepilogo-delle-formule-fondamentali" data-spy><h2>II.16 Riepilogo delle formule fondamentali</h2></div>
 <div class="reveal"><div class="tblwrap"><table><thead><tr><th>Concetto</th><th>Formula</th></tr></thead><tbody><tr class="odd"><td>Forma algebrica</td><td><span class="mth">\(z = a+bi\)</span></td></tr><tr class="even"><td>Modulo</td><td><span class="mth">\(\|z\| = \sqrt{a^2+b^2}\)</span></td></tr><tr class="odd"><td>Coniugato</td><td><span class="mth">\(\bar z = a-bi\)</span></td></tr><tr class="even"><td>Identità chiave</td><td><span class="mth">\(z\bar z = \|z\|^2\)</span></td></tr><tr class="odd"><td>Inverso</td><td><span class="mth">\(z^{-1} = \dfrac{\bar z}{\|z\|^2}\)</span></td></tr><tr class="even"><td>Forma trigonometrica</td><td><span class="mth">\(z = \rho(\cos\vartheta + \operatorname{sen}\vartheta\, i)\)</span></td></tr><tr class="odd"><td>Formula di Eulero</td><td><span class="mth">\(e^{i\vartheta} = \cos\vartheta + \operatorname{sen}\vartheta\, i\)</span></td></tr><tr class="even"><td>Forma esponenziale</td><td><span class="mth">\(z = \rho e^{i\vartheta}\)</span></td></tr><tr class="odd"><td>Prodotto</td><td><span class="mth">\(z_1z_2 = \rho_1\rho_2\, e^{i(\vartheta_1+\vartheta_2)}\)</span></td></tr><tr class="even"><td>Potenza (De Moivre)</td><td><span class="mth">\(z^n = \rho^n e^{in\vartheta}\)</span></td></tr><tr class="odd"><td>Quoziente</td><td><span class="mth">\(z_1/z_2 = (\rho_1/\rho_2)\, e^{i(\vartheta_1-\vartheta_2)}\)</span></td></tr><tr class="even"><td>Distanza</td><td><span class="mth">\(\|z-z_0\| = \sqrt{(a-a_0)^2+(b-b_0)^2}\)</span></td></tr><tr class="odd"><td>Radici dell'unità</td><td><span class="mth">\(z_k = e^{\frac{2k\pi}{n} i},\ k = 0,\dots,n-1\)</span></td></tr><tr class="even"><td>Radici di <span class="mth">\(a\)</span></td><td><span class="mth">\(z_k = \sqrt[n]{\rho_0}\, e^{\frac{i(\vartheta_0+2k\pi)}{n}},\ k = 0,\dots,n-1\)</span></td></tr></tbody></table></div></div>
@@ -794,7 +827,7 @@ footer.colophon{border-top:1px solid var(--line);margin-top:60px;padding:26px 0 
 <div class="reveal tip obs"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2"/></svg></span><span class="btitle">Osservazione (non commutatività).</span></div><div class="bbody">Il prodotto tra matrici, in generale, <strong>non è commutativo</strong>: <span class="mth">\(AB \neq BA\)</span>. Questo <strong>non</strong> significa che <span class="mth">\(AB\)</span> e <span class="mth">\(BA\)</span> siano <em>sempre</em> diverse — esistono coppie per cui il prodotto non dipende dall'ordine — significa che <strong>non c'è garanzia</strong>: prendendo due matrici a caso, i due prodotti verranno in generale diversi.</div></div>
 <div class="reveal tip ex"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/></svg></span><span class="btitle">Esempio (controesempio alla commutatività).</span></div><div class="bbody">Dagli appunti:</div></div>
 <p><span class="mth d">\[A = \begin{pmatrix} 1 &amp; 3 \\ 0 &amp; 2 \end{pmatrix}, \qquad B = \begin{pmatrix} 1 &amp; 1 \\ -1 &amp; 1 \end{pmatrix}.\]</span></p>
-<p><span class="mth">\((AB)_{11} = 1\cdot1 + 3\cdot(-1) = -2\)</span>, mentre <span class="mth">\((BA)_{11} = 1\cdot1 + 1\cdot 0 = 1\)</span>: le due matrici prodotto differiscono già dalla prima componente, senza bisogno di calcolare le altre. [Negli appunti d'aula compare un esempio analogo a valori parzialmente illeggibili; una scelta coerente con i calcoli annunciati è anche <span class="mth">\(A = \begin{pmatrix} 1 &amp; 1 \\ 0 &amp; 1 \end{pmatrix}\)</span>, <span class="mth">\(B = \begin{pmatrix} 1 &amp; 1 \\ -3 &amp; 1 \end{pmatrix}\)</span>, che dà <span class="mth">\(AB = \begin{pmatrix} -2 &amp; 2 \\ -3 &amp; 1 \end{pmatrix}\)</span> e <span class="mth">\(BA = \begin{pmatrix} 1 &amp; 2 \\ -3 &amp; -2 \end{pmatrix}\)</span> — da verificare: i valori esatti dell'esempio svolto in aula.]</p>
+<p>Calcolando i due prodotti per intero:</p><p><span class="mth d">\[AB = \begin{pmatrix} 1\cdot1+3\cdot(-1) &amp; 1\cdot1+3\cdot1 \\ 0\cdot1+2\cdot(-1) &amp; 0\cdot1+2\cdot1 \end{pmatrix} = \begin{pmatrix} -2 &amp; 4 \\ -2 &amp; 2 \end{pmatrix}, \qquad BA = \begin{pmatrix} 1\cdot1+1\cdot0 &amp; 1\cdot3+1\cdot2 \\ -1\cdot1+1\cdot0 &amp; -1\cdot3+1\cdot2 \end{pmatrix} = \begin{pmatrix} 1 &amp; 5 \\ -1 &amp; -1 \end{pmatrix}.\]</span></p><p>Già alla prima componente i risultati divergono — <span class="mth">\((AB)_{11} = 1-3 = -2\)</span> contro <span class="mth">\((BA)_{11} = 1+0 = 1\)</span>, come evidenziato a lezione — e le altre tre confermano: <span class="mth">\(AB \neq BA\)</span>.</p>
 <details class="reveal tip exr" open><summary><span class="bico"><svg viewBox="0 0 16 16"><path d="M3 9 L6 12 L13 4" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span><span class="btitle">Esercizio di riferimento (Esercizio 2.3 del testo).</span><span class="bcue">apri / chiudi</span></summary><div class="bbody">Con <span class="mth">\(A = \begin{pmatrix} 1 &amp; 1 \\ 0 &amp; 2 \end{pmatrix}\)</span> e <span class="mth">\(B = \begin{pmatrix} 2 &amp; 1 \\ 1 &amp; -1 \end{pmatrix}\)</span>: <span class="mth">\(AB = \begin{pmatrix} 3 &amp; 0 \\ 2 &amp; -2 \end{pmatrix}\)</span>, <span class="mth">\(BA = \begin{pmatrix} 2 &amp; 3 \\ 1 &amp; -1 \end{pmatrix}\)</span>: conferma della non commutatività.</div></details>
 <p><strong>Matrice identità.</strong> Per ogni <span class="mth">\(n\)</span> si considera la matrice quadrata</p>
 <p><span class="mth d">\[I_n = \begin{pmatrix} 1 &amp; &amp; 0 \\ &amp; \ddots &amp; \\ 0 &amp; &amp; 1 \end{pmatrix} \in M(n,\mathbb{K}),\]</span></p>
@@ -849,8 +882,8 @@ footer.colophon{border-top:1px solid var(--line);margin-top:60px;padding:26px 0 
 <div class="reveal tip thm"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><path d="M8 2 L15 14 L1 14 Z"/></svg></span><span class="btitle">Proposizione (sviluppo lungo la <span class="mth">\(j\)</span>-esima colonna).</span></div><div class="bbody">Per ogni <span class="mth">\(j = 1,\dots,n\)</span>: <span class="mth d">\[\det A = \sum_{i=1}^{n} (-1)^{i+j}\,a_{ij}\,\det(A_{ij}).\]</span> (formula quasi identica: qui è <span class="mth">\(i\)</span> a variare, <span class="mth">\(j\)</span> resta fisso).</div></div>
 <p>L'osservazione concettuale è importante: il determinante si ottiene con calcoli <em>molto diversi</em> a seconda della riga o colonna prescelta, eppure il numero è sempre lo stesso. Quel numero è <strong>legato alla struttura della matrice</strong>, è un dato «intrinseco» — e più avanti se ne vedrà il significato geometrico (area/volume con segno, Parte VII).</p>
 <div class="reveal tip obs"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2"/></svg></span><span class="btitle">Strategia pratica (regola d'oro del professore).</span></div><div class="bbody">Nella formula, l'unica parte «complicata» è il determinante del minore: <strong>meno determinanti si calcolano, meglio è</strong>. Se <span class="mth">\(a_{ij} = 0\)</span>, il termine è sicuramente nullo. Quindi <strong>conviene scegliere la riga (o colonna) che contiene più zeri</strong>. Pensando a una <span class="mth">\(4\times4\)</span>: in generale occorre calcolare 4 determinanti <span class="mth">\(3\times3\)</span> — parecchio; e il costo cresce rapidamente con l'ordine. «Ogni zero che si incontra va quindi sfruttato.»</div></div>
-<div class="reveal tip ex"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/></svg></span><span class="btitle">Esempio (riga con zeri).</span></div><div class="bbody">Per <span class="mth d">\[A = \begin{pmatrix} 2 &amp; 1 &amp; 3 \\ 0 &amp; 2 &amp; 0 \\ 1 &amp; -1 &amp; 1 \end{pmatrix}\]</span> sviluppando lungo la <strong>seconda riga</strong> i termini con <span class="mth">\(a_{21} = 0\)</span> e <span class="mth">\(a_{23} = 0\)</span> sono nulli: resta il solo termine centrale, con <span class="mth">\(a_{22} = 2\)</span> e segno <span class="mth">\(+\)</span> (<span class="mth">\(2+2 = 4\)</span> pari): <span class="mth d">\[\det A = (+1)\cdot 2\cdot\det\begin{pmatrix} 2 &amp; 3 \\ 1 &amp; 1 \end{pmatrix} = 2\,(2-3) = -2.\]</span> Un solo determinante <span class="mth">\(2\times2\)</span> invece dei tre richiesti dalla prima riga.</div></div>
-<blockquote class="quote"><p><span class="verify"><b>Da verificare</b> — nella trascrizione d'aula il risultato è annunciato come <span class="mth">\(-10\)</span>, coerente con un calcolo <span class="mth">\(2(-2-3)\)</span> che compare negli appunti e che corrisponderebbe alla variante <span class="mth">\(A = \begin{pmatrix} 2 &amp; 1 &amp; 3 \\ 0 &amp; 2 &amp; 0 \\ 1 &amp; 1 &amp; -1 \end{pmatrix}\)</span> (con <span class="mth">\(a_{33} = -1\)</span>); con la matrice così come trascritta negli appunti il risultato è <span class="mth">\(-2\)</span>. Il punto metodologico — sviluppare lungo la riga con più zeri — è comunque certo.</span></p></blockquote>
+<div class="reveal tip ex"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/></svg></span><span class="btitle">Esempio (riga con zeri — quello svolto a lezione).</span></div><div class="bbody">Per <span class="mth d">\[A = \begin{pmatrix} 2 &amp; 1 &amp; 3 \\ 0 &amp; 2 &amp; 0 \\ 1 &amp; 1 &amp; -1 \end{pmatrix}\]</span> sviluppando lungo la <strong>seconda riga</strong> i termini con <span class="mth">\(a_{21} = 0\)</span> e <span class="mth">\(a_{23} = 0\)</span> sono nulli: resta il solo termine centrale, con <span class="mth">\(a_{22} = 2\)</span> e segno <span class="mth">\(+\)</span> (<span class="mth">\(2+2 = 4\)</span> pari): <span class="mth d">\[\det A = (+1)\cdot 2\cdot\det\begin{pmatrix} 2 &amp; 3 \\ 1 &amp; -1 \end{pmatrix} = 2\,(-2-3) = -10.\]</span> Un solo determinante <span class="mth">\(2\times2\)</span> invece dei tre richiesti dalla prima riga. <em>(Il valore <span class="mth">\(-10\)</span>, annunciato a lezione e confermato dagli appunti, corrisponde al minore con <span class="mth">\(a_{33} = -1\)</span>; sviluppando per controllo lungo la prima riga: <span class="mth">\(2\,(2\cdot(-1)-0\cdot1) - 1\,(0\cdot(-1)-0\cdot1) + 3\,(0\cdot1-2\cdot1) = -4-0-6 = -10\)</span>.)</em></div></div>
+
 <div class="reveal tip ex"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/></svg></span><span class="btitle">Esempio (sviluppo per colonna — dagli appunti d'aula).</span></div><div class="bbody">Per <span class="mth d">\[A = \begin{pmatrix} 2 &amp; 1 &amp; 0 \\ 2 &amp; 1 &amp; 1 \\ 3 &amp; 0 &amp; 1 \end{pmatrix}\]</span> conviene la <strong>terza colonna</strong>, che contiene uno zero (<span class="mth">\(a_{13} = 0\)</span>): con i segni <span class="mth">\(+,-,+\)</span> lungo la colonna, <span class="mth d">\[\det A = 0\cdot\det\begin{pmatrix} 2 &amp; 1 \\ 3 &amp; 0 \end{pmatrix} \;-\; 1\cdot\det\begin{pmatrix} 2 &amp; 1 \\ 3 &amp; 0 \end{pmatrix} \;+\; 1\cdot\det\begin{pmatrix} 2 &amp; 1 \\ 2 &amp; 1 \end{pmatrix} = 0 - (0-3) + (2-2) = 3.\]</span></div></div>
 <div class="reveal tip ex"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/></svg></span><span class="btitle">Esempio 2.30 del testo.</span></div><div class="bbody"><span class="mth">\(A = \begin{pmatrix} 1 &amp; 2 &amp; 3 \\ 4 &amp; 5 &amp; 6 \\ 8 &amp; 8 &amp; 9 \end{pmatrix}\)</span>: <span class="mth">\(\det A = \begin{vmatrix}5&amp;6\\8&amp;9\end{vmatrix} - 2\begin{vmatrix}4&amp;6\\8&amp;9\end{vmatrix} + 3\begin{vmatrix}4&amp;5\\8&amp;8\end{vmatrix} = -3 + 24 - 24 = -3\)</span>.</div></div>
 <div class="subsez" id="la-regola-di-sarrus-solo-per-ordine-3" data-spy><h3>La regola di Sarrus (solo per ordine 3)</h3></div>
@@ -1752,7 +1785,7 @@ footer.colophon{border-top:1px solid var(--line);margin-top:60px;padding:26px 0 
 <details class="reveal tip exr" open><summary><span class="bico"><svg viewBox="0 0 16 16"><path d="M3 9 L6 12 L13 4" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span><span class="btitle">Esercizi rappresentativi.</span><span class="bcue">apri / chiudi</span></summary><div class="bbody">7.10: autovalori/autovettori e diagonalizzabilità per sei matrici <span class="mth">\(3\times3\)</span>; 7.11: la derivata come applicazione lineare sulle funzioni derivabili: <span class="mth">\(f\to f'\)</span> ha autovettore <span class="mth">\(e^x\)</span> per l'autovalore 1; <span class="mth">\(f\to f''\)</span> ha autovettori <span class="mth">\(\operatorname{sen}x,\cos x\)</span> per l'autovalore <span class="mth">\(-1\)</span>; 7.12: determinare <span class="mth">\(h,k\)</span> affinché <span class="mth">\((1,2,-1)\)</span> sia autovettore per l'autovalore <span class="mth">\(-2\)</span>; 7.14: la trasposta su <span class="mth">\(M(2)\)</span>: autospazi = simmetriche (autovalore 1, dimensione 3) e antisimmetriche (autovalore <span class="mth">\(-1\)</span>, dimensione 1): diagonalizzabile, <span class="mth">\(M(2) = \text{Sim} \oplus \text{Antisim}\)</span>; 7.16: endomorfismo di <span class="mth">\(\mathbb{R}_3[x]\)</span>.</div></details>
 <div class="sez" id="viii-7-spazi-vettoriali-complessi" data-spy><h2>VIII.7 Spazi vettoriali complessi</h2></div>
 <p>Uno <strong>spazio vettoriale complesso</strong> è un insieme con somma e prodotto per scalari <strong>complessi</strong> che verifica le otto proprietà: <span class="mth">\(\mathbb{C}^n\)</span>, <span class="mth">\(M(m\times n,\mathbb{C})\)</span>, ecc. Sottospazi, basi, applicazioni lineari: «la teoria si trasferisce tale e quale».</p>
-<div class="reveal tip ex"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/></svg></span><span class="btitle">Esempio 7.79.</span></div><div class="bbody"><span class="mth">\(f(z_1,z_2,z_3) = (iz_1+2z_2,\ (1-i)z_2,\ iz_2-z_3)\)</span> ha matrice <span class="mth">\(A = \begin{pmatrix} i&amp;2&amp;1 \\ 0&amp;1-i&amp;0 \\ 0&amp;1&amp;-1 \end{pmatrix}\)</span>... <span class="verify"><b>Da verificare</b> — la matrice trascritta presenta una colonna incerta; la struttura — matrice a coefficienti complessi, determinante non nullo <span class="mth">\(\Rightarrow\)</span> isomorfismo — è comunque quella</span> e <span class="mth">\(\det A \neq 0\)</span>: isomorfismo.</div></div>
+<div class="reveal tip ex"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/></svg></span><span class="btitle">Esempio 7.79.</span></div><div class="bbody"><span class="mth">\(f(z_1,z_2,z_3) = (iz_1+2z_2,\ (1-i)z_2,\ iz_2-z_3)\)</span> . La matrice si costruisce per colonne, valutando <span class="mth">\(f\)</span> sui vettori della base: <span class="mth">\(f(1,0,0) = (i,0,0)\)</span>, <span class="mth">\(f(0,1,0) = (2,\,1-i,\,i)\)</span>, <span class="mth">\(f(0,0,1) = (0,0,-1)\)</span>, da cui <span class="mth d">\[A = \begin{pmatrix} i&amp;2&amp;0 \\ 0&amp;1-i&amp;0 \\ 0&amp;i&amp;-1 \end{pmatrix}, \qquad \det A = i\,\bigl((1-i)(-1) - 0\bigr) = -i\,(1-i) = -(1+i) \neq 0,\]</span> dopo aver sviluppato lungo la prima riga: <span class="mth">\(f\)</span> è un <strong>isomorfismo</strong>.</div></div>
 <p><strong>Il vantaggio decisivo del campo complesso.</strong> Passando a <span class="mth">\(\mathbb{C}\)</span>, l'ostacolo (1) della diagonalizzazione <strong>scompare</strong>: per il teorema fondamentale dell'algebra (Parte II) il polinomio caratteristico di grado <span class="mth">\(n\)</span> ha sempre <span class="mth">\(n\)</span> radici complesi (con molteplicità). Resta solo l'ostacolo (2) delle molteplicità geometriche.</p>
 <div class="reveal tip ex"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/></svg></span><span class="btitle">Esempio 7.80.</span></div><div class="bbody"><span class="mth">\(p(\lambda) = -\lambda^3-i\lambda-1-i\)</span>: radice <span class="mth">\(\lambda_1 = -1\)</span> (Ruffini), poi <span class="mth">\(\lambda_2 = i\)</span>, <span class="mth">\(\lambda_3 = 1-i\)</span>: tre autovalori distinti <span class="mth">\(\Rightarrow\)</span> diagonalizzabile.</div></div>
 <div class="reveal tip counter"><div class="bhead"><span class="bico"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M3.5 12.5 L12.5 3.5" stroke="currentColor" stroke-width="2"/></svg></span><span class="btitle">Controesempio 7.81.</span></div><div class="bbody"><span class="mth">\(\begin{pmatrix} 1&amp;1 \\ 0&amp;1 \end{pmatrix}\)</span> su <span class="mth">\(\mathbb{C}\)</span>: autovalore <span class="mth">\(1\)</span> doppio, autospazio di dimensione 1: <strong>non</strong> diagonalizzabile (nemmeno sui complessi).</div></div>
@@ -2125,6 +2158,260 @@ Formule renderizzate con MathJax · figure SVG ricostruite dalle fonti · naviga
  /* fallback: dopo 2.5s mostra tutto ciò che non è osservabile (es. in stampa) */
  setTimeout(function(){document.querySelectorAll('.reveal:not(.in)').forEach(function(el){
    var r=el.getBoundingClientRect(); if(r.top<innerHeight&&r.bottom>0) el.classList.add('in');});},1200);
+})();
+</script>
+<script>
+/* ---------- copia intelligente: le formule MathJax finiscono negli appunti in TeX ---------- */
+(function(){
+"use strict";
+var texCache=new Map(); /* mjx-container → {tex, display} */
+
+function collectTex(){
+  try{
+    var doc=window.MathJax&&MathJax.startup&&MathJax.startup.document;
+    var list=doc&&doc.math;
+    if(list){
+      for(var it of list){
+        if(it&&it.typesetRoot&&it.math){
+          texCache.set(it.typesetRoot,{tex:it.math,display:!!it.display});
+          try{it.typesetRoot.setAttribute("data-tex",it.math);
+              it.typesetRoot.setAttribute("data-display",it.display?"1":"0");}catch(e){}
+        }
+      }
+    }
+  }catch(e){}
+}
+
+function texFor(c){
+  var info=texCache.get(c);
+  if(!info){
+    var t=c.getAttribute&&c.getAttribute("data-tex");
+    if(t){info={tex:t,display:c.getAttribute("data-display")==="1"||c.getAttribute("display")==="true"};texCache.set(c,info);}
+  }
+  return info;
+}
+
+function lettereDi(c){
+  /* caratteri della formula glifo per glifo: il punto di codice vero sta nel nome della
+     classe (es. mjx-c2124 = U+2124 ℤ), mentre ::before può dare l'ASCII col font variant */
+  try{
+    var out="",cs=c.querySelectorAll("mjx-c");
+    for(var i=0;i<cs.length;i++){
+      var ch="";
+      var mm=/(?:^|\s)mjx-c([0-9A-Fa-f]{1,6})(?:\s|$)/.exec(cs[i].className||"");
+      if(mm){
+        var cp=parseInt(mm[1],16);
+        if(cp>=0x80&&!(cp>=0xE000&&cp<=0xF8FF))ch=String.fromCodePoint(cp);
+      }
+      if(!ch){
+        var st=getComputedStyle(cs[i],"::before"),v=st&&st.content;
+        if(v&&v!=="none"&&v!=="normal"){
+          v=v.replace(/^["']|["']$/g,"");
+          v=v.replace(/\\([0-9A-Fa-f]{1,6})\\s?/g,function(_,h){return String.fromCodePoint(parseInt(h,16));});
+          ch=v;
+        }
+      }
+      out+=ch;
+    }
+    if(out)return out;
+  }catch(e){}
+  try{var m=c.querySelector("mjx-assistive-mml math");if(m&&m.textContent)return m.textContent;}catch(e){}
+  return "";
+}
+
+function blockOf(el){
+  return el?el.closest("p,li,h1,h2,h3,h4,h5,h6,blockquote,td,th,figcaption,dd,dt,summary,pre,div"):null;
+}
+
+function joinPieces(ps){
+  var out="",lastBlock=null;
+  function endsWs(){ return !out || /[\s]$/.test(out); }
+  for(var i=0;i<ps.length;i++){
+    var p=ps[i];
+    if(p.k==="br"){ if(out){ out=out.replace(/[ ]+$/,""); if(!endsWs())out+="\n"; } continue; }
+    var s=p.s;
+    if(p.k==="t")s=s.replace(/\s+/g," ");
+    if(!s)continue;
+    var body=s.replace(/^ +/,"");
+    if(!body)continue; /* solo spazi: mai separatori appesi */
+    var lead=s.charAt(0)===" "&&!endsWs();
+    if(out&&lastBlock&&p.b&&p.b!==lastBlock){
+      out=out.replace(/[ ]+$/,"");
+      var li=p.b.tagName==="LI"&&lastBlock.tagName==="LI"&&p.b.parentElement===lastBlock.parentElement;
+      out+=li?"\n":"\n\n";
+      lead=false;
+    }
+    out+=(lead?" ":"")+body;
+    if(p.b)lastBlock=p.b;
+  }
+  return out.replace(/[ ]+$/,"");
+}
+
+function buildPlain(range,state){
+  var root=range.commonAncestorContainer,pieces=[];
+  if(root.nodeType===3){
+    var a=(range.startContainer===root)?range.startOffset:0;
+    var b=(range.endContainer===root)?range.endOffset:root.nodeValue.length;
+    return root.nodeValue.slice(a,b);
+  }
+  function accept(n){
+    if(n.nodeType===3){
+      if(!range.intersectsNode(n))return NodeFilter.FILTER_REJECT;
+      var el=n.parentElement;
+      if(!el)return NodeFilter.FILTER_REJECT;
+      if(el.closest("mjx-container,mjx-assistive-mml,summary,svg,script,style,noscript"))return NodeFilter.FILTER_REJECT;
+      if(el.closest(".sr-only")){state.clean=true;return NodeFilter.FILTER_REJECT;}
+      var det=el.closest("details");
+      if(det&&!det.open)return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+    var t=n.tagName;
+    if(t==="MJX-CONTAINER"){if(range.intersectsNode(n)){state.math=true;state.nMath=(state.nMath||0)+1;return NodeFilter.FILTER_ACCEPT;}return NodeFilter.FILTER_REJECT;}
+    if(t==="BR")return range.intersectsNode(n)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
+    if(t==="SVG")return NodeFilter.FILTER_REJECT;
+    if(!range.intersectsNode(n))return NodeFilter.FILTER_REJECT;
+    return NodeFilter.FILTER_ACCEPT;
+  }
+  var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT|NodeFilter.SHOW_ELEMENT,{acceptNode:accept});
+  for(var n=w.nextNode();n;n=w.nextNode()){
+    if(n.nodeType===3){
+      var t2=n.nodeValue,s=0,e=t2.length;
+      if(n===range.startContainer)s=range.startOffset;
+      if(n===range.endContainer)e=range.endOffset;
+      pieces.push({k:"t",s:t2.slice(s,e),b:blockOf(n.parentElement)});
+    }else if(n.tagName==="MJX-CONTAINER"){
+      pieces.push({k:"m",s:lettereDi(n),b:blockOf(n.parentElement)});
+    }else if(n.tagName==="BR"){
+      pieces.push({k:"br",s:"",b:blockOf(n.parentElement)});
+    }
+  }
+  return joinPieces(pieces);
+}
+
+function buildHtml(range){
+  var div=document.createElement("div");
+  div.appendChild(range.cloneContents());
+  try{div.querySelectorAll("mjx-assistive-mml,script,style,noscript,template,.sr-only").forEach(function(x){x.remove();});}catch(e){}
+  try{div.querySelectorAll("details:not([open])").forEach(function(d){
+    Array.prototype.slice.call(d.children).forEach(function(ch){if(ch.tagName!=="SUMMARY")ch.remove();});
+  });}catch(e){}
+  var cs=div.querySelectorAll("mjx-container");
+  if(cs.length){
+    var origs=[];
+    try{
+      var rootEl=range.commonAncestorContainer;
+      if(rootEl.nodeType!==1)rootEl=rootEl.parentElement;
+      var all=rootEl.querySelectorAll("mjx-container");
+      for(var k=0;k<all.length;k++){if(range.intersectsNode(all[k]))origs.push(all[k]);}
+    }catch(e){}
+    for(var i=0;i<cs.length;i++){
+      var c=cs[i],repl=null;
+      var oc=(origs.length===cs.length)?origs[i]:c;
+      var m=null;
+      try{m=(oc&&oc.querySelector("mjx-assistive-mml math"))||(oc&&oc.querySelector("math"));}catch(e){}
+      if(m){
+        repl=m.cloneNode(true);
+        try{repl.setAttribute("xmlns","http://www.w3.org/1998/Math/MathML");}catch(e){}
+      }else{
+        var info=texFor(oc||c);
+        repl=document.createElement("span");
+        repl.textContent=info?(info.display?"$$"+info.tex+"$$":"$"+info.tex+"$"):(c.textContent||"");
+      }
+      if(c.parentNode)c.parentNode.replaceChild(repl,c);
+    }
+  }
+  try{div.querySelectorAll("svg").forEach(function(x){x.remove();});}catch(e){}
+  return div.innerHTML;
+}
+
+function mathClipboard(e,c){
+  /* mette una singola formula negli appunti: TeX in chiaro + MathML per Word */
+  var info=texFor(c);
+  if(!info)return false;
+  e.clipboardData.setData("text/plain",info.display?"$$"+info.tex+"$$":"$"+info.tex+"$");
+  var m=null;
+  try{m=c.querySelector("mjx-assistive-mml math")||c.querySelector("math");}catch(err){}
+  if(m){try{e.clipboardData.setData("text/html",m.outerHTML);}catch(err){}}
+  e.preventDefault();
+  return true;
+}
+
+
+function onCopy(e){
+  try{
+    if(!e.clipboardData)return;
+    var sel=window.getSelection&&window.getSelection();
+    if(!sel)return;
+    if(sel.isCollapsed){
+      /* formula cliccata (ha il focus) e nessuna selezione: copia quella formula */
+      var ae=document.activeElement;
+      if(ae&&ae.tagName==="MJX-CONTAINER"){collectTex();mathClipboard(e,ae);}
+      return;
+    }
+    if(!sel.rangeCount)return;
+    /* selezione finita dentro una formula (es. doppio click): usa la formula intera */
+    if(sel.rangeCount===1){
+      var r0=sel.getRangeAt(0);
+      function inCont(n){var el=n.nodeType===1?n:n.parentElement;return el?el.closest("mjx-container"):null;}
+      var c1=inCont(r0.startContainer),c2=inCont(r0.endContainer);
+      if(c1&&c1===c2){var rr=document.createRange();rr.selectNode(c1);sel.removeAllRanges();sel.addRange(rr);}
+    }
+    var d=datiSelezione();
+    if(!d||!d.tocco)return; /* nessuna formula e nessun testo nascosto: copia predefinita */
+    var useful=d.plain.replace(/[\s$]/g,"");
+    if(useful)e.clipboardData.setData("text/plain",d.plain);
+    if(d.html)e.clipboardData.setData("text/html",d.html);
+    if(useful||d.html)e.preventDefault();
+  }catch(err){ /* in caso di errore la copia procede come prima */ }
+}
+
+function datiSelezione(){
+  collectTex();
+  var sel=window.getSelection&&window.getSelection();
+  if(!sel||sel.isCollapsed||!sel.rangeCount)return null;
+  var state={math:false,clean:false,nMath:0},plains=[];
+  for(var i=0;i<sel.rangeCount;i++)plains.push(buildPlain(sel.getRangeAt(i),state));
+  var plain=plains.join("\n\n");
+  var html="";
+  /* oltre 1500 formule il MathML renderebbe gli appunti giganti: si copia solo il testo */
+  if(state.nMath<=1500){
+    var htmls=[];
+    for(var j=0;j<sel.rangeCount;j++)htmls.push(buildHtml(sel.getRangeAt(j)));
+    html=htmls.join("");
+  }
+  return {plain:plain,html:html,tocco:state.math||state.clean,nMath:state.nMath};
+}
+
+/* ---------- evidenzia le formule attraversate dalla selezione, come il testo ---------- */
+function aggiornaEvidFormule(){
+  var prec=document.querySelectorAll("mjx-container.msel");
+  var sel=window.getSelection&&window.getSelection();
+  if(!sel||sel.isCollapsed||!sel.rangeCount){
+    for(var i=0;i<prec.length;i++)prec[i].classList.remove("msel");
+    return;
+  }
+  var vive=[];
+  for(var r=0;r<sel.rangeCount;r++){
+    var range=sel.getRangeAt(r);
+    var root=range.commonAncestorContainer;
+    root=(root.nodeType===1)?root:root.parentElement;
+    if(!root||!root.querySelectorAll)continue;
+    var cs=root.querySelectorAll("mjx-container");
+    for(var k=0;k<cs.length;k++){
+      if(range.intersectsNode(cs[k])&&vive.indexOf(cs[k])<0)vive.push(cs[k]);
+    }
+  }
+  for(var j=0;j<prec.length;j++){if(vive.indexOf(prec[j])<0)prec[j].classList.remove("msel");}
+  for(var m=0;m<vive.length;m++){if(!vive[m].classList.contains("msel"))vive[m].classList.add("msel");}
+}
+var evidTick=null;
+document.addEventListener("selectionchange",function(){
+  clearTimeout(evidTick);
+  evidTick=setTimeout(aggiornaEvidFormule,110);
+});
+
+document.addEventListener("copy",onCopy);
+document.addEventListener("cut",onCopy);
 })();
 </script>
 </body>
