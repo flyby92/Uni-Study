@@ -361,19 +361,20 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') openDrawer(fa
 sidebar.addEventListener('click', e => {
   if(e.target.closest('a') && window.innerWidth <= 1080) openDrawer(false);
 });
-function smoothTo(y){
-  y = Math.max(0, y);
-  window.scrollTo({top: y, behavior: 'smooth'});
-  setTimeout(() => {          // garanzia di arrivo se lo scroll morbido è bloccato dal browser
-    if(Math.abs(window.scrollY - y) > 60) window.scrollTo({top: y, behavior: 'instant'});
-  }, 700);
+function smoothTo(target){
+  const el = target instanceof Element ? target : null;
+  const yOf = () => el ? Math.max(0, el.getBoundingClientRect().top + window.scrollY - 88) : Math.max(0, target);
+  window.scrollTo({top: yOf(), behavior: 'smooth'});
+  const snap = () => { if(Math.abs(window.scrollY - yOf()) > 60) window.scrollTo({top: yOf(), behavior: 'instant'}); };
+  setTimeout(snap, 700);     // garanzia di arrivo se lo scroll morbido è bloccato dal browser
+  setTimeout(snap, 1100);    // riallinea dopo le animazioni di reveal
 }
 document.querySelectorAll('.toc-children a[data-target]').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
     const el = document.getElementById(a.dataset.target);
     openDrawer(false);                       // sblocca lo scroll del body prima di navigare
-    if(el) smoothTo(el.getBoundingClientRect().top + window.scrollY - 76);
+    if(el) smoothTo(el);
     history.replaceState(null, '', '#' + a.dataset.target);
   });
 });
