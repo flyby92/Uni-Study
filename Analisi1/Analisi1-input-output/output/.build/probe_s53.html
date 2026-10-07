@@ -678,5 +678,17 @@ window.MathJax = {
       .catch(e => console.warn('mermaid', e));
   });
 </script>
-</body>
+<script>
+(function(){
+  const el = document.getElementById('53-somma-di-seno-e-coseno-a-sin-x-b-cos-x');
+  if (!el) return;
+  const main = el.closest('main');
+  let p = el;
+  while (p.parentElement && p.parentElement !== main) {
+    while (p.parentElement.firstElementChild !== p) p.parentElement.removeChild(p.parentElement.firstElementChild);
+    p = p.parentElement;
+  }
+  while (main.firstElementChild !== p) main.removeChild(main.firstElementChild);
+})();
+</script></body>
 </html>
