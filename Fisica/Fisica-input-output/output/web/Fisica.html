@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fisica 1 · Dispensa interattiva — Lezioni 1–6 (Di Renzo · Unifi)</title>
-<meta name="description" content="Dispensa ipermediale di Fisica 1: introduzione alla Fisica, grandezze e unità di misura, analisi dimensionale, richiami di matematica, derivate, Taylor, integrali.">
+<title>Fisica 1 · Dispensa interattiva — Lezioni 1–8 (Di Renzo · Unifi)</title>
+<meta name="description" content="Dispensa ipermediale di Fisica 1: introduzione alla Fisica, grandezze e unità di misura, analisi dimensionale, richiami di matematica, derivate, Taylor, integrali, calcolo vettoriale, coordinate, cinematica del punto e introduzione alla dinamica.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -420,8 +420,8 @@ footer.site b{color:var(--ink-soft)}
 <!-- ========================= HERO ========================= -->
 <section class="hero" id="top">
   <div class="kicker">Dispensa definitiva · edizione ipermediale</div>
-  <h1>Fisica 1 — Lezioni 1–6</h1>
-  <p class="sub">Introduzione alla Fisica, grandezze fisiche e unità di misura, analisi dimensionale, misure ed errori, e richiami completi di matematica per la meccanica: successioni, limiti, funzioni, derivate, sviluppi di Taylor, integrali, calcolo vettoriale e campi — con esercizi svolti, figure interattive e i consigli del professore per il voto.</p>
+  <h1>Fisica 1 — Lezioni 1–8</h1>
+  <p class="sub">Introduzione alla Fisica, grandezze fisiche e unità di misura, analisi dimensionale, misure ed errori, richiami completi di matematica per la meccanica: successioni, limiti, funzioni, derivate, sviluppi di Taylor, integrali, calcolo vettoriale e campi; poi i sistemi di coordinate, la cinematica del punto materiale (moto uniformemente accelerato, proiettile, moto circolare e coordinate polari) e l'ingresso nella dinamica — con esercizi svolti, figure interattive e i consigli del professore per il voto.</p>
   <div class="meta">
     <span>Docente: <b>F. Di Renzo</b></span>
     <span>Corso: <b>Fisica B030518</b></span>
@@ -440,7 +440,7 @@ footer.site b{color:var(--ink-soft)}
 
 <div class="box box-note reveal">
   <div class="box-tag"><span class="ico">🛈</span>Nota sulle fonti e sui simboli</div>
-  <p>Questa dispensa fonde in un unico discorso organico le prime sei lezioni del corso, le slide del docente, gli appunti d'aula e le parti corrispondenti del libro di testo (Mazzoldi–Nigro–Voci, <em>Elementi di Fisica — Meccanica</em>: Premessa, avvio del Cap. 1, Appendici A, B, C). Le notazioni sono state uniformate; i passaggi ambigui o contraddittori delle fonti sono segnalati con <span class="verify">da verificare: …</span> e i piccoli completamenti di calcolo lasciati a lezione come esercizio con <span class="completion">completamento</span>. Le figure sono ricostruite fedelmente e alcune sono state rese interattive.</p>
+  <p>Questa dispensa fonde in un unico discorso organico le prime otto lezioni del corso, le slide del docente, gli appunti d'aula e le parti corrispondenti del libro di testo (Mazzoldi–Nigro–Voci, <em>Elementi di Fisica — Meccanica</em>: Premessa, avvio del Cap. 1, Appendici A, B, C). Le notazioni sono state uniformate; i passaggi ambigui o contraddittori delle fonti sono segnalati con <span class="verify">da verificare: …</span> e i piccoli completamenti di calcolo lasciati a lezione come esercizio con <span class="completion">completamento</span>. Le figure sono ricostruite fedelmente e alcune sono state rese interattive.</p>
   <p><b>Testi di riferimento:</b> Mazzoldi–Nigro–Voci (consigliato); Marcellini–Sbordone per l'Analisi; sul web le <em>Feynman Lectures on Physics</em>.</p>
 </div>
 
@@ -1462,6 +1462,10 @@ $$\frac{\Delta z}{z} = \sqrt{\left(\frac{\Delta x}{x}\right)^{2} + \left(\frac{\
 <p>Per i rapporti di polinomi si raccoglie la potenza massima. Esempi svolti in aula e negli appunti:</p>
 <p>$$\lim_{x\to\infty}\frac{x^{3}}{x^{3}+x-1} = \lim_{x\to\infty}\frac{\cancel{x^{3}}}{\cancel{x^{3}}\bigl(1 + \tfrac{1}{x^{2}} - \tfrac{1}{x^{3}}\bigr)} = \frac{1}{1+0-0} = 1;$$</p>
 <p>$$\lim_{x\to\infty}\frac{x^{2}}{x^{3}+x-1} = \lim_{x\to\infty}\frac{\cancel{x^{3}}\,\bigl(\tfrac{1}{x}\bigr)}{\cancel{x^{3}}\bigl(1 + \tfrac{1}{x^{2}} - \tfrac{1}{x^{3}}\bigr)} = \frac{0}{1} = 0.$$</p>
+<div class="box box-obs reveal">
+  <div class="box-tag"><span class="ico">👁</span>Pausa fisica — raggiungere una velocità limite</div>
+  <p>Un corpo che cade in un fluido non accelera indefinitamente: il modello standard prevede $v(t) = v_\infty\left(1 - e^{-t/\tau}\right)$, con $v(0) = 0$ e $\lim_{t\to\infty} v(t) = v_\infty$. Il corpo raggiunge mai <em>esattamente</em> $v_\infty$ in un tempo finito? No: per ogni $t$ finito resta $v(t) &lt; v_\infty$. Il limite distingue ciò che il modello prevede a ogni istante dal comportamento al quale il sistema tende nel tempo: è questo il significato fisico di «velocità limite». (Il modello è ripreso per esercizio al § 47.2, Esercizio 7.)</p>
+</div>
 </section>
 
 <section class="sec" id="s29">
@@ -1602,6 +1606,7 @@ $$\frac{\Delta z}{z} = \sqrt{\left(\frac{\Delta x}{x}\right)^{2} + \left(\frac{\
 <p><strong>Funzioni inverse:</strong> $\arcsin x$ ("l'arco il cui seno è $x$"), definita per $x \in [-1, 1]$ con valori in $[-\pi/2, \pi/2]$; analogamente $\arccos$ e $\arctan$.</p>
 <div class="box box-thm reveal">
   <div class="box-tag"><span class="ico">∑</span>Limite notevole fondamentale</div>
+  <p>Dal confronto geometrico tra triangoli e settore circolare si ricava, per $0 &lt; x &lt; \pi/2$, la doppia disuguaglianza $\cos x &lt; \dfrac{\sin x}{x} &lt; 1$; poiché per $x \to 0$ sia $\cos x$ sia $1$ tendono allo stesso valore, il teorema del confronto (§ 23) fornisce</p>
   <p>$$\lim_{x\to0}\frac{\sin x}{x} = 1 \qquad (x \text{ in radianti}),$$</p>
   <p>da cui l'<strong>approssimazione per angoli piccoli</strong> $\sin x \approx x$ per $x \to 0$: un caso particolare dello <strong>sviluppo in serie di Taylor</strong> (o di <strong>McLaurin</strong> se centrato in $x_0 = 0$; § 44).</p>
 </div>
@@ -1630,6 +1635,10 @@ $$\frac{\Delta z}{z} = \sqrt{\left(\frac{\Delta x}{x}\right)^{2} + \left(\frac{\
 <div class="box box-ex reveal">
   <div class="box-tag"><span class="ico">✏️</span>Esempio d'uso</div>
   <p>Sono esattamente le proprietà usate per risolvere l'esercizio del dimezzamento (§ 26.1): $0{,}9^{m} = \tfrac12 \Rightarrow m = \ln\tfrac12/\ln0{,}9$.</p>
+</div>
+<div class="box box-obs reveal">
+  <div class="box-tag"><span class="ico">👁</span>Osservazione — il parametro τ ha le dimensioni di un tempo</div>
+  <p>Nelle scritture $y_0\,e^{\pm t/\tau}$ l'argomento dell'esponenziale deve essere <strong>adimensionale</strong> (§ 41): per questo $\tau$ ha le dimensioni di un tempo ($[\tau] = T$) — o di una lunghezza, o di qualunque grandezza compaia al denominatore. In un decadimento, dopo un tempo $\tau$ la quantità residua vale $y_0/e \simeq 0{,}37\,y_0$: il parametro $\tau$ è il «tempo caratteristico» del processo, quello in cui l'eccesso si riduce di un fattore $e$.</p>
 </div>
 </section>
 
@@ -1917,7 +1926,11 @@ $$v(t) = \frac{dx}{dt}.$$</li>
 
 <section class="sec" id="s43">
 <h2 class="sec-title"><span class="sn">§ 43</span>Regole di derivazione</h2>
-<p>Le regole di derivazione sono riportate nelle slide (linearità già vista al § 37). Qui l'esempio della più avanzata e le sue conseguenze fisiche.</p>
+<p>Le regole di derivazione sono riportate nelle slide (linearità già vista al § 37). Oltre a quella, le due regole algebriche fondamentali riguardano il <strong>prodotto</strong> e il <strong>quoziente</strong>:</p>
+<p>$$(f\,g)' = f'g + f\,g', \qquad \left(\frac{f}{g}\right)' = \frac{f'g - f\,g'}{g^{2}} \quad (g \neq 0),$$</p>
+<p>con il promemoria pratico: prima di derivare un rapporto, ricordare i punti in cui il denominatore si annulla. Esempio svolto nelle slide:</p>
+<p>$$\frac{d}{dx}\bigl(x^{3}\cos x\bigr) = 3x^{2}\cos x - x^{3}\sin x.$$</p>
+<p>Segue l'esempio della regola più avanzata, la catena, e le sue conseguenze fisiche.</p>
 <h3>43.1 · La regola della catena</h3>
 <div class="box box-thm reveal">
   <div class="box-tag"><span class="ico">∑</span>Regola — derivazione a catena</div>
@@ -1928,7 +1941,9 @@ $$v(t) = \frac{dx}{dt}.$$</li>
 <div class="box box-ex reveal">
   <div class="box-tag"><span class="ico">✏️</span>Esempio</div>
   <p>$$\frac{d}{dx}\,\sin\!\bigl(x^{3}\bigr) = \cos\!\bigl(x^{3}\bigr)\cdot 3x^{2},$$</p>
-  <p>come se si facesse la derivata del seno (che dà $\cos$) per la derivata di $x^{3}$ (che dalla tabellina è $3x^{2}$).</p>
+  <p>come se si facesse la derivata del seno (che dà $\cos$) per la derivata di $x^{3}$ (che dalla tabellina è $3x^{2}$). Altro esempio ricorrente nella fisica dei decadimenti:</p>
+  <p>$$\frac{d}{dt}\,e^{-t/\tau} = -\frac{1}{\tau}\,e^{-t/\tau},$$</p>
+  <p>dove la funzione interna è $-t/\tau$ e la sua derivata $-1/\tau$ esce moltiplicata. La struttura dei differenziali aiuta a ricordare la regola, ma la derivata non è una frazione ordinaria.</p>
 </div>
 <div class="box box-obs reveal">
   <div class="box-tag"><span class="ico">🗣</span>Osservazione — metodo (dal professore)</div>
@@ -1951,7 +1966,11 @@ $$v(t) = \frac{dx}{dt}.$$</li>
   <p>Due automobili subiscono la stessa forza risultante $F$. Quella più veloce riceve la stessa potenza, una potenza maggiore o minore? — Si risponde direttamente dalla formula: $P = Fv$, stessa $F$ e velocità maggiore ⇒ <strong>potenza maggiore</strong>.</p>
 </div>
 <h3>43.3 · cenno: la formula di de L'Hôpital</h3>
-<p>La <strong>formula di de L'Hôpital</strong> (chi l'ha fatta alle superiori l'avrà amata) è stata saltata a lezione — "troppo semplice". Le derivate aiutano a risolvere situazioni di limite apparentemente <strong>indeterminate</strong>, come le forme $0/0$ e $\infty/\infty$: in tali casi $\lim \frac{f(x)}{g(x)} = \lim\frac{f'(x)}{g'(x)}$, se il secondo limite esiste.</p>
+<p>La <strong>formula di de L'Hôpital</strong> (chi l'ha fatta alle superiori l'avrà amata) è stata saltata a lezione — "troppo semplice". Le derivate aiutano a risolvere situazioni di limite apparentemente <strong>indeterminate</strong>, come le forme $0/0$ e $\infty/\infty$: esse <em>non determinano da sole</em> il valore del limite; se valgono le opportune ipotesi di derivabilità,</p>
+<p>$$\lim_{x\to a}\frac{f(x)}{g(x)} = \lim_{x\to a}\frac{f'(x)}{g'(x)},$$</p>
+<p>purché il secondo limite esista. Due esempi classici:</p>
+<p>$$\lim_{x\to 0}\frac{\ln(1+x)}{x} = \lim_{x\to 0}\frac{1/(1+x)}{1} = 1, \qquad\qquad \lim_{x\to\infty}\frac{\ln x}{x} = \lim_{x\to\infty}\frac{1/x}{1} = 0.$$</p>
+<p>La regola si applica <strong>soltanto</strong> alle forme $0/0$ e $\infty/\infty$: le altre forme indeterminate vanno prima trasformate in una di queste. <span class="completion">completamento: gli sviluppi algebrici dei due esempi non sono stati svolti in aula; i risultati sono quelli delle slide</span></p>
 </section>
 <section class="sec" id="s44">
 <h2 class="sec-title"><span class="sn">§ 44</span>La formula di Taylor e le serie di McLaurin</h2>
@@ -1972,7 +1991,10 @@ $$v(t) = \frac{dx}{dt}.$$</li>
 <div class="box box-ex reveal">
   <div class="box-tag"><span class="ico">✏️</span>Esempio (dalla slide) — l'esponenziale</div>
   <p>$$e^{x} = 1 + x + \frac{x^{2}}{2} + O(x^{3}).$$</p>
-  <p>Il simbolo $O(x^{3})$ ("o grande di $x^{3}$") dice <em>quanto è grande ciò che rimane</em> quando ci si ferma prima. Lo sviluppo ha senso se $x$ è piccolino, vicino a zero: con $x = 3$ "viene male", perché il resto è dell'ordine di $x^{3}$ e non è più trascurabile. Lo stesso schema vale per le altre funzioni elementari. <span class="verify">da verificare: la trascrizione non riporta gli altri sviluppi presenti nella slide</span></p>
+  <p>Il simbolo $O(x^{3})$ ("o grande di $x^{3}$") dice <em>quanto è grande ciò che rimane</em> quando ci si ferma prima: raccoglie i termini che, per $x \to 0$, sono dell'ordine di $x^{3}$ o più piccoli, indica l'ordine del primo termine trascurato e permette di stimare come diminuisce l'errore quando $x$ si avvicina a zero. Lo sviluppo ha senso se $x$ è piccolino, vicino a zero: con $x = 3$ "viene male", perché il resto è dell'ordine di $x^{3}$ e non è più trascurabile. Gli sviluppi di McLaurin più usati in Fisica 1 (dalle slide della Lezione 3):</p>
+  <p>$$e^{x} = 1 + x + \frac{x^{2}}{2} + O(x^{3}), \qquad \sin x = x - \frac{x^{3}}{6} + O(x^{5}),$$</p>
+  <p>$$\cos x = 1 - \frac{x^{2}}{2} + O(x^{4}), \qquad \frac{1}{1+x} = 1 - x + x^{2} + O(x^{3}) \quad (|x| &lt; 1).$$</p>
+  <p>Si noti la consequenzialità dei primi tre: derivare lo sviluppo del seno restituisce quello del coseno, e viceversa; il quarto è la serie geometrica, che tornerà utile nell'esercizio «da Newton a $mgh$» (§ 47.2, Esercizio 6).</p>
 </div>
 
 <h3>44.3 · L'approssimazione del seno e il ruolo dei radianti</h3>
@@ -1989,7 +2011,7 @@ $$v(t) = \frac{dx}{dt}.$$</li>
   <p>Un pendolo sta a piombo (verticale). Lo spostate dalla verticale di $10^{\circ}$ e volete usare l'approssimazione $\sin\theta \approx \theta$. Quanto vale l'errore commesso? È sufficiente se serve un'incertezza dello $0{,}5\%$? E se lo spostate di $20^{\circ}$? E di $45^{\circ}$: che errore commettete? Se il risultato vi viene, che so, il $50\%$, voi ingegneri dite: "un errore del 50% è grandino — sei sicuro di voler usare quella formula? Magari no".</p>
   <details class="demo"><summary>Svolgimento e stima dell'errore</summary><div class="demo-body">
   <p>Con $\theta$ in radianti, l'errore relativo di $\sin\theta \approx \theta$ è circa $0{,}5\%$ per $\theta = 10^{\circ}$, circa $2\%$ per $20^{\circ}$ e circa $11\%$ per $45^{\circ}$. <span class="completion">completamento, a titolo di verifica</span></p>
-  <p>Il metodo: sviluppare $\sin\theta = \theta - \theta^{3}/6 + \cdots$; l'errore relativo del primo ordine è circa $\theta^{2}/6$.</p>
+  <p>Il metodo: sviluppare $\sin\theta = \theta - \theta^{3}/6 + \cdots$; l'errore relativo del primo ordine è circa $\theta^{2}/6$. La slide quantifica anche il caso $\theta = 30^{\circ}$: $\sin 30^{\circ} = 0{,}5$ contro $\theta = 0{,}5236$ rad, errore relativo $\simeq 4{,}7\%$ — e pone la domanda giusta: dire che un angolo è «piccolo» ha senso senza specificare la precisione richiesta? La validità di un'approssimazione dipende sia dal parametro sia dall'accuratezza cercata.</p>
   </div></details>
 </div>
 
@@ -2031,6 +2053,10 @@ $$v(t) = \frac{dx}{dt}.$$</li>
 <li>se il segno di $f'$ passa da <strong>positivo a negativo</strong>: $x_0$ è un <strong>massimo (locale)</strong>;</li>
 <li>se passa da <strong>negativo a positivo</strong>: è un <strong>minimo (locale)</strong>.</li>
 </ul>
+<div class="box box-obs reveal">
+  <div class="box-tag"><span class="ico">👁</span>Osservazione — dove cercare gli estremi</div>
+  <p>In un punto interno e differenziabile un estremo locale può trovarsi soltanto dove $f'(x_0) = 0$: la condizione è <strong>necessaria ma non sufficiente</strong> (ci sono punti stazionari che non sono estremi). Ma un passaggio della ricerca non va dimenticato: un estremo può trovarsi anche dove la derivata <strong>non esiste</strong> (lo spigolo di $|x|$, § 39) oppure <strong>agli estremi del dominio</strong>.</p>
+</div>
 <h3>45.2 · Il criterio della derivata seconda</h3>
 <p>Il modo più formale di vedere la stessa cosa, ricordando che $f''$ dice come varia la pendenza della tangente:</p>
 <ul>
@@ -2090,6 +2116,7 @@ $$v(t) = \frac{dx}{dt}.$$</li>
   </svg>
   <figcaption><span class="figbadge">figura ricostruita dalle fonti</span><b>Flesso a tangente orizzontale.</b> $f(x) = x^{3}/3$ ha nell'origine flesso a tangente orizzontale: la curva sale, "rallenta" fino ad avere tangente orizzontale (tratteggio rosso) e riprende a salere, cambiando concavità.</figcaption>
 </figure>
+<p>Il segno di $f''$ descrive la <strong>concavità</strong> del grafico: se $f'' &gt; 0$ la pendenza $f'$ aumenta, se $f'' &lt; 0$ diminuisce; il flesso richiede il <strong>cambio di concavità</strong>. Attenzione al criterio inverso: la sola condizione $f''(x_0) = 0$ <strong>non basta</strong> a decretare un flesso. Controesempio classico (dalle slide): $f(x) = x^{4}$ ha $f''(0) = 0$ eppure in $x = 0$ possiede un <strong>minimo</strong>, non un flesso: la concavità non cambia. Quando $f''(x_0) = 0$ occorre scendere alle derivate successive (§ 45.4) o studiare il segno di $f'$ attorno a $x_0$.</p>
 
 <h3>45.4 · Derivate successive</h3>
 <p>E se né $f'$ né $f''$ bastano (entrambe nulle)? <strong>Derivata terza.</strong> E basta la terza? No: esiste la formula generale che continua con le derivate successive fino alla <strong>prima non nulla</strong> e fornisce analiticamente l'informazione su massimo/minimo. Non è stata mostrata in lezione; è sostanzialmente <strong>forza bruta</strong>: derivo, derivo, derivo. È una cosa che tipicamente non si fa alle superiori né ad Analisi (se il professore di analisi la fa, bene): <strong>la farà il corso di Fisica 1</strong>.</p>
@@ -2154,17 +2181,51 @@ $$v(t) = \frac{dx}{dt}.$$</li>
 </ol>
 <p>Con questa "ricettina" di cinque punti, letteralmente, "ci mettete un satellite fra Terra e Sole". L'obiettivo finale dello studio di funzione era disegnare il grafico: tenete presente che <strong>il grafico e le formule devono raccontare la stessa fisica</strong>. Se l'esame di Analisi comprende sia esercizi sia lo studio di funzione, quanto trattato qui è rilevante.</p>
 <h3>47.1 · Esercizi proposti nella Lezione 4 (con applicazioni fisiche)</h3>
-<p>Al termine di ogni blocco ci saranno <strong>esercizi con applicazioni fisiche</strong> sui concetti appena visti (otto per questo blocco su limiti, continuità e derivate). Il metodo giusto: <strong>leggere, provare, sbatterci la testa</strong> — non andare subito a guardare le soluzioni (che compaiono nelle slide conclusive del blocco), né chiedere all'IA. Non svolti in aula per mancanza di tempo:</p>
+<p>Al termine di ogni blocco ci saranno <strong>esercizi con applicazioni fisiche</strong> sui concetti appena visti (otto per questo blocco su limiti, continuità e derivate). Il metodo giusto: <strong>leggere, provare, sbatterci la testa</strong> — non andare subito a guardare le soluzioni (che compaiono nelle slide conclusive del blocco e sono riportate al § 47.2), né chiedere all'IA. Non svolti in aula per mancanza di tempo; qui i testi completi, con i dati delle slide:</p>
 <ol>
-<li><strong>Raffreddamento continuo della tazza di caffè.</strong> L'esercizio del § 26.1, ma continuo: e dopo <em>un minuto e mezzo</em>? Dopo <em>un secondo</em>? Invece dell'indice intero $n$ si usa $t$: dopo un nanosecondo, dopo un infinitesimo, quant'è la temperatura? La matematica offre i <strong>numeri reali</strong>: $t$ può essere grande o piccolo quanto si vuole, anche infinitesimo — e si risolve il problema. (È la strada che porta all'esponenziale $T(t) = T_{\mathrm{amb}} + (T_0 - T_{\mathrm{amb}})\,e^{-t/\tau}$.)</li>
-<li><strong>Ammortizzatore.</strong> Più ingegneristico: un modello idealizzato con forza definita <strong>per casi</strong>: entro la corsa risponde in modo <strong>lineare</strong> (una costante per la velocità); superato il regime, fine corsa: non si va oltre, e compare una $F_{\max}$.</li>
-<li><strong>Geometria del pendolo.</strong> Coerente con la lezione: il pendolo sarà argomento di una lezione intera fra qualche settimana (<em>spoiler</em> del professore): guardarlo ora solo dal punto di vista matematico.</li>
-<li><strong>Posizione, velocità e inversione del moto</strong> (esercizio).</li>
-<li><strong>Potenza</strong> (già vista, § 43.2).</li>
-<li><strong>Gravità.</strong> Il percorso del corso sarà l'opposto di quello dell'esercizio: all'inizio prendiamo la gravità come costante, $g = 9{,}81\ \mathrm{m/s^{2}}$; poi, verso fine corso, verrà introdotta la <strong>legge di gravitazione universale</strong>, la cui formula "assomiglia" a quella dell'esercizio. Come si conciliano $g$ costante $= 9{,}81$ e la formula della gravitazione universale? <em>Proprio lui: Taylor</em> (lo sviluppo al primo ordine della legge $1/r^{2}$ attorno al raggio terrestre).</li>
-<li><strong>Moto in un mezzo viscoso</strong> (con attrito): fondamentalmente studiare un limite e fare uno sviluppo.</li>
-<li><strong>Proiettile</strong>: il grande classico.</li>
+<li><strong>Raffreddamento di un corpo.</strong> L'esercizio della tazza di caffè (§ 26.1), ma continuo: invece dell'indice intero $n$ si usa il tempo $t$ reale. Un oggetto inizialmente a $T_0 = 80\,^\circ\mathrm{C}$ viene posto in un ambiente a $T_{\mathrm{amb}} = 20\,^\circ\mathrm{C}$; il modello continuo è $T(t) = T_{\mathrm{amb}} + (T_0 - T_{\mathrm{amb}})\,e^{-t/\tau}$, con $\tau = 12$ min. (i) Calcolare $T(0)$ e $\lim_{t\to\infty} T(t)$ e interpretarli fisicamente; (ii) dopo quanto tempo la differenza $T(t) - T_{\mathrm{amb}}$ scende sotto $1\,^\circ\mathrm{C}$? (iii) calcolare $dT/dt$: che segno ha, e che cosa indica? <em>Strumenti:</em> limite dell'esponenziale, logaritmo, derivata di una composta.</li>
+<li><strong>Forza di un ammortizzatore.</strong> Un modello idealizzato esercita la forza $F(v) = -cv$ per $|v| \leq v_0$ e $F(v) = -F_{\max}\,\mathrm{sgn}(v)$ per $|v| &gt; v_0$, con $c &gt; 0$ e $v_0 &gt; 0$. (i) Determinare $F_{\max}$ affinché la forza sia <strong>continua</strong> in $v = \pm v_0$; (ii) con tale scelta la funzione è anche <strong>differenziabile</strong> nei due punti? (iii) disegnare qualitativamente $F(v)$ e spiegare il significato fisico della saturazione.</li>
+<li><strong>Geometria del pendolo.</strong> Una massa sospesa a un filo di lunghezza $L = 1{,}20\ \mathrm{m}$ forma un angolo $\theta = 8^{\circ}$ con la verticale; valgono $x = L\sin\theta$ e $h = L(1-\cos\theta)$. (i) Convertire $\theta$ in radianti; (ii) calcolare $x$ e $h$ con le espressioni esatte; (iii) ripetere con le approssimazioni per piccoli angoli $\sin\theta \simeq \theta$, $1-\cos\theta \simeq \theta^{2}/2$ e confrontare; (iv) quale delle due approssimazioni produce l'errore relativo maggiore? (Il pendolo sarà argomento di una lezione intera fra qualche settimana — <em>spoiler</em> del professore: per ora lo si guarda solo dal punto di vista matematico.)</li>
+<li><strong>Posizione, velocità e inversioni del moto.</strong> La posizione di una particella lungo un asse è $x(t) = 2{,}0\,t^{3} - 9{,}0\,t^{2} + 12t$, con $x$ in m e $t$ in s. (i) Determinare $v(t)$ e $a(t)$; (ii) trovare gli istanti $t \geq 0$ in cui la particella è ferma; (iii) studiare il segno di $v(t)$; (iv) calcolare la posizione negli istanti di arresto e classificarli come massimi o minimi locali di $x(t)$. <em>Interpretazione:</em> un estremo della funzione posizione corrisponde a un'inversione del verso del moto soltanto se la velocità cambia segno.</li>
+<li><strong>Potenza e regola della catena.</strong> $K(v) = \tfrac12 m v^{2}$ con $v = v(t)$. (i) Calcolare $P = dK/dt$ con la regola della catena; (ii) usare $F = ma$ per mostrare che $P = Fv$ nel moto unidimensionale; (iii) un'automobile di massa $m = 1200\ \mathrm{kg}$ viaggia a $20\ \mathrm{m/s}$ con accelerazione $2{,}0\ \mathrm{m/s^2}$: calcolare la potenza associata all'aumento dell'energia cinetica. (Già vista come impostazione al § 43.2.)</li>
+<li><strong>Da Newton a $mgh$ con Taylor.</strong> L'energia potenziale gravitazionale di una massa $m$ a distanza $r$ dal centro della Terra è $U(r) = -GMm/r$. Posto $r = R_{\oplus} + h$ con $h \ll R_{\oplus}$: (i) sviluppare $U(R_{\oplus}+h)$ fino all'ordine $(h/R_{\oplus})^{2}$; (ii) calcolare $\Delta U = U(R_{\oplus}+h) - U(R_{\oplus})$; (iii) riconoscere nel termine dominante la formula $\Delta U \simeq mgh$; (iv) stimare l'importanza della prima correzione per $h = 100\ \mathrm{km}$, con $R_{\oplus} = 6370\ \mathrm{km}$. <em>Suggerimento:</em> usare $(1+\varepsilon)^{-1} = 1 - \varepsilon + \varepsilon^{2} + \cdots$ e $g = GM/R_{\oplus}^{2}$. Il percorso del corso sarà l'opposto: all'inizio prendiamo $g$ costante $= 9{,}81\ \mathrm{m/s^{2}}$; poi, verso fine corso, la <strong>legge di gravitazione universale</strong>; le due si conciliano <em>proprio con Taylor</em>.</li>
+<li><strong>Avvio del moto con attrito.</strong> Un corpo parte da fermo in un fluido e tende alla velocità limite $v(t) = v_{\infty}(1 - e^{-t/\tau})$; integrando, $x(t) = v_{\infty}\left[t - \tau\left(1 - e^{-t/\tau}\right)\right]$ con $x(0) = 0$. (i) Calcolare $\lim_{t\to 0} x(t)/t$ con de L'Hôpital; (ii) sviluppare l'esponenziale per $t \ll \tau$ e mostrare che $x(t) \simeq \tfrac12 a_0 t^{2}$; (iii) ricavare l'accelerazione iniziale $a_0$. (Fondamentalmente: studiare un limite e fare uno sviluppo — qui il limite è la velocità iniziale nulla.)</li>
+<li><strong>Gittata di un proiettile.</strong> In assenza di attrito dell'aria, un proiettile lanciato da terra con velocità $v_0$ e angolo $\theta$ ha gittata $R(\theta) = \frac{v_0^{2}}{g}\,\sin(2\theta)$, $0 \leq \theta \leq \frac{\pi}{2}$. (i) Calcolare $dR/d\theta$ e determinare i punti stazionari; (ii) usare la derivata seconda per classificare quello interno; (iii) determinare l'angolo di gittata massima e il valore $R_{\max}$; (iv) perché è essenziale esprimere $\theta$ in <strong>radianti</strong> durante la derivazione? <em>Discussione:</em> il risultato cambia con attrito dell'aria o con quote iniziale e finale diverse. Il grande classico: il moto del proiettile sarà svolto per intero nella Parte VIII, § 75.</li>
 </ol>
+<h3>47.2 · Le soluzioni schematiche (dalle slide conclusive del blocco)</h3>
+<p>Le soluzioni erano nelle pagine finali delle slide; si provino gli esercizi prima di leggerle.</p>
+<div class="box box-ex reveal">
+  <div class="box-tag"><span class="ex-num">1</span>Soluzione — Raffreddamento</div>
+  <p>$T(0) = 20 + 60 = 80\,^\circ\mathrm{C}$ e $\lim_{t\to\infty} T(t) = 20\,^\circ\mathrm{C}$: il corpo tende asintoticamente alla temperatura dell'ambiente. La condizione $T(t) - T_{\mathrm{amb}} = 60\,e^{-t/12} &lt; 1$ dà $t &gt; 12\ln 60 \simeq 49{,}1$ min. Infine $\dfrac{dT}{dt} = -\dfrac{60}{12}\,e^{-t/12} = -5\,e^{-t/12}\ ^\circ\mathrm{C/min}$: la derivata è negativa e il suo modulo diminuisce — il raffreddamento <strong>rallenta</strong> col tempo (l'eccesso si riduce geometricamente, come nella versione discreta del § 26.1).</p>
+</div>
+<div class="box box-ex reveal">
+  <div class="box-tag"><span class="ex-num">2</span>Soluzione — Ammortizzatore</div>
+  <p>La continuità in $v = v_0$ richiede $\lim_{v\to v_0^{-}} F = -cv_0 = \lim_{v\to v_0^{+}} F = -F_{\max}$, da cui $F_{\max} = c\,v_0$; la stessa condizione assicura la continuità anche in $v = -v_0$. Le derivate laterali però valgono $F'(v_0^{-}) = -c$ e $F'(v_0^{+}) = 0$: la forza è <strong>continua ma non differenziabile</strong> in $v = \pm v_0$ — la transizione alla saturazione presenta uno spigolo (la stessa struttura del modulo, § 39).</p>
+</div>
+<div class="box box-ex reveal">
+  <div class="box-tag"><span class="ex-num">3</span>Soluzione — Geometria del pendolo</div>
+  <p>$\theta = 8^{\circ}\cdot\pi/180^{\circ} \simeq 0{,}1396$ rad. Con i valori esatti: $x = 1{,}20\sin\theta \simeq 0{,}1670$ m e $h = 1{,}20(1-\cos\theta) \simeq 0{,}01168$ m; con i piccoli angoli: $x \simeq 1{,}20\,\theta \simeq 0{,}1676$ m e $h \simeq 1{,}20\,\theta^{2}/2 \simeq 0{,}01170$ m. Errori relativi: $\simeq 0{,}33\%$ su $x$ e $\simeq 0{,}16\%$ su $h$: entrambe le approssimazioni sono accurate a questo angolo; quella su $\sin\theta$ ha l'errore relativo maggiore.</p>
+</div>
+<div class="box box-ex reveal">
+  <div class="box-tag"><span class="ex-num">4</span>Soluzione — Posizione e velocità</div>
+  <p>$v(t) = 6t^{2} - 18t + 12 = 6(t-1)(t-2)$ e $a(t) = 12t - 18$: la particella è ferma a $t = 1$ s e $t = 2$ s. Il segno di $v$: positivo su $(0,1)$, negativo su $(1,2)$, positivo per $t &gt; 2$. Le posizioni negli istanti di arresto: $x(1) = 5$ m (massimo locale), $x(2) = 4$ m (minimo locale); coerentemente $a(1) = -6 &lt; 0$ e $a(2) = +6 &gt; 0$.</p>
+</div>
+<div class="box box-ex reveal">
+  <div class="box-tag"><span class="ex-num">5</span>Soluzione — Potenza</div>
+  <p>$P = \dfrac{dK}{dt} = \dfrac{dK}{dv}\dfrac{dv}{dt} = m\,v\,a = F\,v$. Per l'automobile: $P = (1200\ \mathrm{kg})(20\ \mathrm{m/s})(2{,}0\ \mathrm{m/s^2}) = 4{,}8\times10^{4}$ W $= 48$ kW. Questa è la potenza netta che aumenta l'energia cinetica: non comprende attriti, resistenza dell'aria e rendimento del motore.</p>
+</div>
+<div class="box box-ex reveal">
+  <div class="box-tag"><span class="ex-num">6</span>Soluzione — Energia potenziale vicino alla Terra</div>
+  <p>Con $\varepsilon = h/R_{\oplus}$: $U(R_{\oplus}+h) = -\dfrac{GMm}{R_{\oplus}}\,(1+\varepsilon)^{-1} \simeq -\dfrac{GMm}{R_{\oplus}} + \dfrac{GMm}{R_{\oplus}^{2}}\,h - \dfrac{GMm}{R_{\oplus}^{3}}\,h^{2}$, per cui, con $g = GM/R_{\oplus}^{2}$, $\Delta U \simeq m\,g\,h\left(1 - \dfrac{h}{R_{\oplus}}\right)$. Il termine dominante è $mgh$; per $h = 100$ km la correzione è $h/R_{\oplus} \simeq 1{,}6\%$: assumere $g$ costante sovrastima l'energia di circa l'1,6%.</p>
+</div>
+<div class="box box-ex reveal">
+  <div class="box-tag"><span class="ex-num">7</span>Soluzione — Avvio del moto</div>
+  <p>$x(t)/t$ per $t \to 0$ è della forma $0/0$; con de L'Hôpital: $\lim_{t\to 0} x(t)/t = \lim_{t\to 0} x'(t) = \lim_{t\to 0} v_{\infty}(1 - e^{-t/\tau}) = 0$: la velocità media tende correttamente alla velocità iniziale, nulla. Per $t \ll \tau$, con $e^{-t/\tau} = 1 - \frac{t}{\tau} + \frac{t^{2}}{2\tau^{2}} + O(t^{3})$: $x(t) \simeq v_{\infty}\frac{t^{2}}{2\tau} = \tfrac12 a_0 t^{2}$, da cui $a_0 = \dfrac{v_{\infty}}{\tau}$: all'avvio il moto è uniformemente accelerato, poi l'attrito «spegne» via via l'accelerazione fino alla velocità limite.</p>
+</div>
+<div class="box box-ex reveal">
+  <div class="box-tag"><span class="ex-num">8</span>Soluzione — Gittata massima</div>
+  <p>$R'(\theta) = 2\,\dfrac{v_0^{2}}{g}\cos(2\theta)$; nell'intervallo $(0, \pi/2)$ si annulla per $\cos 2\theta = 0$, cioè $\theta = \pi/4 = 45^{\circ}$. Poiché $R''(\theta) = -4\,\dfrac{v_0^{2}}{g}\sin 2\theta$ e $R''(\pi/4) &lt; 0$, il punto è un massimo, con $R_{\max} = \dfrac{v_0^{2}}{g}$. La derivata di $\sin(2\theta)$ assume la forma semplice $2\cos(2\theta)$ soltanto se $\theta$ è misurato in radianti: con i gradi comparirebbe un fattore di conversione spurio (§ 44.3).</p>
+</div>
 </section>
 </section>
 <!-- ========================= PARTE VI ========================= -->
@@ -2457,6 +2518,19 @@ $$x(t) = \tfrac12\,a_0\,t^{2} + v_0\,t + x_0.$$</li>
 <li><strong>Prodotto adatto:</strong> compare tipicamente una derivata nota per una funzione: si usa l'<strong>integrazione per parti</strong>.</li>
 <li><strong>Tutte le trasformazioni del caso, sperando che si risolva qualcosa:</strong> un'etichetta-cesto per tutti gli altri casi (quelli "un pochino più rumorosi"): trasformazioni algebriche o goniometriche ad hoc, non esiste una ricetta generale, si va di inventiva (o, come detto a lezione, "trasformazioni al panico").</li>
 </ol>
+<p>La tabella riassuntiva delle slide lega ogni struttura al suo esempio tipico:</p>
+<div class="tblwrap reveal"><div class="tblscroll">
+<table class="tbl">
+<caption>Scelta della tecnica di integrazione</caption>
+<thead><tr><th>struttura</th><th>esempio</th></tr></thead>
+<tbody>
+<tr><td>immediata</td><td>$\int x^{3}\,dx$</td></tr>
+<tr><td>sostituzione</td><td>$\int x\cos(x^{2})\,dx$</td></tr>
+<tr><td>parti</td><td>$\int x\,e^{x}\,dx$</td></tr>
+</tbody>
+</table>
+</div></div>
+<p>Il controllo finale consiste sempre nel <strong>derivare il risultato</strong> (una primitiva si verifica derivandola: la derivata deve restituire l'integranda).</p>
 <h3>58.1 · Integrazione per sostituzione</h3>
 <p>È di fatto l'<strong>opposto della regola di derivazione a catena</strong> (§ 43.1):</p>
 <div class="box box-thm reveal">
@@ -2555,12 +2629,28 @@ $$x(t) = \tfrac12\,a_0\,t^{2} + v_0\,t + x_0.$$</li>
 <h3>59.4 · Integrali da dati sperimentali (cenno)</h3>
 <p>Quando in laboratorio si prendono misure di una variabile indipendente e di una variabile dipendente, e serve una grandezza che dipende da un integrale, l'integrale si approssima <strong>numericamente</strong> a partire dai dati (ad esempio sommando aree di rettangoli). Regola pratica annotata negli appunti: se si conoscono solo i valori $(x_i, f_i)$, si usa la <strong>regola dei rettangoli</strong>; una formula comoda è il <strong>punto medio</strong>:</p>
 <div class="formula-hero reveal">$$\int_a^b f(x)\,dx \approx (b-a)\; f\!\left(\frac{a+b}{2}\right)$$<div class="fcap">regola del punto medio</div></div>
+<p>Più precisa è la <strong>regola dei trapezi</strong>, che interpola linearmente fra misure consecutive:</p>
+<div class="formula-hero reveal">$$\int_a^b f(x)\,dx \;\simeq\; \sum_{i=0}^{n-1} \frac{f_i + f_{i+1}}{2}\,\Delta x_i$$<div class="fcap">regola dei trapezi</div></div>
+<div class="box box-ex reveal">
+  <div class="box-tag"><span class="ico">✏️</span>Esempio numerico (dalle slide)</div>
+  <p>Una forza viene misurata ogni $0{,}10$ m:</p>
+  <div class="tblwrap reveal"><div class="tblscroll">
+  <table class="tbl">
+  <caption>Forza misurata in funzione della posizione</caption>
+  <thead><tr><th>$x$ (m)</th><th>0</th><th>0,10</th><th>0,20</th><th>0,30</th><th>0,40</th></tr></thead>
+  <tbody><tr><td>$F$ (N)</td><td>0</td><td>20</td><td>35</td><td>45</td><td>50</td></tr></tbody>
+  </table>
+  </div></div>
+  <p>Con i trapezi: $W \simeq 0{,}10\left(\tfrac{0}{2} + 20 + 35 + 45 + \tfrac{50}{2}\right)\mathrm{J} = 12{,}5$ J: l'area approssimata sotto il grafico $F(x)$; le unità $\mathrm{N\,m}$ confermano che si tratta di un'energia. Una griglia più fitta riduce in genere l'errore di discretizzazione; l'esercizio completo (con rettangoli sinistri e destri come stime di bound) è al § 60.7.</p>
+</div>
 <p>L'argomento è delegato ai corsi di laboratorio; sulle slide resta un esercizio per cimentarsi nell'integrale numerico senza la fretta del laboratorio.</p>
 
 <h3>59.5 · Integrali impropri (cenno)</h3>
 <p>Esistono <strong>integrali impropri</strong>: integrali definiti tramite <strong>limiti</strong>, tipicamente quando l'intervallo di integrazione è infinito:</p>
 <p>$$\int_0^{\infty} g(t)\,dt = \lim_{b\to\infty} \int_0^{b} g(t)\,dt.$$</p>
-<p>In tal caso, oltre alla fatica di calcolare la primitiva, ci si deve chiedere se ciò che è scritto abbia senso, cioè se l'integrale <strong>converge</strong> ed è finito. In fisica il caso capita spesso: tipicamente nello smorzamento di un sistema soggetto ad attrito viscoso (decadimento esponenziale).</p>
+<p>In tal caso, oltre alla fatica di calcolare la primitiva, ci si deve chiedere se ciò che è scritto abbia senso, cioè se l'integrale <strong>converge</strong> ed è finito. In fisica il caso capita spesso: tipicamente nello smorzamento di un sistema soggetto ad attrito viscoso (decadimento esponenziale). Il caso prototipo, che vale la pena ricordare:</p>
+<div class="formula-hero reveal">$$\int_0^{\infty} e^{-t/\tau}\,dt = \tau$$<div class="fcap">il processo dura un tempo infinito, il contributo totale è finito</div></div>
+<p>Il processo continua per un tempo idealmente infinito, ma il contributo totale è <strong>finito</strong> — proprio perché l'esponenziale decade abbastanza in fretta (ogni tempo $\tau$ il contributo si riduce di un fattore $e$). L'esercizio completo sul decadimento, col tempo medio, è al § 60.8.</p>
 
 <h3>59.6 · Integrali multipli, grandezze vettoriali e densità volumica</h3>
 <p>Il primo integrale multiplo che incontrerete — e quasi l'unico, anche nel secondo semestre — è l'integrale di una <strong>densità volumica</strong> $\rho(\vec r)$ (rho greco: "una P senza grazie", col ricciolo; si chiama <em>ro</em>, "come il paese vicino a Milano").</p>
@@ -2702,9 +2792,29 @@ $$x(t) = \tfrac12\,a_0\,t^{2} + v_0\,t + x_0.$$</li>
   <figcaption><span class="figbadge">figura ricostruita dalle fonti</span><b>Andamento qualitativo della posizione.</b> Crescita parabolica fino al massimo $x=8$ m in $t=4$ s (l'istante dell'inversione del moto, dove $v=0$), poi discesa a $x=7$ m in $t=5$ s. Il grafico della posizione è continuo e liscio a tratti; il massimo corrisponde esattamente al cambio di segno della velocità.</figcaption>
 </figure>
 
-<h3>60.2 · Lavoro di una molla</h3>
-<p>Già svolto al § 59.2: $W = \int_0^{a} kx\,dx = \tfrac12 k a^{2}$, nelle due versioni (forza esterna che tira, forza elastica che si oppone: segni opposti per azione–reazione).</p>
-<h3>60.3 · Forza non lineare (esercizio proposto, con soluzione schematica)</h3>
+<h3>60.2 · Dall'accelerazione alla posizione (esercizio proposto)</h3>
+<div class="box box-exercise reveal">
+  <div class="box-tag"><span class="ex-num">⟩</span>Testo</div>
+  <p>Una particella si muove lungo un asse con $a(t) = 4 - 2t$ (in $\mathrm{m/s^2}$), con condizioni iniziali $v(0) = 1\ \mathrm{m/s}$ e $x(0) = 0$. (i) Ricavare $v(t)$ per integrazione; (ii) ricavare $x(t)$; (iii) determinare l'istante in cui la velocità è massima; (iv) calcolare il valore della velocità massima.</p>
+  <details class="demo"><summary>Svolgimento</summary><div class="demo-body">
+  <p>È il complemento ideale del § 56: due integrazioni successive, con le costanti fissate dalle condizioni iniziali.</p>
+  <p><strong>(i)</strong> $v(t) = \int (4-2t)\,dt = 4t - t^{2} + C$; da $v(0) = 1$ segue $C = 1$: $v(t) = 1 + 4t - t^{2}$.</p>
+  <p><strong>(ii)</strong> $x(t) = \int (1+4t-t^{2})\,dt = t + 2t^{2} - \tfrac{t^{3}}{3} + C_x$, con $C_x = 0$ da $x(0) = 0$.</p>
+  <p><strong>(iii)</strong> La velocità è massima dove si annulla la sua derivata, cioè dove $a(t) = 4 - 2t = 0$: $t = 2$ s.</p>
+  <p><strong>(iv)</strong> $v_{\max} = v(2) = 1 + 8 - 4 = 5\ \mathrm{m/s}$.</p>
+  </div></details>
+</div>
+<h3>60.3 · Lavoro su una molla (esercizio proposto)</h3>
+<div class="box box-exercise reveal">
+  <div class="box-tag"><span class="ex-num">⟩</span>Testo</div>
+  <p>Una molla ideale ha costante elastica $k = 250\ \mathrm{N/m}$ e viene compressa lentamente dalla posizione di equilibrio fino ad $A = 0{,}12$ m. (i) Scrivere la forza esterna necessaria in funzione della compressione $x$; (ii) calcolare il lavoro della forza esterna; (iii) quello della forza elastica; (iv) verificare le dimensioni.</p>
+  <details class="demo"><summary>Svolgimento</summary><div class="demo-body">
+  <p>Compressa «quasi staticamente» (senza strappi), la forza esterna equilibra in ogni istante quella elastica:</p>
+  <p>$$F_{\mathrm{ext}}(x) = k\,x, \qquad W_{\mathrm{ext}} = \int_0^{A} kx\,dx = \tfrac12 k A^{2} = \tfrac12 (250\ \mathrm{N/m})(0{,}12\ \mathrm{m})^{2} = 1{,}8\ \mathrm{J}.$$</p>
+  <p>La forza elastica, di verso opposto allo spostamento, compie il lavoro opposto: $W_{\mathrm{el}} = -1{,}8$ J (azione–reazione, § 59.2). Le dimensioni tornano: $(\mathrm{N/m})\cdot\mathrm{m}^{2} = \mathrm{N\,m} = \mathrm{J}$. Già incontrato come impostazione al § 59.2, nelle due versioni (forza esterna che tira, forza elastica che si oppone: segni opposti per azione–reazione).</p>
+  </div></details>
+</div>
+<h3>60.4 · Forza non lineare (esercizio proposto, con soluzione schematica)</h3>
 <div class="box box-exercise reveal">
   <div class="box-tag"><span class="ex-num">⟩</span>Testo</div>
   <p>Una forza ha andamento non lineare</p>
