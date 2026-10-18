@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chimica Generale — Dispensa Ipermediale</title>
-<meta name="description" content="Dispensa ipermediale completa di Chimica Generale: fondamenti, struttura dell'atomo, legame chimico, gas, forze intermolecolari, soluzioni ed esercizi svolti.">
+<meta name="description" content="Dispensa ipermediale completa di Chimica Generale: fondamenti, struttura dell'atomo, legame chimico, gas, forze intermolecolari, soluzioni e proprietà colligative, stato solido ed esercizi svolti.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -24,21 +24,6 @@ window.MathJax = {
 };
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-<script>
-window.mermaidCfg = {
-  startOnLoad: true,
-  theme: 'base',
-  securityLevel: 'loose',
-  flowchart: { curve: 'basis', htmlLabels: true, padding: 14 },
-  themeVariables: {
-    primaryColor: '#eef2f7', primaryTextColor: '#2e2c28', primaryBorderColor: '#3b5b92',
-    lineColor: '#8a8f98', secondaryColor: '#eef5ef', tertiaryColor: '#f6f2ea',
-    fontFamily: 'Inter, system-ui, sans-serif', fontSize: '14px'
-  }
-};
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"
-        onload="mermaid.initialize(window.mermaidCfg)"></script>
 <style>
 :root{
   --paper:#faf7f1; --paper-2:#f4efe5; --card:#ffffff;
@@ -181,7 +166,7 @@ a:hover{border-bottom-color:var(--blue)}
 .mathdisp{margin:20px 0;overflow-x:auto;overflow-y:hidden;padding:2px 0}
 mjx-container[display="true"]{margin:0 !important;max-width:100%;overflow-x:auto;overflow-y:hidden;padding:1px 0}
 .box mjx-container[display="true"]{margin:6px 0 !important}
-p:has(mjx-container),li:has(mjx-container){overflow-x:auto;overflow-y:hidden}
+p:has(mjx-container){overflow-x:auto;overflow-y:hidden}
 
 /* ---------- tabelle ---------- */
 .table-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:var(--radius);
@@ -200,8 +185,20 @@ tbody tr:last-child td{border-bottom:none}
 .figure .ascii{margin:0;text-align:left}
 pre.ascii{font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.55;color:var(--ink);
   background:var(--paper-2);border:1px solid var(--line-soft);border-radius:10px;padding:14px 18px;overflow-x:auto}
-.mermaid{display:flex;justify-content:center}
-.mermaid svg{max-width:100%}
+
+/* ---------- grafico interattivo (curve di solubilità) ---------- */
+svg[data-sol]{cursor:crosshair}
+svg[data-sol]:focus{outline:2px solid var(--blue);outline-offset:4px;border-radius:6px}
+.viz-tip{position:absolute;z-index:5;min-width:156px;background:var(--card);border:1px solid var(--line);
+  border-radius:10px;box-shadow:0 8px 24px rgba(46,44,40,.14);padding:8px 11px;text-align:left;
+  font-family:'Inter',sans-serif;font-size:12.5px;line-height:1.5;pointer-events:none}
+.viz-tip-h{font-weight:700;color:var(--ink);margin-bottom:3px}
+.viz-tip-r{display:flex;align-items:center;gap:7px;color:var(--ink-soft)}
+.viz-tip-r b{color:var(--ink);min-width:34px;text-align:right;font-variant-numeric:tabular-nums}
+.viz-tip-r.hl span:last-child{color:var(--ink);font-weight:600}
+.viz-key{display:inline-block;width:14px;height:3px;border-radius:2px;flex:none}
+.box .table-wrap{margin:12px 0;box-shadow:none}
+details.sol > .table-wrap, details.sol > .mathdisp{margin:12px 18px}
 
 /* ---------- soluzioni collassabili ---------- */
 details.sol{margin:8px 0 20px;border:1px solid var(--line);border-radius:var(--radius);background:#fdfcf9;overflow:hidden}
@@ -289,7 +286,7 @@ details.sol > p:first-of-type{margin-top:12px}
 
 /* ---------- stampa ---------- */
 @media print{
-  .topbar,aside#sidebar,#toTop,#progress,.backdrop{display:none !important}
+  .topbar,aside#sidebar,#toTop,#progress,.backdrop,.viz-tip{display:none !important}
   body{background:#fff;font-size:11.5pt}
   .layout{padding-top:0}
   .figure,.box,.table-wrap{box-shadow:none;break-inside:avoid}
@@ -324,7 +321,7 @@ __TOC__
       <header class="hero">
         <div class="kicker">Corso di Chimica Generale · Ingegneria Biomedica · Università degli Studi di Firenze</div>
         <h1>Chimica — Dispensa Definitiva</h1>
-        <p class="sub">Tutto il corso in un'unica pagina: dalle leggi ponderali alla struttura quantistica dell'atomo, dal legame chimico ai gas, dalle forze intermolecolari alle soluzioni, con esercizi svolti e il metodo della docente.</p>
+        <p class="sub">Tutto il corso in un'unica pagina: dalle leggi ponderali alla struttura quantistica dell'atomo, dal legame chimico ai gas, dalle forze intermolecolari alle soluzioni e allo stato solido, con esercizi svolti e il metodo della docente.</p>
         <div class="chips">
           <span class="chip-meta">__NPARTI__ parti</span>
           <span class="chip-meta">__NSEC__ sezioni</span>
@@ -488,10 +485,17 @@ const GLOSS = {
   'numero sterico': 'Numero di sfere elettroniche (legami σ + coppie solitarie) attorno all’atomo centrale nel VSEPR.',
   'legge di Henry': 'La solubilità di un gas in un liquido è proporzionale alla sua pressione parziale.',
   'solvatazione': 'Circondamento di ioni o molecole di soluto da parte del solvente (idratazione, se il solvente è acqua).',
-  'paramagnetismo': 'Attrazione debole in un campo magnetico dovuta a elettroni spaiati (es. O₂).'
+  'paramagnetismo': 'Attrazione debole in un campo magnetico dovuta a elettroni spaiati (es. O₂).',
+  'prodotto di solubilità': 'Costante di equilibrio della dissociazione di un sale poco solubile: Kps = [A]ⁿ·[B]ᵐ; se il prodotto ionico la supera, il sale precipita.',
+  'proprietà colligative': 'Proprietà che dipendono solo dal numero di particelle di soluto, non dalla loro natura: ΔP, ΔT_eb, ΔT_cr, π.',
+  'pressione osmotica': 'Pressione da applicare alla soluzione per impedire l’osmosi attraverso una membrana semipermeabile: πV = n·RT.',
+  'cella unitaria': 'La più piccola porzione del cristallo che, ripetuta lungo i tre assi, genera l’intera struttura e ne porta la stechiometria.',
+  'numero di coordinazione': 'Numero di primi vicini (alla distanza minima) di una particella in un cristallo: NaCl 6:6, ZnS 4, Li₂O 4:8.',
+  'energia reticolare': 'Energia liberata quando gli ioni gassosi formano il reticolo cristallino: cresce con le cariche, cala con i raggi.',
+  'costante di Madelung': 'Somma dei contributi coulombiani, attrattivi e repulsivi, dei gusci di ioni attorno a uno ione: ≈ 1,748 per NaCl.'
 };
 (function(){
-  const skip = 'svg,pre,code,.chip,.btitle,a,summary,script,style,.mermaid,.verify,mjx-container';
+  const skip = 'svg,pre,code,.chip,.btitle,a,summary,script,style,.verify,mjx-container,.viz-tip';
   const walker = document.createTreeWalker(document.querySelector('main'), NodeFilter.SHOW_TEXT, {
     acceptNode(node){
       if(!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
@@ -515,6 +519,84 @@ const GLOSS = {
     }
   }
 })();
+
+/* ============ curve di solubilità: lettura dei valori al passaggio del puntatore o da tastiera ============ */
+document.querySelectorAll('svg[data-sol]').forEach(svg => {
+  let D;
+  try { D = JSON.parse(svg.dataset.sol); } catch(e) { return; }
+  const NS = 'http://www.w3.org/2000/svg';
+  const fx = t => D.x0 + t / 100 * (D.x1 - D.x0);
+  const fy = g => D.y0 - g / D.ymax * (D.y0 - D.y1);
+  const layer = document.createElementNS(NS, 'g');
+  layer.setAttribute('visibility', 'hidden');
+  layer.setAttribute('pointer-events', 'none');
+  const cross = document.createElementNS(NS, 'line');
+  cross.setAttribute('y1', D.y1); cross.setAttribute('y2', D.y0);
+  cross.setAttribute('stroke', '#6a6459'); cross.setAttribute('stroke-width', '1');
+  layer.appendChild(cross);
+  const dots = D.s.map(s => {
+    const c = document.createElementNS(NS, 'circle');
+    c.setAttribute('r', s.h ? 4.5 : 3.5); c.setAttribute('fill', s.c);
+    c.setAttribute('stroke', '#fff'); c.setAttribute('stroke-width', '2');
+    layer.appendChild(c);
+    return c;
+  });
+  svg.appendChild(layer);
+  const fig = svg.closest('figure');
+  fig.style.position = 'relative';
+  const tip = document.createElement('div');
+  tip.className = 'viz-tip'; tip.hidden = true; tip.setAttribute('aria-live', 'polite');
+  fig.appendChild(tip);
+  let k = -1;
+  function show(idx) {
+    k = Math.max(0, Math.min(D.T.length - 1, idx));
+    const T = D.T[k], x = fx(T);
+    cross.setAttribute('x1', x); cross.setAttribute('x2', x);
+    D.s.forEach((s, j) => { dots[j].setAttribute('cx', x); dots[j].setAttribute('cy', fy(s.v[k])); });
+    layer.setAttribute('visibility', 'visible');
+    tip.textContent = '';
+    const h = document.createElement('div');
+    h.className = 'viz-tip-h'; h.textContent = T + ' °C — g / 100 g H₂O';
+    tip.appendChild(h);
+    D.s.map(s => ({ s: s, v: s.v[k] })).sort((a, b) => b.v - a.v).forEach(r => {
+      const row = document.createElement('div');
+      row.className = 'viz-tip-r' + (r.s.h ? ' hl' : '');
+      const key = document.createElement('span');
+      key.className = 'viz-key'; key.style.background = r.s.c;
+      const val = document.createElement('b');
+      val.textContent = String(r.v).replace('.', ',');
+      const name = document.createElement('span');
+      name.textContent = r.s.n;
+      row.append(key, val, name);
+      tip.appendChild(row);
+    });
+    tip.hidden = false;
+    const box = svg.getBoundingClientRect(), fb = fig.getBoundingClientRect();
+    const sx = box.width / svg.viewBox.baseVal.width;
+    let left = box.left - fb.left + x * sx + 14;
+    if (left + tip.offsetWidth > fb.width - 8) left = box.left - fb.left + x * sx - tip.offsetWidth - 14;
+    tip.style.left = Math.max(8, left) + 'px';
+    tip.style.top = (box.top - fb.top + 12) + 'px';
+  }
+  function hide() { layer.setAttribute('visibility', 'hidden'); tip.hidden = true; }
+  function nearest(ev) {
+    const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY;
+    const p = pt.matrixTransform(svg.getScreenCTM().inverse());
+    const T = (p.x - D.x0) / (D.x1 - D.x0) * 100;
+    let best = 0;
+    D.T.forEach((t, j) => { if (Math.abs(t - T) < Math.abs(D.T[best] - T)) best = j; });
+    return best;
+  }
+  svg.addEventListener('pointermove', ev => show(nearest(ev)));
+  svg.addEventListener('pointerleave', hide);
+  svg.addEventListener('focus', () => show(k < 0 ? 0 : k));
+  svg.addEventListener('blur', hide);
+  svg.addEventListener('keydown', ev => {
+    if (ev.key === 'ArrowRight') { show(k + 1); ev.preventDefault(); }
+    else if (ev.key === 'ArrowLeft') { show(k - 1); ev.preventDefault(); }
+    else if (ev.key === 'Escape') hide();
+  });
+});
 </script>
 </body>
 </html>
