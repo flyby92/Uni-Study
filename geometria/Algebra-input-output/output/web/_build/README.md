@@ -31,12 +31,22 @@ Solo libreria standard di Python. Nessun accesso alla rete in fase di build.
     di un paragrafo) → il codice è in `tpl/widgets.js` (2D) e `tpl/labs3d.js` (3D), registrato in
     `GAL.labs['id']`;
   - indice di ricerca e albero della barra laterale (id dei titoli = gli stessi dell'Indice).
+  - formule chiave: ogni formula display con `\boxed{…}` diventa un riquadro «Formula chiave» (classe
+    `dm key`) e una voce del **Formulario** (pulsante Σ nella barra in alto, tasto `F`; dati JSON in
+    `#keyData`, finestra disegnata da `tpl/app.js`). Le formule del Capitolo 20 (quaderno) sono escluse.
 - `checks.py` — controlli di fedeltà: tutte le formule identiche e nello stesso ordine, testo
   identico parola per parola, figure, id unici, link interni con bersaglio, HTML ben annidato.
 - `tpl/` — `page.tpl` (scheletro), `style.css`, `app.js` (indice, scroll-spy, ricerca, preferenze,
   formule), `diagrams.js`, `widgets.js`, `labs3d.js`.
 - `vendor/katex-0.16.47/dist` — KaTeX (incorporato; le formule si rendono nel browser, prima
   quelle visibili). `fonts/` — Source Serif 4 e Libre Franklin (woff2, sottoinsieme latin).
+
+## Sorgenti della dispensa
+
+`Dispensa-Definitiva/dispensa_definitiva.md` è assemblata da `Dispensa-Definitiva/.build/capitoli/*.md`
+(un file per capitolo, Parti incluse; `20_quaderno.md` è il quaderno di esercizi) con
+`python3 .build/assemble.py`, che rigenera anche l'Indice. Le figure si rigenerano con
+`.build/fig_parte1.py` … `fig_parte6.py` (libreria `figlib.py`).
 
 ## Dopo nuove lezioni
 

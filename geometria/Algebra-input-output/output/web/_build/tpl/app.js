@@ -167,6 +167,17 @@
   const liById = new Map(items.map((li) => [li.dataset.id, li]));
   function setOpen(li, open, manual) {
     if (!li || !li.hasAttribute('data-has')) return;
+    // un capitolo aperto alla volta: aprendone uno si chiude quello precedente
+    if (open && li.classList.contains('t-chapter')) {
+      for (const other of items) {
+        if (other !== li && other.classList.contains('t-chapter') && other.classList.contains('open')) {
+          other.classList.remove('open');
+          const ob = other.querySelector(':scope > .t-row > .t-tog');
+          if (ob) ob.setAttribute('aria-expanded', 'false');
+          other.dataset.manual = '0';
+        }
+      }
+    }
     li.classList.toggle('open', open);
     const b = li.querySelector(':scope > .t-row > .t-tog');
     if (b) b.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -320,6 +331,7 @@
     }
   }
   const progFill = $('#progFill');
+  const courseFill = $('#courseFill');
   function onScroll() {
     const y = window.scrollY + topOffset() + 6;
     if (spyLock && Date.now() - spyLockT < 1200) {
@@ -341,6 +353,13 @@
       if (yy >= c.top && yy < c.bottom) { p = (window.scrollY + vh - c.top) / Math.max(1, c.bottom - c.top); break; }
     }
     progFill.style.width = (Math.max(0, Math.min(1, p)) * 100).toFixed(2) + '%';
+    // avanzamento nell'intero corso (dal primo all'ultimo capitolo)
+    let cp = 0;
+    if (chapters.length) {
+      const start = chapters[0].top, end = chapters[chapters.length - 1].bottom;
+      cp = (yy - start) / Math.max(1, end - start);
+    }
+    courseFill.style.width = (Math.max(0, Math.min(1, cp)) * 100).toFixed(2) + '%';
   }
   let ticking = false;
   window.addEventListener('scroll', () => {
@@ -642,6 +661,61 @@
   $('#lbxClose').addEventListener('click', () => { lbx.hidden = true; });
   lbx.addEventListener('click', (e) => { if (e.target === lbx || e.target.closest('.lbx-img')) lbx.hidden = true; });
 
+  /* ------------------------------------------------------------------ formulario */
+  const frm = $('#formulario');
+  let frmBuilt = false;
+  function buildForm() {
+    if (frmBuilt) return;
+    frmBuilt = true;
+    let data = [];
+    try { data = JSON.parse($('#keyData').textContent); } catch (e) { data = []; }
+    const body = $('#formBody');
+    const sel = $('#formChap');
+    const frag = document.createDocumentFragment();
+    let last = null;
+    let sec = null;
+    for (const d of data) {
+      if (d.c !== last) {
+        last = d.c;
+        sec = document.createElement('section');
+        sec.className = 'frm-c';
+        sec.dataset.c = d.c;
+        const h = document.createElement('h3');
+        h.textContent = d.c;
+        sec.append(h);
+        frag.append(sec);
+        const o = document.createElement('option');
+        o.value = d.c;
+        o.textContent = d.c;
+        sel.append(o);
+      }
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'frm-i';
+      b.dataset.a = d.a;
+      const lab = [d.e, d.g ? '(' + d.g + ')' : ''].filter(Boolean).join(' · ');
+      b.innerHTML = `<span class="frm-l"><b>${escH(lab || 'Formula')}</b><span class="frm-s">${escH(d.s)}</span></span><span class="frm-f"></span>`;
+      const f = b.querySelector('.frm-f');
+      try { f.innerHTML = GAL.tex(d.x.replace(/\\tag\{[^}]*\}/g, '').replace(/[.,;:]\s*$/, ''), true); } catch (e) { f.textContent = d.x; }
+      sec.append(b);
+    }
+    body.append(frag);
+  }
+  function openForm() { buildForm(); frm.hidden = false; $('#formClose').focus(); }
+  function closeForm() { frm.hidden = true; }
+  $('#formBtn').addEventListener('click', openForm);
+  $('#formClose').addEventListener('click', closeForm);
+  frm.addEventListener('click', (e) => {
+    if (e.target === frm) { closeForm(); return; }
+    const it = e.target.closest('.frm-i');
+    if (it) { closeForm(); navigate(it.dataset.a); }
+  });
+  $('#formChap').addEventListener('change', (e) => {
+    const v = e.target.value;
+    $$('.frm-c', frm).forEach((x) => { x.hidden = !!v && x.dataset.c !== v; });
+    $('#formBody').scrollTop = 0;
+  });
+
   /* ------------------------------------------------------------------ scorciatoie */
   const help = $('#help');
   $('#helpBtn').addEventListener('click', () => { help.hidden = false; $('#helpClose').focus(); });
@@ -661,6 +735,7 @@
     if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) { e.preventDefault(); openSearch(); return; }
     if (e.key === 'Escape') {
       if (!ovlSearch.hidden) closeSearch();
+      else if (!frm.hidden) closeForm();
       else if (!lbx.hidden) lbx.hidden = true;
       else if (!help.hidden) help.hidden = true;
       else if (!pop.hidden) hidePop();
@@ -668,12 +743,13 @@
       return;
     }
     if (typing || e.ctrlKey || e.metaKey || e.altKey) return;
-    if (!ovlSearch.hidden || !help.hidden || !lbx.hidden) return;
+    if (!ovlSearch.hidden || !help.hidden || !lbx.hidden || !frm.hidden) return;
     const k = e.key;
     if (k === '/') { e.preventDefault(); openSearch(); }
     else if (k === 'n' || k === 'N') sectionStep(1);
     else if (k === 'p' || k === 'P') sectionStep(-1);
     else if (k === 't' || k === 'T') cycleTheme();
+    else if (k === 'f' || k === 'F') openForm();
     else if (k === '?') { help.hidden = false; $('#helpClose').focus(); }
   });
 

@@ -37,6 +37,7 @@
 <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z" fill="currentColor"/></symbol>
 <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v4h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 <symbol id="i-kbd" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6 10h.01M9.5 10h.01M13 10h.01M16.5 10h.01M7.5 14h9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-sigma" viewBox="0 0 24 24"><path d="M18 5H6.5l6 7-6 7H18" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M5.5 11.5L12 5l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 <symbol id="i-axes" viewBox="0 0 32 32"><path d="M9 23V5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M9 23h18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M9 23l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M9 3.2l-3 4.2h6zM28.8 23l-4.2-3v6z" fill="currentColor"/><path d="M9 23l11-11" fill="none" stroke="var(--brand-v, #b3261e)" stroke-width="2.6" stroke-linecap="round"/><path d="M22.4 9.6l-1.1 5.2-4.1-4.1z" fill="var(--brand-v, #b3261e)"/></symbol>
 </svg>
@@ -66,10 +67,11 @@
     <button class="icbtn tb-menu" id="menuBtn" type="button" aria-label="Apri l’indice" aria-controls="side" aria-expanded="false"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
     <nav class="crumbs" id="crumbs" aria-label="Sei qui"></nav>
     <div class="tb-act">
+      <button class="tb-btn" id="formBtn" type="button" aria-label="Formulario (F)"><svg class="ic" aria-hidden="true"><use href="#i-sigma"/></svg><span class="tb-l">Formulario</span></button>
       <button class="tb-btn" id="searchBtn" type="button" aria-label="Cerca (Ctrl K)"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><span class="tb-l">Cerca</span></button>
       <button class="tb-btn tb-sq" id="themeBtn" type="button" aria-label="Tema"><svg class="ic" aria-hidden="true"><use href="#i-auto"/></svg></button>
     </div>
-    <div class="prog" aria-hidden="true"><span id="progFill"></span></div>
+    <div class="prog" aria-hidden="true"><span id="courseFill" class="course"></span><span id="progFill"></span></div>
   </header>
 
   <main class="doc" id="doc">
@@ -120,12 +122,26 @@
   </figure>
 </div>
 
+<div class="ovl" id="formulario" hidden>
+  <div class="frm" role="dialog" aria-modal="true" aria-labelledby="formT">
+    <div class="frm-h">
+      <svg class="ic" aria-hidden="true"><use href="#i-sigma"/></svg>
+      <h2 id="formT">Formulario</h2>
+      <select id="formChap" aria-label="Mostra un solo capitolo"><option value="">Tutti i capitoli</option></select>
+      <button class="icbtn" id="formClose" type="button" aria-label="Chiudi il formulario"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <p class="frm-n">Le formule chiave della dispensa, capitolo per capitolo. Fai clic su una formula per raggiungerla nel testo.</p>
+    <div class="frm-b" id="formBody"></div>
+  </div>
+</div>
+
 <div class="ovl" id="help" hidden>
   <div class="hlp" role="dialog" aria-modal="true" aria-labelledby="helpT">
     <div class="hlp-h"><h2 id="helpT">Scorciatoie da tastiera</h2><button class="icbtn" id="helpClose" type="button" aria-label="Chiudi"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></div>
     <dl class="hlp-l">
       <dt><kbd>/</kbd> o <kbd>Ctrl</kbd>+<kbd>K</kbd></dt><dd>Cerca nella dispensa</dd>
       <dt><kbd>N</kbd> / <kbd>P</kbd></dt><dd>Sezione successiva / precedente</dd>
+      <dt><kbd>F</kbd></dt><dd>Apre il formulario (le formule chiave, capitolo per capitolo)</dd>
       <dt><kbd>T</kbd></dt><dd>Cambia tema (automatico, chiaro, scuro)</dd>
       <dt><kbd>Esc</kbd></dt><dd>Chiude finestre e indice</dd>
     </dl>
@@ -137,6 +153,7 @@
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script type="application/json" id="searchData">{{SEARCH}}</script>
+<script type="application/json" id="keyData">{{FORMULE}}</script>
 <script>{{KATEX_JS}}</script>
 <script>{{APP_JS}}</script>
 </body>

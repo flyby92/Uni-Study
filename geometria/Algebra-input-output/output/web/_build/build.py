@@ -298,7 +298,7 @@ DIAGRAM_LABELS = {
     'Campo 𝕂<br/>ℚ, ℝ, ℂ, ℤₚ (p primo)':
         r'Campo $\mathbb{K}$<br/>$\mathbb{Q}$, $\mathbb{R}$, $\mathbb{C}$, $\mathbb{Z}_p$ ($p$ primo)',
     '+ prodotto per scalari di 𝕂<br/>con 4 proprietà': r'+ prodotto per scalari di $\mathbb{K}$<br/>con 4 proprietà',
-    'Spazio vettoriale su 𝕂<br/>(Capp. 6–14)': r'Spazio vettoriale su $\mathbb{K}$<br/>(Capp. 6–14)',
+    'Spazio vettoriale su 𝕂<br/>(Capp. 6 e 14–19)': r'Spazio vettoriale su $\mathbb{K}$<br/>(Capp. 6 e 14–19)',
     'ℕ': r'$\mathbb{N}$', 'ℤ': r'$\mathbb{Z}$', 'ℚ': r'$\mathbb{Q}$', 'ℝ': r'$\mathbb{R}$', 'ℂ': r'$\mathbb{C}$',
     'x+1=0': r'$x+1=0$', '2x+1=0': r'$2x+1=0$', 'x²−2=0': r'$x^2-2=0$', 'x²+1=0': r'$x^2+1=0$',
     'Forma algebrica<br/>z = a + bi': r'Forma algebrica<br/>$z = a + bi$',
@@ -335,6 +335,29 @@ DIAGRAM_LABELS = {
     'det(P₁−P₀; v; w) = 0 ?': r'$\det(P_1 - P_0;\, \underline{v};\, \underline{w}) = 0$ ?',
     'v ∧ w = 0 ?': r'$\underline{v} \wedge \underline{w} = \underline{0}$ ?',
     'P₁ ∈ r ?': r'$P_1 \in r$ ?',
+    # Capitolo 15: Rouché–Capelli
+    'Sistema Ax = b<br/>m equazioni, n incognite': r'Sistema $Ax = b$<br/>$m$ equazioni, $n$ incognite',
+    "Calcolare p = rango(A)<br/>e p' = rango(A|b)": r"Calcolare $p = \operatorname{rango}(A)$<br/>e $p' = \operatorname{rango}(A\mid b)$",
+    "p = p' ?": r"$p = p'$ ?",
+    'p = n ?': r'$p = n$ ?',
+    'Infinite soluzioni<br/>dipendenti da n − p parametri': r'Infinite soluzioni<br/>dipendenti da $n - p$ parametri',
+    # Capitolo 17: matrice associata
+    'v ∈ V': r'$v \in V$',
+    'f(v) ∈ W': r'$f(v) \in W$',
+    'x ∈ 𝕂ⁿ': r'$x \in \mathbb{K}^n$',
+    'y = A x ∈ 𝕂ᵐ': r'$y = A x \in \mathbb{K}^m$',
+    'coordinate rispetto a 𝒫': r'coordinate rispetto a $\mathcal{P}$',
+    'moltiplicazione per A': r'moltiplicazione per $A$',
+    'vettore di W con coordinate y rispetto ad 𝒜': r'vettore di $W$ con coordinate $y$ rispetto ad $\mathcal{A}$',
+    # Capitolo 18: diagonalizzazione
+    'Matrice A di f<br/>(rispetto a una base)': r'Matrice $A$ di $f$<br/>(rispetto a una base)',
+    'Polinomio caratteristico<br/>p(λ) = det(A − λI)': r'Polinomio caratteristico<br/>$p(\lambda) = \det(A - \lambda I)$',
+    'p ha n radici in 𝕂<br/>(con molteplicità)?': r'$p$ ha $n$ radici in $\mathbb{K}$<br/>(con molteplicità)?',
+    'per ogni autovalore multiplo λ:<br/>m_g(λ) = n − rango(A − λI)':
+        r'per ogni autovalore multiplo $\lambda$:<br/>$m_g(\lambda) = n - \operatorname{rango}(A - \lambda I)$',
+    'm_g(λ) = m_a(λ)<br/>per ogni λ?': r'$m_g(\lambda) = m_a(\lambda)$<br/>per ogni $\lambda$?',
+    'diagonalizzabile:<br/>base di autovettori, P⁻¹AP diagonale':
+        r'diagonalizzabile:<br/>base di autovettori, $P^{-1}AP$ diagonale',
 }
 
 NODE_RE = re.compile(r'([A-Za-z][A-Za-z0-9_]*)\s*(\[\s*"(.*?)"\s*\]|\{\s*"(.*?)"\s*\}|\(\s*"(.*?)"\s*\))?')
@@ -509,6 +532,8 @@ class Renderer:
         self.bid = 0
         self.search = []       # voci per la ricerca
         self.cur_path = []     # [part, chapter, section] per i risultati
+        self.cur_env = ''      # etichetta del riquadro corrente (per il formulario)
+        self.keyf = []         # formule chiave (\\boxed) per il formulario
         self.cur_anchor = 'top'
         self.figs = {}
         self.stats = {'env': {}, 'figs': 0, 'labs': 0, 'proofs': 0, 'notes': 0}
@@ -543,9 +568,20 @@ class Renderer:
         tex = b['tex']
         self.math_seq.append(tex)
         m = re.search(r'\\tag\{(\d+\.\d+)\}', tex)
-        idattr = f' id="{num_id("eq", m.group(1))}"' if m else ''
-        cont = ' cont' if b.get('cont') else ''
-        return f'<div class="dm{cont}"{idattr}>{esc(tex)}</div>'
+        did = num_id("eq", m.group(1)) if m else None
+        cls = ' cont' if b.get('cont') else ''
+        if '\\boxed' in tex:
+            # formula chiave: riquadro evidenziato e voce del formulario
+            cls += ' key'
+            if did is None:
+                did = f'kf{len(self.keyf) + 1}'
+            chap = self.cur_path[1] if len(self.cur_path) > 1 else ''
+            if not chap.startswith('20.'):
+                self.keyf.append({'a': did, 'x': tex, 'c': chap,
+                                  's': self.cur_path[2] if len(self.cur_path) > 2 else '',
+                                  'e': self.cur_env, 'g': m.group(1) if m else ''})
+        idattr = f' id="{did}"' if did else ''
+        return f'<div class="dm{cls}"{idattr}>{esc(tex)}</div>'
 
     def lst(self, b, cls=None):
         tag = 'ol' if b['ordered'] else 'ul'
@@ -710,6 +746,8 @@ class Renderer:
         self.stats['env'][etype] = self.stats['env'].get(etype, 0) + 1
         prev_self = self.ctx.self_id
         self.ctx.self_id = eid
+        prev_env = self.cur_env
+        self.cur_env = nd['label']
         th = f' <span class="env-t">({self.il(title)})</span>' if title else ''
         out = [f'<div class="env env-{fam}" id="{eid}" data-kind="{abbr}">',
                f'<div class="env-h"><span class="env-k">{esc(nd["label"])}</span>{th}</div>',
@@ -739,6 +777,7 @@ class Renderer:
             out.append('</div></div></div>')
         out.append('</div>')
         self.ctx.self_id = prev_self
+        self.cur_env = prev_env
         return ''.join(out)
 
     def proof(self, nd):
@@ -809,11 +848,10 @@ def analyse_headings(blocks):
                 b['kind'], b['num'], b['ttl'] = 'riepilogo', None, text
         elif b['level'] == 4:
             b['kind'], b['num'], b['ttl'] = 'sub', None, text
-    # albero: nella sidebar le Parti non compaiono; i capitoli stanno alla radice
-    # e il primo capitolo di ogni Parte è preceduto da un separatore
+    # albero: nella sidebar le Parti non compaiono; i capitoli stanno alla radice,
+    # ciascuno preceduto da una riga di separazione
     root = []
     chap = sec = None
-    after_part = False
     for h in heads:
         node = {'h': h, 'kids': []}
         k = h['kind']
@@ -821,11 +859,9 @@ def analyse_headings(blocks):
             root.append(node)
         elif k == 'part':
             chap = None
-            after_part = True
         elif k in ('chapter', 'intro'):
-            if k == 'chapter' and after_part:
-                node['newpart'] = True
-                after_part = False
+            if k == 'chapter':
+                node['newpart'] = True   # riga di separazione prima di ogni capitolo
             root.append(node)
             chap, sec = node, None
         elif k in ('section', 'riepilogo'):
@@ -1211,6 +1247,7 @@ def assemble(doc, out_path):
                   f'<li><b>{n_es}</b> esempi</li><li><b>{n_ex}</b> esercizi svolti</li>'
                   f'<li><b>{st["figs"]}</b> figure</li><li><b>{st["labs"]}</b> laboratori interattivi</li>')
     search_json = json.dumps(R.search, ensure_ascii=False, separators=(',', ':'))
+    keyf_json = json.dumps(R.keyf, ensure_ascii=False, separators=(',', ':'))
     rep = {
         '{{TITLE}}': esc(hero[1]),
         '{{SUBTITLE}}': esc(hero[2]),
@@ -1222,6 +1259,7 @@ def assemble(doc, out_path):
         '{{STATS}}': stats_html,
         '{{CHAPS}}': f'Capitoli 1–{chapters}',
         '{{SEARCH}}': search_json.replace('</', '<\\/'),
+        '{{FORMULE}}': keyf_json.replace('</', '<\\/'),
         '{{KATEX_JS}}': katex_js.replace('</script', '<\\/script'),
         '{{APP_JS}}': '\n'.join(js_parts).replace('</script', '<\\/script'),
     }
