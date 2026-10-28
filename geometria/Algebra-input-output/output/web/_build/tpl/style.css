@@ -193,6 +193,7 @@ kbd {
 .t-tx { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .t-tx .katex { font-size: 1.04em; }
 .t-sep { height: 0; margin: .55rem .5rem .5rem; border-top: 1px solid var(--line-2); }
+.t-part > .t-row > .t-a { font-size: .885rem; }
 .t-chapter > .t-row > .t-a { font-weight: 650; color: var(--ink); }
 .t-chapter > .t-row > .t-a .t-n { color: var(--accent); font-weight: 700; }
 .t-indice > .t-row > .t-a, .t-intro > .t-row > .t-a { color: var(--ink); font-weight: 600; }

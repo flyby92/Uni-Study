@@ -168,9 +168,10 @@
   function setOpen(li, open, manual) {
     if (!li || !li.hasAttribute('data-has')) return;
     // un capitolo aperto alla volta: aprendone uno si chiude quello precedente
+    // (ma mai un antenato: aprire una sezione non chiude la sua Parte)
     if (open && li.classList.contains('t-chapter')) {
       for (const other of items) {
-        if (other !== li && other.classList.contains('t-chapter') && other.classList.contains('open')) {
+        if (other !== li && !other.contains(li) && other.classList.contains('t-chapter') && other.classList.contains('open')) {
           other.classList.remove('open');
           const ob = other.querySelector(':scope > .t-row > .t-tog');
           if (ob) ob.setAttribute('aria-expanded', 'false');
@@ -294,7 +295,9 @@
     const n = a.querySelector('.t-n:not(.t-ic)');
     const tx = a.querySelector('.t-tx');
     const cls = li.classList.contains('t-chapter') || li.classList.contains('t-intro') ? 'c-chap' : 'c-sec';
-    return `<a class="${cls}" href="#${id}">${n ? n.textContent + (li.classList.contains('t-chapter') ? '. ' : ' ') : ''}${tx ? tx.innerHTML : ''}</a>`;
+    const isPart = li.classList.contains('t-part');
+    const pre = n && !isPart ? n.textContent + (li.classList.contains('t-chapter') ? '. ' : ' ') : '';
+    return `<a class="${cls}" href="#${id}">${pre}${tx ? tx.innerHTML : ''}</a>`;
   }
   const crumbs = $('#crumbs');
   function setActive(id) {

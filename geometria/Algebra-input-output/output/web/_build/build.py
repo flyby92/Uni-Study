@@ -848,21 +848,28 @@ def analyse_headings(blocks):
                 b['kind'], b['num'], b['ttl'] = 'riepilogo', None, text
         elif b['level'] == 4:
             b['kind'], b['num'], b['ttl'] = 'sub', None, text
-    # albero: nella sidebar le Parti non compaiono; i capitoli stanno alla radice,
-    # ciascuno preceduto da una riga di separazione
+    # albero: nella sidebar i capitoli sono le Parti; i capitoli numerati diventano
+    # sottosezioni di ciascuna Parte, le sezioni (N.M) e i sottotitoli scendono di un livello
     root = []
-    chap = sec = None
+    part = chap = sec = None
     for h in heads:
         node = {'h': h, 'kids': []}
         k = h['kind']
         if k == 'indice':
             root.append(node)
         elif k == 'part':
-            chap = None
-        elif k in ('chapter', 'intro'):
-            if k == 'chapter':
-                node['newpart'] = True   # riga di separazione prima di ogni capitolo
+            node['newpart'] = True   # riga di separazione prima di ogni Parte
             root.append(node)
+            part, chap, sec = node, None, None
+        elif k == 'intro':
+            root.append(node)
+            chap, sec = node, None
+        elif k == 'chapter':
+            if part is None:
+                node['newpart'] = True
+                root.append(node)
+            else:
+                part['kids'].append(node)
             chap, sec = node, None
         elif k in ('section', 'riepilogo'):
             chap['kids'].append(node)
@@ -884,7 +891,9 @@ def render_tree(nodes, ctx, depth=0, labs_by_sec=None):
         k = h['kind']
         kids = nd['kids']
         hid = h['id']
-        if k == 'chapter':
+        if k == 'part':
+            label = f'<span class="t-n">{esc(h["num"])}</span><span class="t-tx">{inline(h["ttl"], ctx)}</span>'
+        elif k == 'chapter':
             label = f'<span class="t-n">{esc(h["num"])}</span><span class="t-tx">{inline(h["ttl"], ctx)}</span>'
         elif k == 'section':
             label = f'<span class="t-n">{esc(h["num"])}</span><span class="t-tx">{inline(h["ttl"], ctx)}</span>'
@@ -903,7 +912,8 @@ def render_tree(nodes, ctx, depth=0, labs_by_sec=None):
                f'aria-label="Espandi o comprimi">{CHEV}</button>') if kids else ''
         if nd.get('newpart'):
             out.append('<li class="t-sep" role="presentation"></li>')
-        out.append(f'<li class="t-i t-{k}" data-id="{attr(hid)}"{" data-has" if kids else ""}>'
+        cls = f't-{k}' + (' t-chapter' if k == 'part' else '')
+        out.append(f'<li class="t-i {cls}" data-id="{attr(hid)}"{" data-has" if kids else ""}>'
                    f'<div class="t-row"><a class="t-a" href="#{attr(hid)}">{label}{extra}</a>{tog}</div>')
         if kids:
             out.append('<div class="t-kids"><div class="t-kin">')
