@@ -335,6 +335,12 @@ DIAGRAM_LABELS = {
     'det(P₁−P₀; v; w) = 0 ?': r'$\det(P_1 - P_0;\, \underline{v};\, \underline{w}) = 0$ ?',
     'v ∧ w = 0 ?': r'$\underline{v} \wedge \underline{w} = \underline{0}$ ?',
     'P₁ ∈ r ?': r'$P_1 \in r$ ?',
+    # Capitolo 13: lettura di un sistema ridotto
+    'Matrice completa ridotta<br/>m equazioni, n incognite': r'Matrice completa ridotta<br/>$m$ equazioni, $n$ incognite',
+    'Individuare i pivot<br/>(primo elemento ≠ 0 di ogni riga)': r'Individuare i pivot<br/>(primo elemento $\neq 0$ di ogni riga)',
+    "Nessuna soluzione<br/>(un'equazione 0 = b, b ≠ 0)": r"Nessuna soluzione<br/>(un'equazione $0 = b$, $b \neq 0$)",
+    'Infinite soluzioni:<br/>le p incognite dei pivot<br/>in funzione delle altre n − p':
+        r'Infinite soluzioni:<br/>le $p$ incognite dei pivot<br/>in funzione delle altre $n - p$',
     # Capitolo 15: Rouché–Capelli
     'Sistema Ax = b<br/>m equazioni, n incognite': r'Sistema $Ax = b$<br/>$m$ equazioni, $n$ incognite',
     "Calcolare p = rango(A)<br/>e p' = rango(A|b)": r"Calcolare $p = \operatorname{rango}(A)$<br/>e $p' = \operatorname{rango}(A\mid b)$",
@@ -892,7 +898,8 @@ def render_tree(nodes, ctx, depth=0, labs_by_sec=None):
         kids = nd['kids']
         hid = h['id']
         if k == 'part':
-            label = f'<span class="t-n">{esc(h["num"])}</span><span class="t-tx">{inline(h["ttl"], ctx)}</span>'
+            label = (f'<span class="t-n" title="Parte {esc(h["num"])}">{esc(h["num"])}</span>'
+                     f'<span class="t-tx">{inline(h["ttl"], ctx)}</span>')
         elif k == 'chapter':
             label = f'<span class="t-n">{esc(h["num"])}</span><span class="t-tx">{inline(h["ttl"], ctx)}</span>'
         elif k == 'section':
@@ -912,7 +919,7 @@ def render_tree(nodes, ctx, depth=0, labs_by_sec=None):
                f'aria-label="Espandi o comprimi">{CHEV}</button>') if kids else ''
         if nd.get('newpart'):
             out.append('<li class="t-sep" role="presentation"></li>')
-        cls = f't-{k}' + (' t-chapter' if k == 'part' else '')
+        cls = f't-{k}'
         out.append(f'<li class="t-i {cls}" data-id="{attr(hid)}"{" data-has" if kids else ""}>'
                    f'<div class="t-row"><a class="t-a" href="#{attr(hid)}">{label}{extra}</a>{tog}</div>')
         if kids:
@@ -985,7 +992,7 @@ LABS = [
      'Scegli una configurazione: il determinante delle normali decide se esiste un solo punto comune.'),
     ('fig-12-7', 'r-fascio', 'Il fascio di piani di asse $r$',
      'Muovi il parametro: il piano $\\lambda(\\dots)+\\mu(\\dots)=0$ ruota attorno alla retta $r$.'),
-    ('es-12-18', 'r-sghembe', 'Distanza fra rette sghembe',
+    ('es-12-19', 'r-sghembe', 'Distanza fra rette sghembe',
      'Muovi $P$ su $r$ e $Q$ su $s$: la distanza minima si raggiunge sulla perpendicolare comune.'),
 ]
 

@@ -750,7 +750,7 @@
     st = slider({ label: '$t$', min: -2.5, max: 1.5, step: 0.01, value: t, onInput: (x) => { t = x; S.render(); } });
     ss = slider({ label: '$s$', min: -1.5, max: 1.2, step: 0.01, value: sv, onInput: (x) => { sv = x; S.render(); } });
     L.side.append(st, ss, h('div', { class: 'lab-ctl' }, btn('Vai al minimo', null, () => { t = -9 / 13; sv = -1 / 13; st.setValue(N().rnd(t, 2)); ss.setValue(N().rnd(sv, 2)); S.render(); })), info,
-      GAL.note('Rette dell’Esempio 12.18. Il tratteggio rosso è la perpendicolare comune ($t=-\\frac9{13}$, $s=-\\frac1{13}$); il piano azzurro contiene $r$ ed è parallelo a $s$ (secondo metodo).'));
+      GAL.note('Rette dell’Esempio 12.19. Il tratteggio rosso è la perpendicolare comune ($t=-\\frac9{13}$, $s=-\\frac1{13}$); il piano azzurro contiene $r$ ed è parallelo a $s$ (secondo metodo).'));
     S.setDraw(draw);
   };
 })();

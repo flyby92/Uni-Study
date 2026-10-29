@@ -193,7 +193,10 @@ kbd {
 .t-tx { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .t-tx .katex { font-size: 1.04em; }
 .t-sep { height: 0; margin: .55rem .5rem .5rem; border-top: 1px solid var(--line-2); }
-.t-part > .t-row > .t-a { font-size: .885rem; }
+.t-part > .t-row > .t-a { font-weight: 700; color: var(--ink); font-size: .9rem; }
+.t-part > .t-row > .t-a .t-n { color: var(--accent); font-weight: 700; font-family: var(--font-text, inherit); }
+.t-part > .t-kids > .t-kin > .t-l { margin: .1rem 0 .35rem .95rem; padding-left: .45rem; border-left: 1px solid var(--line-2); }
+.t-part > .t-kids > .t-kin > .t-l > .t-chapter > .t-row > .t-a { font-weight: 600; font-size: .86rem; }
 .t-chapter > .t-row > .t-a { font-weight: 650; color: var(--ink); }
 .t-chapter > .t-row > .t-a .t-n { color: var(--accent); font-weight: 700; }
 .t-indice > .t-row > .t-a, .t-intro > .t-row > .t-a { color: var(--ink); font-weight: 600; }
